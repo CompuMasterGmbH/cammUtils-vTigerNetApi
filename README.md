@@ -4,8 +4,7 @@ A library written in C# which allows easy access to the VTiger CRM webservice.
 It is capable to use every aspect of the VTiger-Webservice as is.
 
 ## About
-I started this Project as part of an internship at [url:CompuMaster|http://www.compumaster.de] and it was a whole lot of fun to experience working on a project where I could not do as I wish like in my own projects.
-And at last, this API would have never existed, if I didn't get that chance by having an internship.
+This project started as part of an internship and at last, this API would have never existed, if our trainee didn't get that chance by having an internship.
 
 ## Other useful links
 * http://sourceforge.net/projects/vtigercrm/ The previous vtiger project website

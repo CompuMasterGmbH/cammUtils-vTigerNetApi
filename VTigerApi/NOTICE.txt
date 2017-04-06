@@ -1,0 +1,6 @@
+﻿VTiger .NET API
+Copyright 2011 Björn Zeutzheim
+
+This software includes the Jayrock library developed by
+Atif Aziz (http://jayrock.berlios.de)
+Licensed under the GNU Lesser General Public License

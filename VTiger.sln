@@ -1,0 +1,69 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VTigerApi", "VTigerApi\VTigerApi.csproj", "{3C40452B-1415-4A82-9326-2045FBDC06AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VTiger Manager Demo", "VTigerManagerDemo\VTiger Manager Demo.csproj", "{F8B8BA13-CB21-4325-B65B-0A9B7746DA38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VTiger Manager Demo Controls", "VTigerManagerDemoControls\VTiger Manager Demo Controls.csproj", "{B6AFCB0D-36AC-448D-8C9D-E626C22C451A}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 4
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs35
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = VTigerApi\\VTigerApi.csproj
+		SccProjectName1 = VTigerApi
+		SccLocalPath1 = VTigerApi
+		SccProjectUniqueName2 = VTigerManagerDemo\\VTiger\u0020Manager\u0020Demo.csproj
+		SccProjectName2 = VTigerManagerDemo
+		SccLocalPath2 = VTigerManagerDemo
+		SccProjectUniqueName3 = VTigerManagerDemoControls\\VTiger\u0020Manager\u0020Demo\u0020Controls.csproj
+		SccProjectName3 = VTigerManagerDemoControls
+		SccLocalPath3 = VTigerManagerDemoControls
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C40452B-1415-4A82-9326-2045FBDC06AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C40452B-1415-4A82-9326-2045FBDC06AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C40452B-1415-4A82-9326-2045FBDC06AB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{3C40452B-1415-4A82-9326-2045FBDC06AB}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{3C40452B-1415-4A82-9326-2045FBDC06AB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3C40452B-1415-4A82-9326-2045FBDC06AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C40452B-1415-4A82-9326-2045FBDC06AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C40452B-1415-4A82-9326-2045FBDC06AB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3C40452B-1415-4A82-9326-2045FBDC06AB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{3C40452B-1415-4A82-9326-2045FBDC06AB}.Release|x86.ActiveCfg = Release|Any CPU
+		{F8B8BA13-CB21-4325-B65B-0A9B7746DA38}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{F8B8BA13-CB21-4325-B65B-0A9B7746DA38}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{F8B8BA13-CB21-4325-B65B-0A9B7746DA38}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{F8B8BA13-CB21-4325-B65B-0A9B7746DA38}.Debug|x86.ActiveCfg = Debug|x86
+		{F8B8BA13-CB21-4325-B65B-0A9B7746DA38}.Debug|x86.Build.0 = Debug|x86
+		{F8B8BA13-CB21-4325-B65B-0A9B7746DA38}.Release|Any CPU.ActiveCfg = Release|x86
+		{F8B8BA13-CB21-4325-B65B-0A9B7746DA38}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{F8B8BA13-CB21-4325-B65B-0A9B7746DA38}.Release|Mixed Platforms.Build.0 = Release|x86
+		{F8B8BA13-CB21-4325-B65B-0A9B7746DA38}.Release|x86.ActiveCfg = Release|x86
+		{F8B8BA13-CB21-4325-B65B-0A9B7746DA38}.Release|x86.Build.0 = Release|x86
+		{B6AFCB0D-36AC-448D-8C9D-E626C22C451A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6AFCB0D-36AC-448D-8C9D-E626C22C451A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6AFCB0D-36AC-448D-8C9D-E626C22C451A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B6AFCB0D-36AC-448D-8C9D-E626C22C451A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B6AFCB0D-36AC-448D-8C9D-E626C22C451A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B6AFCB0D-36AC-448D-8C9D-E626C22C451A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6AFCB0D-36AC-448D-8C9D-E626C22C451A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6AFCB0D-36AC-448D-8C9D-E626C22C451A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B6AFCB0D-36AC-448D-8C9D-E626C22C451A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B6AFCB0D-36AC-448D-8C9D-E626C22C451A}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

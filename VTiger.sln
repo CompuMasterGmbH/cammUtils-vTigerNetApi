@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VTigerApi", "VTigerApi\VTigerApi.csproj", "{3C40452B-1415-4A82-9326-2045FBDC06AB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VTiger Manager Demo", "VTigerManagerDemo\VTiger Manager Demo.csproj", "{F8B8BA13-CB21-4325-B65B-0A9B7746DA38}"
@@ -8,21 +10,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VTiger Manager Demo Controls", "VTigerManagerDemoControls\VTiger Manager Demo Controls.csproj", "{B6AFCB0D-36AC-448D-8C9D-E626C22C451A}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 4
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs35
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = VTigerApi\\VTigerApi.csproj
-		SccProjectName1 = VTigerApi
-		SccLocalPath1 = VTigerApi
-		SccProjectUniqueName2 = VTigerManagerDemo\\VTiger\u0020Manager\u0020Demo.csproj
-		SccProjectName2 = VTigerManagerDemo
-		SccLocalPath2 = VTigerManagerDemo
-		SccProjectUniqueName3 = VTigerManagerDemoControls\\VTiger\u0020Manager\u0020Demo\u0020Controls.csproj
-		SccProjectName3 = VTigerManagerDemoControls
-		SccLocalPath3 = VTigerManagerDemoControls
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms

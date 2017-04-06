@@ -38,9 +38,8 @@
     <DocumentationFile>bin\Release\VTigerApi.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Jayrock.Json, Version=0.9.12915.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\Jayrock.Json.dll</HintPath>
+    <Reference Include="Jayrock.Json, Version=0.9.16530.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\jayrock-json.0.9.16530.1\lib\net20\Jayrock.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -54,9 +53,15 @@
   <ItemGroup>
     <Compile Include="JsonConverters.cs" />
     <Compile Include="JsonExcludeExportAttribute.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="VTigerService.cs" />
     <Compile Include="VTigerTypes.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

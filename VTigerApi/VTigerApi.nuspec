@@ -1,0 +1,25 @@
+﻿<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://raw.githubusercontent.com/CompuMasterGmbH/cammUtils-vTigerNetApi/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/CompuMasterGmbH/cammUtils-vTigerNetApi</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/CompuMasterGmbH/cammUtils-vTigerNetApi/master/logo_64x64.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>.NET library for simplified API and data access to a VTiger instance using its API interfaces (a lot of JSON) and provide all data (where ever possible) in DataTables</description>
+    <releaseNotes></releaseNotes>
+    <copyright>2014, 2017 CompuMaster GmbH &amp; additional committers</copyright>
+    <tags>CompuMaster camm Utils VTigerAPI VTiger DataTables System.DataTable</tags>
+  </metadata>
+  <!--
+  <files>
+    <file src="bin\Release\**\VTigerNetApi*.dll" target="lib\net20"/>
+    <file src="bin\Release\**\VTigerNetApi*.pdb" target="lib\net20"/>
+    <file src="bin\Release\**\VTigerNetApi*.xml" target="lib\net20"/>
+  </files>
+  -->
+</package>

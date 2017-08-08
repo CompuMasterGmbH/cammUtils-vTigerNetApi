@@ -1,7 +1,15 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="VTigerManager.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="VTigerUser" Type="System.String" Scope="User">
+      <Value Profile="(Default)">admin</Value>
+    </Setting>
+    <Setting Name="VTigerAppKey" Type="System.String" Scope="User">
+      <Value Profile="(Default)">GhYLo32mlHul7H4</Value>
+    </Setting>
+    <Setting Name="VTigerInstanceUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://localhost:8880</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

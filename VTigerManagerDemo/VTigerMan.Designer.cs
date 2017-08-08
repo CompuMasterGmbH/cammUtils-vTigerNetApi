@@ -233,7 +233,7 @@
             // LQueryTable
             // 
             this.LQueryTable.Name = "LQueryTable";
-            this.LQueryTable.Size = new System.Drawing.Size(52, 22);
+            this.LQueryTable.Size = new System.Drawing.Size(51, 22);
             this.LQueryTable.Text = "<Table>";
             // 
             // toolStripLabel2

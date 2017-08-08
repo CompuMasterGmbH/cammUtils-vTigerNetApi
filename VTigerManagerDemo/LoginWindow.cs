@@ -15,5 +15,12 @@ namespace VTigerManager
         {
             InitializeComponent();
         }
+
+        private void LoginWindow_Load(object sender, EventArgs e)
+        {
+            EdServiceUrl.Text = (string)Properties.Settings.Default["VTigerInstanceUrl"];
+            EdUsername.Text = (string)Properties.Settings.Default["VTigerUser"];
+            EdAuthKey.Text = (string)Properties.Settings.Default["VTigerAppKey"];
+        }
     }
 }

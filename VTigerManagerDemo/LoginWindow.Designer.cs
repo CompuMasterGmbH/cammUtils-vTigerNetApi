@@ -68,7 +68,6 @@
             this.EdServiceUrl.Name = "EdServiceUrl";
             this.EdServiceUrl.Size = new System.Drawing.Size(279, 21);
             this.EdServiceUrl.TabIndex = 4;
-            this.EdServiceUrl.Text = "http://srv13:8082";
             // 
             // label1
             // 
@@ -135,6 +134,7 @@
             this.Name = "LoginWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Login...";
+            this.Load += new System.EventHandler(this.LoginWindow_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

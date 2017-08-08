@@ -91,14 +91,14 @@ namespace VTigerManager
 
         private void VTigerMan_Load(object sender, EventArgs e)
         {
+            string VTigerInstanceUrl = (string)Properties.Settings.Default["VTigerInstanceUrl"];
             try
             {
-                Login("http://localhost:8880", "admin", "GhYLo32mlHul7H4");
-                textBoxSessionID.Text = api.SessionName;
+                Login(VTigerInstanceUrl, (string)Properties.Settings.Default["VTigerUser"], (string)Properties.Settings.Default["VTigerAppKey"]);
             }
             catch (Exception ex)
             {
-                System.Windows.Forms.MessageBox.Show(ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Login to VTiger instance at " + VTigerInstanceUrl + " FAILED!" + System.Environment.NewLine + ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -136,11 +136,17 @@ namespace VTigerManager
                 MainPanel.Enabled = true;
                 logoutToolStripMenuItem.Visible = true;
                 loginToolStripMenuItem.Visible = false;
+                textBoxSessionID.Text = api.SessionName;
             }
             catch (Exception ex)
             {
                 StatusLabel.Text = "Error: " + ex.Message;
+                System.Windows.Forms.MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 api = null;
+                MainPanel.Enabled = false;
+                logoutToolStripMenuItem.Visible = false;
+                loginToolStripMenuItem.Visible = true;
+                textBoxSessionID.Text = "";
             }
         }
 

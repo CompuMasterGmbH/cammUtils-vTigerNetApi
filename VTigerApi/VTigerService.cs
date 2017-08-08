@@ -565,7 +565,7 @@ namespace VTigerApi
             string response = VTigerExecuteOperation(operation, parameters, post);
             VTigerResult<T> result = ImportJson<VTigerResult<T>>(response);
             if (!result.success)
-                throw new Exception(result.error.message);
+                throw new VTigerApiException(result.error);
             return result.result;
         }
 
@@ -861,6 +861,8 @@ namespace VTigerApi
                 lastname,
                 user_id);
             element.firstname = firstname;
+            //element.
+                return Update<VTigerContact>(element);
             return Create<VTigerContact>(element);
         }
 

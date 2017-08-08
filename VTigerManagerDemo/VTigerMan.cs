@@ -91,15 +91,7 @@ namespace VTigerManager
 
         private void VTigerMan_Load(object sender, EventArgs e)
         {
-            string VTigerInstanceUrl = (string)Properties.Settings.Default["VTigerInstanceUrl"];
-            try
-            {
-                Login(VTigerInstanceUrl, (string)Properties.Settings.Default["VTigerUser"], (string)Properties.Settings.Default["VTigerAppKey"]);
-            }
-            catch (Exception ex)
-            {
-                System.Windows.Forms.MessageBox.Show("Login to VTiger instance at " + VTigerInstanceUrl + " FAILED!" + System.Environment.NewLine + ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            loginToolStripMenuItem_Click(null, null);
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
@@ -140,13 +132,17 @@ namespace VTigerManager
             }
             catch (Exception ex)
             {
-                StatusLabel.Text = "Error: " + ex.Message;
-                System.Windows.Forms.MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (api != null)
+                    try { api.Logout(); }
+                    catch { }
                 api = null;
                 MainPanel.Enabled = false;
                 logoutToolStripMenuItem.Visible = false;
                 loginToolStripMenuItem.Visible = true;
                 textBoxSessionID.Text = "";
+                StatusLabel.Text = "Failed to login: " + ex.Message;
+                this.Refresh();
+                System.Windows.Forms.MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

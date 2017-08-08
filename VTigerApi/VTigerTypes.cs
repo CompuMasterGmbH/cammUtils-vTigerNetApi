@@ -100,6 +100,43 @@ namespace VTigerApi
     }
 
     //====================================================================
+
+    public class VTigerApiException : System.Exception
+    {
+        internal VTigerApiException(VTigerError apiError)
+        {
+            this.VTigerErrorCode = apiError.code;
+            this.VTigerMessage = apiError.message;
+            /*
+            if ((apiError.code == null) || (apiError.code == ""))
+            {
+                this.Message = "UNKNOWN ERROR: " + apiError.message;
+            }
+            else
+            {
+                this.Message = apiError.code + ": " + apiError.message;
+            }
+            */
+        }
+        public string VTigerErrorCode;
+        public string VTigerMessage;
+        public override string Message
+        {
+            get
+            {
+                if ((this.VTigerErrorCode == null) || (this.VTigerErrorCode == ""))
+                {
+                    return "UNKNOWN ERROR: " + this.VTigerMessage;
+                }
+                else
+                {
+                    return this.VTigerErrorCode + ": " + this.VTigerMessage;
+                }
+            }
+        }
+
+    }
+    //====================================================================
     #region VTiger-Access-Classes
 
     public class VTigerResult<T>

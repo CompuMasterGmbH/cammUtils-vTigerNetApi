@@ -54,6 +54,7 @@ This project started as part of an internship and at last, this API would have n
 * http://sourceforge.net/projects/vtigercrm/ The previous vtiger project website
 * https://wiki.vtiger.com The official VTiger Wiki
 * http://www.vtiger-crm.it/dotnetnuke/Progetti/NTigerNetAPI/tabid/68/Default.aspx Another .NET library for vtiger - let us know your feedback or recommendations!
+* https://hub.docker.com/r/pimuzzo/vtiger/ Quick guide for a VTiger V6 docker setup to run this tool against a test instance
 
 ## VTiger Version Support
 * V5: not supported / login fails with DATABASE_QUERY_ERROR: Database error while performing required operation

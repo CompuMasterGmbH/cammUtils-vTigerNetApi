@@ -91,6 +91,7 @@ namespace VTigerManager
 
         private void VTigerMan_Load(object sender, EventArgs e)
         {
+            formTitle();
             loginToolStripMenuItem_Click(null, null);
         }
 
@@ -162,6 +163,22 @@ namespace VTigerManager
             }
         }
 
+        /// <summary>
+        /// Update the form's title
+        /// </summary>
+        /// <param name="instanceDescription"></param>
+        private void formTitle()
+        {
+            if (api == null || api.SessionName == null || api.SessionName == "")
+            {
+                this.Text = this.Text = "VTiger Demo";
+            }
+            else
+            {
+                this.Text = this.Text = "VTiger Demo - connected to VTiger V" + api.VTigerVersion().ToString() + " at " + api.ServiceUrl;
+            }
+        }
+
         private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -173,6 +190,7 @@ namespace VTigerManager
             MainPanel.Enabled = false;
             logoutToolStripMenuItem.Visible = false;
             loginToolStripMenuItem.Visible = true;
+            formTitle();
         }
 
         //========== treeView1 ==========
@@ -243,6 +261,7 @@ namespace VTigerManager
             }
             catch (Exception ex)
             {
+                MessageBox.Show(this, ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 StatusLabel.Text = "Error: " + ex.Message;
                 return false;
             }
@@ -280,6 +299,7 @@ namespace VTigerManager
             }
             catch (Exception ex)
             {
+                MessageBox.Show(this, ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 StatusLabel.Text = "Error: " + ex.Message;
             }
             dataView.Enabled = true;
@@ -287,12 +307,20 @@ namespace VTigerManager
 
         public void UpdateOderByList()
         {
+            try
+            {
             EdOrderBy.Items.Clear();
             if (dataView.DataSource != null)
                 foreach (DataColumn col in (dataView.DataSource as DataTable).Columns)
                 {
                     EdOrderBy.Items.Add(col.Caption);
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                StatusLabel.Text = "Error: " + ex.Message;
+            }
         }
 
         private void UpdatePageCaption()
@@ -364,6 +392,7 @@ namespace VTigerManager
             }
             catch (Exception ex)
             {
+                MessageBox.Show(this, ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 StatusLabel.Text = "Error: " + ex.Message;
                 return false;
             }
@@ -420,6 +449,7 @@ namespace VTigerManager
             }
             catch (Exception ex)
             {
+                MessageBox.Show(this, ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 StatusLabel.Text = "Error: " + ex.Message;
             }
         }
@@ -448,6 +478,7 @@ namespace VTigerManager
             }
             catch (Exception ex)
             {
+                MessageBox.Show(this, ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 StatusLabel.Text = "Error: " + ex.Message;
             }
         }
@@ -480,6 +511,7 @@ namespace VTigerManager
             }
             catch (Exception ex)
             {
+                MessageBox.Show(this, ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 StatusLabel.Text = "Error: " + ex.Message;
             }
         }
@@ -498,6 +530,7 @@ namespace VTigerManager
             }
             catch (Exception ex)
             {
+                MessageBox.Show(this, ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 StatusLabel.Text = "Error: " + ex.Message;
             }
         }
@@ -516,6 +549,7 @@ namespace VTigerManager
             }
             catch (Exception ex)
             {
+                MessageBox.Show(this, ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 StatusLabel.Text = "Error: " + ex.Message;
             }
         }
@@ -551,6 +585,7 @@ namespace VTigerManager
             }
             catch (Exception ex)
             {
+                MessageBox.Show(this, ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 StatusLabel.Text = "Error: " + ex.Message;
             }
         }

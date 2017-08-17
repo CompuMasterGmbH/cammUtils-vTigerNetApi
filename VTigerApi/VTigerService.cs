@@ -48,6 +48,22 @@ namespace VTigerApi
             }
         }
 
+        private string webserviceVersion;
+        public System.Version WebserviceVersion
+        {
+            get { return new System.Version(webserviceVersion); }
+        }
+        private string vtigerVersion;
+        public System.Version VTigerVersion
+        {
+            get { return new System.Version(vtigerVersion); }
+        }
+        private string userID;
+        public string UserID
+        {
+            get { return userID; }
+        }
+
         private string sessionName;
         /// <summary>
         /// The session-identifier which is used for authentication.
@@ -208,6 +224,9 @@ namespace VTigerApi
                 String.Format("username={0}&accessKey={1}", username, key), true);
 
             sessionName = loginResult.sessionName;
+            vtigerVersion = loginResult.vtigerVersion;
+            webserviceVersion = loginResult.version;
+            userID = loginResult.userId;
         }
 
         /// <summary>
@@ -697,6 +716,12 @@ namespace VTigerApi
             return queryWriter;
         }
 
+        private string VTigerTableName (VTigerType elementType)
+        {
+            //return "vtiger_" + String.Format("{0}", elementType);
+            return String.Format("{0}", elementType);
+        }
+
         /// <summary>
         /// Searches for an entity which matches the specified condition and retrives it's ID
         /// </summary>
@@ -707,7 +732,7 @@ namespace VTigerApi
         public string FindEntityID(VTigerType elementType, string field, string value)
         {
             VTigerEntity[] items = Query<VTigerEntity>(String.Format(
-                "SELECT id,{1} FROM {0} WHERE {1}='{2}';", elementType, field, value));
+                "SELECT id,{1} FROM {0} WHERE {1}='{2}';", VTigerTableName(elementType), field, value));
             if (items.Length == 0)
                 throw new Exception(String.Format(
                     "Could not find an element for the condition {0}='{1}'", field, value));
@@ -728,7 +753,7 @@ namespace VTigerApi
         public T FindEntity<T>(string field, string value) where T : VTigerEntity, new()
         {
             T[] items = Query<T>(String.Format(
-                "SELECT * FROM {0} WHERE {1}='{2}';", (new T()).elementType, field, value));
+                "SELECT * FROM {0} WHERE {1}='{2}';", VTigerTableName((new T()).elementType), field, value));
             if (items.Length == 0)
                 return null;
                 //throw new Exception(String.Format(

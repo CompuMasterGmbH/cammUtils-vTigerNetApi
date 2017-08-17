@@ -145,6 +145,7 @@ namespace VTigerManager
                 this.Refresh();
                 System.Windows.Forms.MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            formTitle();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -175,7 +176,7 @@ namespace VTigerManager
             }
             else
             {
-                this.Text = this.Text = "VTiger Demo - connected to VTiger V" + api.VTigerVersion().ToString() + " at " + api.ServiceUrl;
+                this.Text = this.Text = "VTiger Demo - connected to VTiger V" + api.VTigerVersion.ToString() + " at " + api.ServiceUrl;
             }
         }
 

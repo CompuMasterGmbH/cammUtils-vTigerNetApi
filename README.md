@@ -1,6 +1,6 @@
 # cammUtils-vTigerNetApi
 
-A library written in C# which allows easy access to the VTiger CRM webservice.
+A library written in C# which allows easy access to the VTiger CRM webservice (for VTiger V6 or later).
 It is capable to use every aspect of the VTiger-Webservice as is. [![NuGet VTigerNetApi](https://img.shields.io/nuget/v/VTigerNetApi.svg?label=VTigerNetApi)](https://www.nuget.org/packages/VTigerNetApi/)
 
 ## Short example of using the VTiger .NET API
@@ -52,3 +52,8 @@ This project started as part of an internship and at last, this API would have n
 ## Other useful links
 * http://sourceforge.net/projects/vtigercrm/ The previous vtiger project website
 * http://www.vtiger-crm.it/dotnetnuke/Progetti/NTigerNetAPI/tabid/68/Default.aspx Another .NET library for vtiger - let us know your feedback or recommendations!
+
+## VTiger Version Support
+* V5: not supported / login fails with DATABASE_QUERY_ERROR: Database error while performing required operation
+* V6: supported
+* V7: (to be) supported (feedback welcome!)

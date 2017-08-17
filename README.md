@@ -28,6 +28,7 @@ if (dt.Rows.Count > 0)
 ```
 
 ### Notes
+Please also review https://wiki.vtiger.com/index.php/Webservice_reference_manual for general notes on using the VTiger Webservice API.
 
 **NOTE 1** about VTiger-Login:
 In order to log in, you need the authentication-key which can be found in user's profile-settings.
@@ -51,6 +52,7 @@ This project started as part of an internship and at last, this API would have n
 
 ## Other useful links
 * http://sourceforge.net/projects/vtigercrm/ The previous vtiger project website
+* https://wiki.vtiger.com The official VTiger Wiki
 * http://www.vtiger-crm.it/dotnetnuke/Progetti/NTigerNetAPI/tabid/68/Default.aspx Another .NET library for vtiger - let us know your feedback or recommendations!
 
 ## VTiger Version Support

@@ -14,6 +14,7 @@ namespace VTigerManager
         public LoginWindow()
         {
             InitializeComponent();
+            this.DialogResult = DialogResult.Cancel; //general return value if window has been closed
         }
 
         private void LoginWindow_Load(object sender, EventArgs e)
@@ -22,5 +23,18 @@ namespace VTigerManager
             EdUsername.Text = (string)Properties.Settings.Default["VTigerUser"];
             EdAuthKey.Text = (string)Properties.Settings.Default["VTigerAppKey"];
         }
+
+        private void BtnLogin_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
+            if (this.CheckBoxSaveCredentials.Checked)
+            {
+                Properties.Settings.Default["VTigerInstanceUrl"] = this.EdServiceUrl.Text;
+                Properties.Settings.Default["VTigerUser"] = this.EdUsername.Text;
+                Properties.Settings.Default["VTigerAppKey"] = this.EdAuthKey.Text;
+                Properties.Settings.Default.Save();
+            }
+        }
+
     }
 }

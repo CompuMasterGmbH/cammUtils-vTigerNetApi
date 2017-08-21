@@ -36,6 +36,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.EdUsername = new System.Windows.Forms.TextBox();
             this.EdAuthKey = new System.Windows.Forms.TextBox();
+            this.CheckBoxSaveCredentials = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // BtnCancel
@@ -59,6 +60,7 @@
             this.BtnLogin.TabIndex = 2;
             this.BtnLogin.Text = "Login";
             this.BtnLogin.UseVisualStyleBackColor = true;
+            this.BtnLogin.Click += new System.EventHandler(this.BtnLogin_Click);
             // 
             // EdServiceUrl
             // 
@@ -113,6 +115,16 @@
             this.EdAuthKey.Size = new System.Drawing.Size(279, 20);
             this.EdAuthKey.TabIndex = 1;
             // 
+            // CheckBoxSaveCredentials
+            // 
+            this.CheckBoxSaveCredentials.AutoSize = true;
+            this.CheckBoxSaveCredentials.Location = new System.Drawing.Point(12, 135);
+            this.CheckBoxSaveCredentials.Name = "CheckBoxSaveCredentials";
+            this.CheckBoxSaveCredentials.Size = new System.Drawing.Size(106, 17);
+            this.CheckBoxSaveCredentials.TabIndex = 9;
+            this.CheckBoxSaveCredentials.Text = "Save Credentials";
+            this.CheckBoxSaveCredentials.UseVisualStyleBackColor = true;
+            // 
             // LoginWindow
             // 
             this.AcceptButton = this.BtnLogin;
@@ -120,6 +132,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.BtnCancel;
             this.ClientSize = new System.Drawing.Size(303, 165);
+            this.Controls.Add(this.CheckBoxSaveCredentials);
             this.Controls.Add(this.EdAuthKey);
             this.Controls.Add(this.EdUsername);
             this.Controls.Add(this.label3);
@@ -150,5 +163,6 @@
         public System.Windows.Forms.ComboBox EdServiceUrl;
         public System.Windows.Forms.TextBox EdUsername;
         public System.Windows.Forms.TextBox EdAuthKey;
+        private System.Windows.Forms.CheckBox CheckBoxSaveCredentials;
     }
 }

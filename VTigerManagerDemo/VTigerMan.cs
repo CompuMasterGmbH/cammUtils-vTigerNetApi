@@ -121,9 +121,7 @@ namespace VTigerManager
                 this.Refresh();
 
                 api = new VTiger(Url);
-
                 api.Login(Username, AccessKey);
-                user_id = api.GetUserID(Username);
 
                 StatusLabel.Text = "Successfully logged in";
                 MainPanel.Enabled = true;
@@ -191,6 +189,7 @@ namespace VTigerManager
             MainPanel.Enabled = false;
             logoutToolStripMenuItem.Visible = false;
             loginToolStripMenuItem.Visible = true;
+            dataView.DataSource = null;
             formTitle();
         }
 

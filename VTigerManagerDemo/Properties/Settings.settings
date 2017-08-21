@@ -5,11 +5,11 @@
     <Setting Name="VTigerUser" Type="System.String" Scope="User">
       <Value Profile="(Default)">admin</Value>
     </Setting>
-    <Setting Name="VTigerAppKey" Type="System.String" Scope="User">
-      <Value Profile="(Default)">GhYLo32mlHul7H4</Value>
-    </Setting>
-    <Setting Name="VTigerInstanceUrl" Type="System.String" Scope="Application">
+    <Setting Name="VTigerInstanceUrl" Type="System.String" Scope="User">
       <Value Profile="(Default)">http://localhost:8880</Value>
+    </Setting>
+    <Setting Name="VTigerAppKey" Type="System.String" Scope="User">
+      <Value Profile="(Default)">imU69FrtsqTBlAo</Value>
     </Setting>
   </Settings>
 </SettingsFile>

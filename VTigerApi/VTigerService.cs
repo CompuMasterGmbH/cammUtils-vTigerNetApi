@@ -27,14 +27,14 @@ using System.Reflection;
 namespace VTigerApi
 {
     /// <summary>
-    /// Interface to the VTiger-Web-API
+    /// Client for the VTiger webservice API
     /// </summary>
     public partial class VTiger
     {
         private string serviceUrl;
         private string baseUrl;
         /// <summary>
-        /// The URL of the VTiger-CRM (eg: http://demo.vtiger.de/)
+        /// The URL of the VTiger-CRM (e.g. http://demo.vtiger.de/)
         /// </summary>
         public string ServiceUrl
         {
@@ -49,16 +49,25 @@ namespace VTigerApi
         }
 
         private string webserviceVersion;
+        /// <summary>
+        /// The version of the server's VTiger webservice to which the current user logged in
+        /// </summary>
         public System.Version WebserviceVersion
         {
             get { return new System.Version(webserviceVersion); }
         }
         private string vtigerVersion;
+        /// <summary>
+        /// The version of the server's VTiger software to which the current user logged in
+        /// </summary>
         public System.Version VTigerVersion
         {
             get { return new System.Version(vtigerVersion); }
         }
         private string userID;
+        /// <summary>
+        /// The ID of the current VTiger user which is logged in
+        /// </summary>
         public string UserID
         {
             get { return userID; }
@@ -66,9 +75,11 @@ namespace VTigerApi
 
         private string sessionName;
         /// <summary>
-        /// The session-identifier which is used for authentication.
-        /// This value is automatically set by Login
+        /// The session identifier which is used for authentication
         /// </summary>
+        /// <remarks>
+        /// This value is automatically set by login
+        /// </remarks>
         /// <seealso cref="VTigerApi.VTiger.Login"/>
         public string SessionName
         {

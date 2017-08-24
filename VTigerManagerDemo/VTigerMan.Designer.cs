@@ -66,6 +66,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.loadThread = new System.ComponentModel.BackgroundWorker();
+            this.CompareLocalVsRemoteTableButton = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1.SuspendLayout();
             this.MainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
@@ -166,11 +167,11 @@
             this.dataView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataView.Location = new System.Drawing.Point(159, 48);
+            this.dataView.Location = new System.Drawing.Point(159, 70);
             this.dataView.Name = "dataView";
             this.dataView.RowHeadersVisible = false;
             this.dataView.ShowKeyValueTable = false;
-            this.dataView.Size = new System.Drawing.Size(785, 358);
+            this.dataView.Size = new System.Drawing.Size(785, 336);
             this.dataView.TabIndex = 8;
             this.dataView.DataSourceChanged += new System.EventHandler(this.dataView_DataSourceChanged);
             // 
@@ -184,7 +185,7 @@
             this.toolStripLabel3,
             this.EdOrderBy,
             this.BtnQuery});
-            this.toolStrip1.Location = new System.Drawing.Point(159, 23);
+            this.toolStrip1.Location = new System.Drawing.Point(159, 45);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(785, 25);
             this.toolStrip1.TabIndex = 7;
@@ -255,11 +256,12 @@
             this.BtnPageLast,
             this.BtnExportTable,
             this.toolStripButton2,
-            this.textBoxSessionID});
+            this.textBoxSessionID,
+            this.CompareLocalVsRemoteTableButton});
             this.BtnSwitchTableStyle.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.BtnSwitchTableStyle.Location = new System.Drawing.Point(159, 0);
             this.BtnSwitchTableStyle.Name = "BtnSwitchTableStyle";
-            this.BtnSwitchTableStyle.Size = new System.Drawing.Size(785, 23);
+            this.BtnSwitchTableStyle.Size = new System.Drawing.Size(785, 45);
             this.BtnSwitchTableStyle.TabIndex = 6;
             this.BtnSwitchTableStyle.Text = "Switch table-style";
             // 
@@ -417,6 +419,16 @@
             this.StatusLabel.Size = new System.Drawing.Size(10, 17);
             this.StatusLabel.Text = " ";
             // 
+            // CompareLocalVsRemoteTableButton
+            // 
+            this.CompareLocalVsRemoteTableButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.CompareLocalVsRemoteTableButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.CompareLocalVsRemoteTableButton.Name = "CompareLocalVsRemoteTableButton";
+            this.CompareLocalVsRemoteTableButton.Size = new System.Drawing.Size(172, 19);
+            this.CompareLocalVsRemoteTableButton.Text = "Compare local vs remote table";
+            this.CompareLocalVsRemoteTableButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.CompareLocalVsRemoteTableButton.Click += new System.EventHandler(this.CompareLocalVsRemoteTableButton_Click);
+            // 
             // VTigerMan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -486,6 +498,7 @@
         private System.Windows.Forms.ToolStripButton BtnExportTable;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStripTextBox textBoxSessionID;
+        private System.Windows.Forms.ToolStripButton CompareLocalVsRemoteTableButton;
     }
 }
 

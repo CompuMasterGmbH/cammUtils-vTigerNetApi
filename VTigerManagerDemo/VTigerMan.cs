@@ -626,5 +626,64 @@ namespace VTigerManager
             }
         }
 
+        private void CompareLocalVsRemoteTableButton_Click(object sender, EventArgs e)
+        {
+            if (!CheckChangedStatus())
+                return;
+
+            try
+            {
+                DataTable localDataTable = api.NewElement(api.RemoteTables[currentTable].ElementType);
+
+                //Query remote table structure
+                StatusLabel.Text = "Retriving elements...";
+                this.Refresh();
+                creatingEntry = true;
+                changed = false;
+                EditMode = true;
+                DataTable remoteDataTable = api.NewElementFromRemoteServerScheme(currentTable);
+                StatusLabel.Text = "Successfully retrived elements";
+                this.Refresh();
+
+                //Identify the additional columns from remote server
+                DataTable diffDataTable = remoteDataTable.Clone();
+                for (int myCounter=0; myCounter < remoteDataTable.Columns.Count; myCounter++)
+                {
+                    DataColumn col = remoteDataTable.Columns[myCounter];
+                    if (localDataTable.Columns.Contains(col.ColumnName))
+                        diffDataTable.Columns.Remove(diffDataTable.Columns[col.ColumnName]);
+                }
+
+                //Show results to user
+                DataTable diffDescriptionDataTable = new DataTable();
+                diffDescriptionDataTable.Columns.Add("ColumnName", typeof(string));
+                diffDescriptionDataTable.Columns.Add("DataType", typeof(string));
+                for (int myCounter = 0; myCounter < diffDataTable.Columns.Count; myCounter++)
+                {
+                    DataColumn col = diffDataTable.Columns[myCounter];
+                    DataRow row = diffDescriptionDataTable.NewRow();
+                    row["ColumnName"] = col.ColumnName;
+                    row["DataType"] = col.DataType.ToString();
+                    diffDescriptionDataTable.Rows.Add(row);
+                }
+                dataView.DataSource = diffDescriptionDataTable;
+            }
+            catch (VTigerApiSessionTimedOutException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), "ERROR from remote server", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                StatusLabel.Text = "VTiger remote server session timeout error: " + ex.Message;
+                this.loginToolStripMenuItem_Click(null, null);
+            }
+            catch (VTigerApiException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), "ERROR from remote server", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                StatusLabel.Text = "VTiger remote server error: " + ex.Message;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                StatusLabel.Text = "Error: " + ex.Message;
+            }
+        }
     }
 }

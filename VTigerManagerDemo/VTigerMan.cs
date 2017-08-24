@@ -419,7 +419,6 @@ namespace VTigerManager
                 return;
 
             /* code optimized for slow or offline connections to VTiger server
-             */
             try
             {
                 creatingEntry = true;
@@ -433,7 +432,8 @@ namespace VTigerManager
                 MessageBox.Show(this, ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 StatusLabel.Text = "Error: " + ex.Message;
             }
-         
+            */
+
             try
             {
                 StatusLabel.Text = "Retriving elements...";

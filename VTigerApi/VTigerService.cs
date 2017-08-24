@@ -526,8 +526,9 @@ namespace VTigerApi
         /// <returns></returns>
         public DataTable NewElementFromRemoteServerScheme(string remoteTableName)
         {
-            string query = String.Format("select * from {0} limit 0;", remoteTableName);
+            string query = String.Format("select * from {0} limit 1;", remoteTableName); // we need to query for at least 1 row to recieve a table schema!
             DataTable dt = this.Query(query);
+            dt = dt.Clone(); //empty all rows and start from the very beginning - except that we've got the full table schema now ;-)
             if (dt.Columns.Count == 0)
             {
                 return this.NewElement(remoteTables[remoteTableName].ElementType);

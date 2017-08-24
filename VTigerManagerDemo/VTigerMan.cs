@@ -297,6 +297,17 @@ namespace VTigerManager
                 dataView.DataSource = dt;
                 StatusLabel.Text = "Successfully retrived elements";
             }
+            catch (VTigerApiSessionTimedOutException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), "ERROR from remote server", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                StatusLabel.Text = "VTiger remote server session timeout error: " + ex.Message;
+                this.loginToolStripMenuItem_Click(null, null);
+            }
+            catch (VTigerApiException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), "ERROR from remote server", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                StatusLabel.Text = "VTiger remote server error: " + ex.Message;
+            }
             catch (Exception ex)
             {
                 MessageBox.Show(this, ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);

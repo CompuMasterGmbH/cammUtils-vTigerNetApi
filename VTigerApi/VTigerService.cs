@@ -595,7 +595,16 @@ namespace VTigerApi
             string response = VTigerExecuteOperation(operation, parameters, post);
             VTigerResult<T> result = ImportJson<VTigerResult<T>>(response);
             if (!result.success)
-                throw new VTigerApiException(result.error);
+            {
+                if (result.error.code == "INVALID_SESSIONID")
+                {
+                    throw new VTigerApiSessionTimedOutException(result.error);
+                }
+                else
+                { 
+                    throw new VTigerApiException(result.error);
+                }
+            }
             return result.result;
         }
 

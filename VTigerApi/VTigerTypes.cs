@@ -101,6 +101,21 @@ namespace VTigerApi
 
     //====================================================================
 
+    /// <summary>
+    /// A session timeout at the server may required to re-logon again
+    /// </summary>
+    public class VTigerApiSessionTimedOutException : VTigerApiException
+    {
+        internal VTigerApiSessionTimedOutException(VTigerError apiError) : base(apiError)
+        {
+            base.VTigerErrorCode = apiError.code;
+            base.VTigerMessage = apiError.message;
+        }
+    }
+
+    /// <summary>
+    /// An exception as reported by the remote server
+    /// </summary>
     public class VTigerApiException : System.Exception
     {
         internal VTigerApiException(VTigerError apiError)
@@ -118,8 +133,17 @@ namespace VTigerApi
             }
             */
         }
+        /// <summary>
+        /// The error code as defined by the VTiger remote server
+        /// </summary>
         public string VTigerErrorCode;
+        /// <summary>
+        /// A human readable error message from the VTiger remote server
+        /// </summary>
         public string VTigerMessage;
+        /// <summary>
+        /// The full message from the VTiger remote server (error code + human readable message)
+        /// </summary>
         public override string Message
         {
             get

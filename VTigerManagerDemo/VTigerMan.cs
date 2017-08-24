@@ -11,12 +11,10 @@ namespace VTigerManager
     {
         public bool closed = false;
         private VTiger api;
-        private Dictionary<string, NameFieldsItem> nameFields;
 
         private int currentPage;
         private string currentTable;
         private int pageLimit = 20;
-        private string user_id;
 
         private bool editMode;
         private bool EditMode
@@ -38,55 +36,9 @@ namespace VTigerManager
         private bool changed;
         private bool creatingEntry;
 
-        private struct NameFieldsItem
-        {
-            public string defaultField1;
-            public string defaultField2;
-            public VTigerType elementType;
-            public NameFieldsItem(string defField1, string defField2, VTigerType elemType)
-            {
-                defaultField1 = defField1;
-                defaultField2 = defField2;
-                elementType = elemType;
-            }
-        }
-
         public VTigerMan()
         {
             InitializeComponent();
-
-            nameFields = new Dictionary<string, NameFieldsItem>();
-            nameFields.Add("Calendar", new NameFieldsItem("subject", null, VTigerType.Calendar));
-            nameFields.Add("Leads", new NameFieldsItem("firstname", "lastname", VTigerType.Leads));
-            nameFields.Add("Accounts", new NameFieldsItem("accountname", null, VTigerType.Accounts));
-            nameFields.Add("Contacts", new NameFieldsItem("firstname", "lastname", VTigerType.Contacts));
-            nameFields.Add("Potentials", new NameFieldsItem("potentialname", null, VTigerType.Potentials));
-            nameFields.Add("Products", new NameFieldsItem("productname", null, VTigerType.Products));
-            nameFields.Add("Documents", new NameFieldsItem("notes_title", null, VTigerType.Documents));
-            nameFields.Add("Emails", new NameFieldsItem("assigned_user_id", "subject", VTigerType.Emails));
-            nameFields.Add("HelpDesk", new NameFieldsItem("ticket_title", null, VTigerType.HelpDesk));
-            nameFields.Add("Faq", new NameFieldsItem("question", null, VTigerType.Faq));
-            nameFields.Add("Vendors", new NameFieldsItem("vendorname", null, VTigerType.Vendors));
-            nameFields.Add("PriceBooks", new NameFieldsItem("bookname", null, VTigerType.PriceBooks));
-            nameFields.Add("Quotes", new NameFieldsItem("subject", null, VTigerType.Quotes));
-            nameFields.Add("PurchaseOrder", new NameFieldsItem("subject", null, VTigerType.PurchaseOrder));
-            nameFields.Add("SalesOrder", new NameFieldsItem("subject", null, VTigerType.SalesOrder));
-            nameFields.Add("Invoice", new NameFieldsItem("subject", null, VTigerType.Invoice));
-            nameFields.Add("Campaigns", new NameFieldsItem("campaignname", null, VTigerType.Campaigns));
-            nameFields.Add("Events", new NameFieldsItem("subject", null, VTigerType.Events));
-            nameFields.Add("Users", new NameFieldsItem("user_name", null, VTigerType.Users));
-            nameFields.Add("PBXManager", new NameFieldsItem(null, null, VTigerType.PBXManager));
-            nameFields.Add("ServiceContracts", new NameFieldsItem("subject", null, VTigerType.ServiceContracts));
-            nameFields.Add("Services", new NameFieldsItem("servicename", null, VTigerType.Services));
-            nameFields.Add("Assets", new NameFieldsItem("product", "assetname", VTigerType.Assets));
-            nameFields.Add("ModComments", new NameFieldsItem("creator", "related_to", VTigerType.ModComments));
-            nameFields.Add("ProjectMilestone", new NameFieldsItem("projectmilestonename", null, VTigerType.ProjectMilestone));
-            nameFields.Add("ProjectTask", new NameFieldsItem("projecttaskname", null, VTigerType.ProjectTask));
-            nameFields.Add("Project", new NameFieldsItem("projectname", null, VTigerType.Project));
-            nameFields.Add("SMSNotifier", new NameFieldsItem(null, null, VTigerType.SMSNotifier));
-            nameFields.Add("Groups", new NameFieldsItem("groupname", null, VTigerType.Groups));
-            nameFields.Add("Currency", new NameFieldsItem("currency_name", null, VTigerType.Currency));
-            nameFields.Add("DocumentFolders", new NameFieldsItem("foldername", null, VTigerType.DocumentFolders));
         }
 
         private void VTigerMan_Load(object sender, EventArgs e)
@@ -97,7 +49,7 @@ namespace VTigerManager
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            dataView.DataSource = api.Describe_DataTable(nameFields[currentTable].elementType);
+            dataView.DataSource = api.Describe_DataTable(api.RemoteTables[currentTable].ElementType);
         }
 
         #region Events
@@ -208,37 +160,37 @@ namespace VTigerManager
                 StatusLabel.Text = "Loading nodes...";
                 this.Refresh();
 
-                NameFieldsItem nameField;
-                try { nameField = nameFields[node.Text]; }
-                catch { nameField = new NameFieldsItem(); }
+                VTiger.TitleFields titleField;
+                try { titleField = api.RemoteTables[node.Text]; }
+                catch { titleField = new VTiger.TitleFields(); }
 
                 string formatString;
                 string query;
-                if (nameField.defaultField1 != null)
-                    if (nameField.defaultField2 != null)
+                if (titleField.DefaultTitleField1 != null)
+                    if (titleField.DefaultTitleField2 != null)
                     {
                         formatString = "[{0}] {1} - {2}";
-                        query = String.Format("select id,{1},{2} from {0};", node.Text, nameField.defaultField1, nameField.defaultField2);
+                        query = String.Format("select id,{1},{2} from {0};", node.Text, titleField.DefaultTitleField1, titleField.DefaultTitleField2);
                         DataTable dt = api.Query(query);
                         node.Nodes.Clear();
                         foreach (DataRow dr in dt.Rows)
                         {
                             string id = (string)dr["id"];
                             node.Nodes.Add(id, String.Format(
-                                formatString, id, (string)dr[nameField.defaultField1], (string)dr[nameField.defaultField2]));
+                                formatString, id, (string)dr[titleField.DefaultTitleField1], (string)dr[titleField.DefaultTitleField2]));
                         }
                     }
                     else
                     {
                         formatString = "[{0}] {1}";
-                        query = String.Format("select id,{1} from {0};", node.Text, nameField.defaultField1);
+                        query = String.Format("select id,{1} from {0};", node.Text, titleField.DefaultTitleField1);
                         DataTable dt = api.Query(query);
                         node.Nodes.Clear();
                         foreach (DataRow dr in dt.Rows)
                         {
                             string id = (string)dr["id"];
                             node.Nodes.Add(id, String.Format(
-                                formatString, id, (string)dr[nameField.defaultField1]));
+                                formatString, id, (string)dr[titleField.DefaultTitleField1]));
                         }
                     }
                 else
@@ -450,13 +402,43 @@ namespace VTigerManager
         {
             if (!CheckChangedStatus())
                 return;
+
+            /* code optimized for slow or offline connections to VTiger server
+             */
             try
             {
                 creatingEntry = true;
                 changed = false;
                 EditMode = true;
-                DataTable dt = api.NewElement(nameFields[currentTable].elementType);
+                DataTable dt = api.NewElement(api.RemoteTables[currentTable].ElementType);
                 dataView.DataSource = dt;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                StatusLabel.Text = "Error: " + ex.Message;
+            }
+         
+            try
+            {
+                StatusLabel.Text = "Retriving elements...";
+                creatingEntry = true;
+                changed = false;
+                EditMode = true;
+                DataTable dt = api.NewElementFromRemoteServerScheme(currentTable);
+                dataView.DataSource = dt;
+                StatusLabel.Text = "Successfully retrived elements";
+            }
+            catch (VTigerApiSessionTimedOutException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), "ERROR from remote server", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                StatusLabel.Text = "VTiger remote server session timeout error: " + ex.Message;
+                this.loginToolStripMenuItem_Click(null, null);
+            }
+            catch (VTigerApiException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), "ERROR from remote server", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                StatusLabel.Text = "VTiger remote server error: " + ex.Message;
             }
             catch (Exception ex)
             {
@@ -516,7 +498,7 @@ namespace VTigerManager
                 string account_id = GetInput("account_id");
 
                 StatusLabel.Text = "Creating element";
-                api.AddContact(firstname, lastname, user_id);
+                api.AddContact(firstname, lastname, api.UserID);
                 StatusLabel.Text = "Successfully created element";
                 ShowPage(currentPage);
             }
@@ -534,7 +516,7 @@ namespace VTigerManager
                 string subject = GetInput("subject");
 
                 StatusLabel.Text = "Creating element";
-                api.AddCalendar(user_id, subject, DateTime.Now, DateTime.Now,
+                api.AddCalendar(api.UserID, subject, DateTime.Now, DateTime.Now,
                     TaskStatus.In_Progress);
                 StatusLabel.Text = "Successfully created element";
                 ShowPage(currentPage);
@@ -547,23 +529,6 @@ namespace VTigerManager
         }
 
         #endregion
-
-        private void toolStripButton1_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var element = new VTigerEmail("test1", DateTime.Now, "from@address.com",
-                    new string[1] { "bjoern@zeutzheim-boppard.de" }, user_id);
-                element.parent_id = "4x8";
-                api.Create(element);
-                ShowPage(currentPage);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(this, ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                StatusLabel.Text = "Error: " + ex.Message;
-            }
-        }
 
         private void BtnQuery_Click(object sender, EventArgs e)
         {

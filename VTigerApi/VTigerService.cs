@@ -56,6 +56,24 @@ namespace VTigerApi
         {
             get { return new System.Version(webserviceVersion); }
         }
+
+        private System.Collections.Generic.Dictionary<string, TitleFields> remoteTables;
+        /// <summary>
+        /// Available tables at VTiger instance
+        /// </summary>
+        /// <remarks>
+        /// Table list is only available when logged on
+        /// </remarks>
+        public System.Collections.Generic.Dictionary<string, TitleFields> RemoteTables
+        {
+            get {
+                if (remoteTables != null)
+                    return remoteTables;
+                else
+                    return new System.Collections.Generic.Dictionary<string, TitleFields>();
+            }
+        }
+
         private string vtigerVersion;
         /// <summary>
         /// The version of the server's VTiger software to which the current user logged in
@@ -210,6 +228,31 @@ namespace VTigerApi
 
         #region Basic Access
 
+        /// <summary>
+        /// The typical title fields for a table row
+        /// </summary>
+        public class TitleFields
+        {
+            public string DefaultTitleField1;
+            public string DefaultTitleField2;
+            public VTigerType ElementType;
+            public TitleFields()
+            {
+            }
+            public TitleFields(string nameOfTitleField, VTigerType elementType)
+            {
+                DefaultTitleField1 = nameOfTitleField;
+                DefaultTitleField2 = null;
+                this.ElementType = elementType;
+            }
+            public TitleFields(string nameOfTitleField1, string nameOfTitleField2, VTigerType elementType)
+            {
+                DefaultTitleField1 = nameOfTitleField1;
+                DefaultTitleField2 = nameOfTitleField2;
+                this.ElementType = elementType;
+            }
+        }
+
         //====================================================================
         #region Login & Info
 
@@ -236,6 +279,48 @@ namespace VTigerApi
 
             sessionName = loginResult.sessionName;
             vtigerVersion = loginResult.vtigerVersion;
+
+            switch (vtigerVersion)
+            {
+                default:
+                    {
+                        System.Collections.Generic.Dictionary<string, TitleFields> nameFields = new System.Collections.Generic.Dictionary<string, TitleFields>();
+                        nameFields.Add("Calendar", new TitleFields("subject", null, VTigerType.Calendar));
+                        nameFields.Add("Leads", new TitleFields("firstname", "lastname", VTigerType.Leads));
+                        nameFields.Add("Accounts", new TitleFields("accountname", null, VTigerType.Accounts));
+                        nameFields.Add("Contacts", new TitleFields("firstname", "lastname", VTigerType.Contacts));
+                        nameFields.Add("Potentials", new TitleFields("potentialname", null, VTigerType.Potentials));
+                        nameFields.Add("Products", new TitleFields("productname", null, VTigerType.Products));
+                        nameFields.Add("Documents", new TitleFields("notes_title", null, VTigerType.Documents));
+                        nameFields.Add("Emails", new TitleFields("assigned_user_id", "subject", VTigerType.Emails));
+                        nameFields.Add("HelpDesk", new TitleFields("ticket_title", null, VTigerType.HelpDesk));
+                        nameFields.Add("Faq", new TitleFields("question", null, VTigerType.Faq));
+                        nameFields.Add("Vendors", new TitleFields("vendorname", null, VTigerType.Vendors));
+                        nameFields.Add("PriceBooks", new TitleFields("bookname", null, VTigerType.PriceBooks));
+                        nameFields.Add("Quotes", new TitleFields("subject", null, VTigerType.Quotes));
+                        nameFields.Add("PurchaseOrder", new TitleFields("subject", null, VTigerType.PurchaseOrder));
+                        nameFields.Add("SalesOrder", new TitleFields("subject", null, VTigerType.SalesOrder));
+                        nameFields.Add("Invoice", new TitleFields("subject", null, VTigerType.Invoice));
+                        nameFields.Add("Campaigns", new TitleFields("campaignname", null, VTigerType.Campaigns));
+                        nameFields.Add("Events", new TitleFields("subject", null, VTigerType.Events));
+                        nameFields.Add("Users", new TitleFields("user_name", null, VTigerType.Users));
+                        nameFields.Add("PBXManager", new TitleFields(null, null, VTigerType.PBXManager));
+                        nameFields.Add("ServiceContracts", new TitleFields("subject", null, VTigerType.ServiceContracts));
+                        nameFields.Add("Services", new TitleFields("servicename", null, VTigerType.Services));
+                        nameFields.Add("Assets", new TitleFields("product", "assetname", VTigerType.Assets));
+                        nameFields.Add("ModComments", new TitleFields("creator", "related_to", VTigerType.ModComments));
+                        nameFields.Add("ProjectMilestone", new TitleFields("projectmilestonename", null, VTigerType.ProjectMilestone));
+                        nameFields.Add("ProjectTask", new TitleFields("projecttaskname", null, VTigerType.ProjectTask));
+                        nameFields.Add("Project", new TitleFields("projectname", null, VTigerType.Project));
+                        nameFields.Add("SMSNotifier", new TitleFields(null, null, VTigerType.SMSNotifier));
+                        nameFields.Add("Groups", new TitleFields("groupname", null, VTigerType.Groups));
+                        nameFields.Add("Currency", new TitleFields("currency_name", null, VTigerType.Currency));
+                        nameFields.Add("DocumentFolders", new TitleFields("foldername", null, VTigerType.DocumentFolders));
+                        remoteTables = nameFields;
+                        break;
+                    }
+            }
+
             webserviceVersion = loginResult.version;
             userID = loginResult.userId;
         }
@@ -248,6 +333,7 @@ namespace VTigerApi
             VTigerGetJson<JsonObject>("logout",
                 String.Format("sessionName={0}", sessionName), false);
             sessionName = null;
+            remoteTables = null;
         }
 
         /// <summary>
@@ -431,6 +517,26 @@ namespace VTigerApi
                 dt.Columns.Add(inf.Name, inf.FieldType);
             dt.Rows.Add(dt.NewRow());
             return dt;
+        }
+        /// <summary>
+        /// Creates a new empty, locally stored VTiger entity with column scheme as provided by remote server
+        /// </summary>
+        /// <remarks>WARNING: the remote system must return at least 1 row! If the remote system returns 0 rows, there won't be any information on columns (table schema).</remarks>
+        /// <param name="remoteTableName"></param>
+        /// <returns></returns>
+        public DataTable NewElementFromRemoteServerScheme(string remoteTableName)
+        {
+            string query = String.Format("select * from {0} limit 0;", remoteTableName);
+            DataTable dt = this.Query(query);
+            if (dt.Columns.Count == 0)
+            {
+                return this.NewElement(remoteTables[remoteTableName].ElementType);
+            }
+            else
+            {
+                dt.Rows.Add(dt.NewRow());
+                return dt;
+            }
         }
 
         #endregion

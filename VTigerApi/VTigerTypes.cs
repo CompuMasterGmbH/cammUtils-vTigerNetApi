@@ -312,13 +312,18 @@ namespace VTigerApi
 
     public enum VTigerType
     {
-        Undefined,
-        Calendar, Leads, Accounts, Contacts, Potentials, Products,
-        Documents, Emails, HelpDesk, Faq, Vendors, PriceBooks, Quotes,
-        PurchaseOrder, SalesOrder, Invoice, Campaigns, Events, Users,
-        PBXManager, ServiceContracts, Services, Assets, ModComments,
-        ProjectMilestone, ProjectTask, Project, SMSNotifier, Groups,
-        Currency, DocumentFolders
+        Undefined = 0,
+        Calendar = 1, Leads = 2, Accounts = 3,
+        Contacts = 4, Potentials = 5, Products = 6,
+        Documents = 7, Emails = 8, HelpDesk = 9,
+        Faq = 10, Vendors = 11, PriceBooks = 12,
+        Quotes = 13, PurchaseOrder = 14, SalesOrder = 15,
+        Invoice = 16, Campaigns = 17, Events = 18,
+        Users = 19, PBXManager = 20, ServiceContracts = 21,
+        Services = 22, Assets = 23, ModComments = 24,
+        ProjectMilestone = 25, ProjectTask = 26,
+        Project = 27, SMSNotifier = 28, Groups = 29,
+        Currency = 30, DocumentFolders = 31
     }
 
     public partial class VTiger

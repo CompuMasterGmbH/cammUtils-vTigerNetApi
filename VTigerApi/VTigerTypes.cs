@@ -487,6 +487,8 @@ namespace VTigerApi
         public string bill_pobox;
         public string ship_pobox;
         public string description;
+        public string modifiedby;
+        public string isconvertedfromlead;
     }
 
     /// <summary>
@@ -543,6 +545,10 @@ namespace VTigerApi
         public string mailingpobox;
         public string otherpobox;
         public string description;
+        public string secondaryemail;
+        public string modifiedby;
+        public string imagename;
+        public string isconvertedfromlead;
     }
 
     /// <summary>

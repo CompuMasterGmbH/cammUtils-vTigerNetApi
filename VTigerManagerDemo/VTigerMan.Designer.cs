@@ -29,37 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VTigerMan));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Contacts");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Accounts");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Calendar");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Leads");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Potentials");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Products");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Documents");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Emails");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("HelpDesk");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Faq");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Vendors");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("PriceBooks");
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Quotes");
-            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("PurchaseOrder");
-            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("SalesOrder");
-            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("Invoice");
-            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("Campaigns");
-            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("Events");
-            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Users");
-            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("PBXManager");
-            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("ServiceContracts");
-            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("Services");
-            System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("Assets");
-            System.Windows.Forms.TreeNode treeNode24 = new System.Windows.Forms.TreeNode("ModComments");
-            System.Windows.Forms.TreeNode treeNode25 = new System.Windows.Forms.TreeNode("ProjectMilestone");
-            System.Windows.Forms.TreeNode treeNode26 = new System.Windows.Forms.TreeNode("ProjectTask");
-            System.Windows.Forms.TreeNode treeNode27 = new System.Windows.Forms.TreeNode("Project");
-            System.Windows.Forms.TreeNode treeNode28 = new System.Windows.Forms.TreeNode("SMSNotifier");
-            System.Windows.Forms.TreeNode treeNode29 = new System.Windows.Forms.TreeNode("Groups");
-            System.Windows.Forms.TreeNode treeNode30 = new System.Windows.Forms.TreeNode("Currency");
-            System.Windows.Forms.TreeNode treeNode31 = new System.Windows.Forms.TreeNode("DocumentFolders");
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -129,14 +98,14 @@
             // loginToolStripMenuItem
             // 
             this.loginToolStripMenuItem.Name = "loginToolStripMenuItem";
-            this.loginToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.loginToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.loginToolStripMenuItem.Text = "Login";
             this.loginToolStripMenuItem.Click += new System.EventHandler(this.loginToolStripMenuItem_Click);
             // 
             // logoutToolStripMenuItem
             // 
             this.logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.logoutToolStripMenuItem.Text = "Logout";
             this.logoutToolStripMenuItem.Visible = false;
             this.logoutToolStripMenuItem.Click += new System.EventHandler(this.logoutToolStripMenuItem_Click);
@@ -144,7 +113,7 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -428,101 +397,6 @@
             this.tableList.Dock = System.Windows.Forms.DockStyle.Left;
             this.tableList.Location = new System.Drawing.Point(0, 0);
             this.tableList.Name = "tableList";
-            treeNode1.Name = "NContacts";
-            treeNode1.Text = "Contacts";
-            treeNode2.Name = "NAccounts";
-            treeNode2.Text = "Accounts";
-            treeNode3.Name = "";
-            treeNode3.Text = "Calendar";
-            treeNode4.Name = "";
-            treeNode4.Text = "Leads";
-            treeNode5.Name = "";
-            treeNode5.Text = "Potentials";
-            treeNode6.Name = "";
-            treeNode6.Text = "Products";
-            treeNode7.Name = "";
-            treeNode7.Text = "Documents";
-            treeNode8.Name = "";
-            treeNode8.Text = "Emails";
-            treeNode9.Name = "";
-            treeNode9.Text = "HelpDesk";
-            treeNode10.Name = "";
-            treeNode10.Text = "Faq";
-            treeNode11.Name = "";
-            treeNode11.Text = "Vendors";
-            treeNode12.Name = "";
-            treeNode12.Text = "PriceBooks";
-            treeNode13.Checked = true;
-            treeNode13.Name = "";
-            treeNode13.Text = "Quotes";
-            treeNode14.Name = "";
-            treeNode14.Text = "PurchaseOrder";
-            treeNode15.Name = "";
-            treeNode15.Text = "SalesOrder";
-            treeNode16.Name = "";
-            treeNode16.Text = "Invoice";
-            treeNode17.Name = "";
-            treeNode17.Text = "Campaigns";
-            treeNode18.Name = "";
-            treeNode18.Text = "Events";
-            treeNode19.Name = "";
-            treeNode19.Text = "Users";
-            treeNode20.Name = "";
-            treeNode20.Text = "PBXManager";
-            treeNode21.Name = "";
-            treeNode21.Text = "ServiceContracts";
-            treeNode22.Name = "";
-            treeNode22.Text = "Services";
-            treeNode23.Name = "";
-            treeNode23.Text = "Assets";
-            treeNode24.Name = "";
-            treeNode24.Text = "ModComments";
-            treeNode25.Name = "";
-            treeNode25.Text = "ProjectMilestone";
-            treeNode26.Name = "";
-            treeNode26.Text = "ProjectTask";
-            treeNode27.Name = "";
-            treeNode27.Text = "Project";
-            treeNode28.Name = "";
-            treeNode28.Text = "SMSNotifier";
-            treeNode29.Name = "";
-            treeNode29.Text = "Groups";
-            treeNode30.Name = "";
-            treeNode30.Text = "Currency";
-            treeNode31.Name = "";
-            treeNode31.Text = "DocumentFolders";
-            this.tableList.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3,
-            treeNode4,
-            treeNode5,
-            treeNode6,
-            treeNode7,
-            treeNode8,
-            treeNode9,
-            treeNode10,
-            treeNode11,
-            treeNode12,
-            treeNode13,
-            treeNode14,
-            treeNode15,
-            treeNode16,
-            treeNode17,
-            treeNode18,
-            treeNode19,
-            treeNode20,
-            treeNode21,
-            treeNode22,
-            treeNode23,
-            treeNode24,
-            treeNode25,
-            treeNode26,
-            treeNode27,
-            treeNode28,
-            treeNode29,
-            treeNode30,
-            treeNode31});
             this.tableList.Size = new System.Drawing.Size(156, 406);
             this.tableList.TabIndex = 0;
             this.tableList.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);

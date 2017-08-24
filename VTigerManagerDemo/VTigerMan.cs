@@ -61,6 +61,18 @@ namespace VTigerManager
 
         //========== mainMenu ==========
 
+        private void FillRemoteTableList()
+        {
+            //fill remote table list
+            List<string> zlk = new List<string>(api.RemoteTables.Keys); // Create a list of keys
+            zlk.Sort(); // and then sort it.
+            tableList.Nodes.Clear();
+            foreach (string remoteTable in zlk)
+            {
+                tableList.Nodes.Add(remoteTable);
+            }
+        }
+
         public void Login(string Url, string Username, string AccessKey)
         {
             try
@@ -80,6 +92,7 @@ namespace VTigerManager
                 logoutToolStripMenuItem.Visible = true;
                 loginToolStripMenuItem.Visible = false;
                 textBoxSessionID.Text = api.SessionName;
+                FillRemoteTableList();
             }
             catch (Exception ex)
             {
@@ -90,6 +103,7 @@ namespace VTigerManager
                 MainPanel.Enabled = false;
                 logoutToolStripMenuItem.Visible = false;
                 loginToolStripMenuItem.Visible = true;
+                tableList.Nodes.Clear();
                 textBoxSessionID.Text = "";
                 StatusLabel.Text = "Failed to login: " + ex.Message;
                 this.Refresh();
@@ -142,6 +156,7 @@ namespace VTigerManager
             logoutToolStripMenuItem.Visible = false;
             loginToolStripMenuItem.Visible = true;
             dataView.DataSource = null;
+            tableList.Nodes.Clear();
             formTitle();
         }
 
@@ -151,73 +166,73 @@ namespace VTigerManager
 
         #region Data display
 
-        public bool LoadTreeNode(TreeNode node)
-        {
-            try
-            {
-                node.Nodes.Insert(0, "Loading...");
-                node.Expand();
-                StatusLabel.Text = "Loading nodes...";
-                this.Refresh();
+        //public bool LoadTreeNode(TreeNode node)
+        //{
+        //    try
+        //    {
+        //        node.Nodes.Insert(0, "Loading...");
+        //        node.Expand();
+        //        StatusLabel.Text = "Loading nodes...";
+        //        this.Refresh();
 
-                VTiger.TitleFields titleField;
-                try { titleField = api.RemoteTables[node.Text]; }
-                catch { titleField = new VTiger.TitleFields(); }
+        //        VTiger.TitleFields titleField;
+        //        try { titleField = api.RemoteTables[node.Text]; }
+        //        catch { titleField = new VTiger.TitleFields(); }
 
-                string formatString;
-                string query;
-                if (titleField.DefaultTitleField1 != null)
-                    if (titleField.DefaultTitleField2 != null)
-                    {
-                        formatString = "[{0}] {1} - {2}";
-                        query = String.Format("select id,{1},{2} from {0};", node.Text, titleField.DefaultTitleField1, titleField.DefaultTitleField2);
-                        DataTable dt = api.Query(query);
-                        node.Nodes.Clear();
-                        foreach (DataRow dr in dt.Rows)
-                        {
-                            string id = (string)dr["id"];
-                            node.Nodes.Add(id, String.Format(
-                                formatString, id, (string)dr[titleField.DefaultTitleField1], (string)dr[titleField.DefaultTitleField2]));
-                        }
-                    }
-                    else
-                    {
-                        formatString = "[{0}] {1}";
-                        query = String.Format("select id,{1} from {0};", node.Text, titleField.DefaultTitleField1);
-                        DataTable dt = api.Query(query);
-                        node.Nodes.Clear();
-                        foreach (DataRow dr in dt.Rows)
-                        {
-                            string id = (string)dr["id"];
-                            node.Nodes.Add(id, String.Format(
-                                formatString, id, (string)dr[titleField.DefaultTitleField1]));
-                        }
-                    }
-                else
-                {
-                    formatString = "[{0}]";
-                    query = String.Format("select id from {0};", node.Text);
-                    DataTable dt = api.Query(query);
-                    node.Nodes.Clear();
-                    foreach (DataRow dr in dt.Rows)
-                    {
-                        string id = (string)dr["id"];
-                        node.Nodes.Add(id, String.Format(formatString, id));
-                    }
-                }
-                node.Expand();
+        //        string formatString;
+        //        string query;
+        //        if (titleField.DefaultTitleField1 != null)
+        //            if (titleField.DefaultTitleField2 != null)
+        //            {
+        //                formatString = "[{0}] {1} - {2}";
+        //                query = String.Format("select id,{1},{2} from {0};", node.Text, titleField.DefaultTitleField1, titleField.DefaultTitleField2);
+        //                DataTable dt = api.Query(query);
+        //                node.Nodes.Clear();
+        //                foreach (DataRow dr in dt.Rows)
+        //                {
+        //                    string id = (string)dr["id"];
+        //                    node.Nodes.Add(id, String.Format(
+        //                        formatString, id, (string)dr[titleField.DefaultTitleField1], (string)dr[titleField.DefaultTitleField2]));
+        //                }
+        //            }
+        //            else
+        //            {
+        //                formatString = "[{0}] {1}";
+        //                query = String.Format("select id,{1} from {0};", node.Text, titleField.DefaultTitleField1);
+        //                DataTable dt = api.Query(query);
+        //                node.Nodes.Clear();
+        //                foreach (DataRow dr in dt.Rows)
+        //                {
+        //                    string id = (string)dr["id"];
+        //                    node.Nodes.Add(id, String.Format(
+        //                        formatString, id, (string)dr[titleField.DefaultTitleField1]));
+        //                }
+        //            }
+        //        else
+        //        {
+        //            formatString = "[{0}]";
+        //            query = String.Format("select id from {0};", node.Text);
+        //            DataTable dt = api.Query(query);
+        //            node.Nodes.Clear();
+        //            foreach (DataRow dr in dt.Rows)
+        //            {
+        //                string id = (string)dr["id"];
+        //                node.Nodes.Add(id, String.Format(formatString, id));
+        //            }
+        //        }
+        //        node.Expand();
 
-                StatusLabel.Text = "Successfully loaded nodes...";
-                this.Refresh();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(this, ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                StatusLabel.Text = "Error: " + ex.Message;
-                return false;
-            }
-        }
+        //        StatusLabel.Text = "Successfully loaded nodes...";
+        //        this.Refresh();
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(this, ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        StatusLabel.Text = "Error: " + ex.Message;
+        //        return false;
+        //    }
+        //}
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {

@@ -824,12 +824,16 @@ namespace VTigerApi
         public double txtAdjustment;
         public double hdnGrandTotal;
         public HdnTaxType hdnTaxType;
+        public double discount_percent;
+        public double discount_amount;
         public double hdnDiscountPercent;
         public double hdnDiscountAmount;
         public double hdnS_H_Amount;
+        public double hdnS_H_Percent;
         public string account_id; //mandatory
         public string assigned_user_id; //mandatory
         public DateTime createdtime;
+        public string modifiedby;
         public DateTime modifiedtime;
         public string currency_id;
         public double conversion_rate;
@@ -847,6 +851,13 @@ namespace VTigerApi
         public string ship_pobox;
         public string description;
         public string terms_conditions;
+        public string productid;
+        public double quantity;
+        public double listprice;
+        public string comment;
+        public string tax1;
+        public string tax2;
+        public string tax3;
     }
 
     /// <summary>
@@ -880,12 +891,16 @@ namespace VTigerApi
         public double hdnGrandTotal;
         public double hdnSubTotal;
         public HdnTaxType hdnTaxType;
+        public double discount_percent;
+        public double discount_amount;
         public double hdnDiscountPercent;
         public double hdnDiscountAmount;
         public double hdnS_H_Amount;
+        public double hdnS_H_Percent;
         public PoStatus postatus; //mandatory
         public string assigned_user_id; //mandatory
         public DateTime createdtime;
+        public string modifiedby;
         public DateTime modifiedtime;
         public string currency_id;
         public double conversion_rate;
@@ -903,6 +918,13 @@ namespace VTigerApi
         public string ship_pobox;
         public string description;
         public string terms_conditions;
+        public string productid;
+        public double quantity;
+        public double listprice;
+        public string comment;
+        public string tax1;
+        public string tax2;
+        public string tax3;
     }
 
     /// <summary>
@@ -940,12 +962,16 @@ namespace VTigerApi
         public double hdnGrandTotal;
         public double hdnSubTotal;
         public HdnTaxType hdnTaxType;
+        public double discount_percent;
+        public double discount_amount;
         public double hdnDiscountPercent;
         public double hdnDiscountAmount;
         public double hdnS_H_Amount;
+        public double hdnS_H_Percent;
         public string account_id; //mandatory
         public string assigned_user_id; //mandatory
         public DateTime createdtime;
+        public string modifiedby;
         public DateTime modifiedtime;
         public string currency_id;
         public double conversion_rate;
@@ -969,6 +995,13 @@ namespace VTigerApi
         public string end_period;
         public Payment_duration payment_duration;
         public Invoicestatus invoicestatus; //mandatory
+        public string productid;
+        public double quantity;
+        public double listprice;
+        public string comment;
+        public string tax1;
+        public string tax2;
+        public string tax3;
     }
 
     /// <summary>
@@ -999,13 +1032,18 @@ namespace VTigerApi
         public double exciseduty;
         public double hdnSubTotal;
         public double hdnGrandTotal;
+        public double hdnS_H_Amount;
+        public double hdnS_H_Percent;
         public HdnTaxType hdnTaxType;
         public double hdnDiscountPercent;
         public double hdnDiscountAmount;
+        public double discount_percent;
+        public double discount_amount;
         public string account_id; //mandatory
         public Invoicestatus invoicestatus;
         public string assigned_user_id; //mandatory
         public DateTime createdtime;
+        public string modifiedby; 
         public DateTime modifiedtime;
         public string currency_id;
         public double conversion_rate;
@@ -1024,6 +1062,13 @@ namespace VTigerApi
         public string description;
         public string terms_conditions;
         public string invoice_no;
+        public string productid;
+        public double quantity;
+        public double listprice;
+        public string comment;
+        public string tax1;
+        public string tax2;
+        public string tax3;
     }
 
     /// <summary>

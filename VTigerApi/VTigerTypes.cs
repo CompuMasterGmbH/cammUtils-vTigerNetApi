@@ -858,6 +858,7 @@ namespace VTigerApi
         public string tax1;
         public string tax2;
         public string tax3;
+        public double pre_tax_total;
     }
 
     /// <summary>
@@ -925,6 +926,9 @@ namespace VTigerApi
         public string tax1;
         public string tax2;
         public string tax3;
+        public double pre_tax_total;
+        public double paid;
+        public double balance;
     }
 
     /// <summary>
@@ -1002,6 +1006,7 @@ namespace VTigerApi
         public string tax1;
         public string tax2;
         public string tax3;
+        public double pre_tax_total;
     }
 
     /// <summary>
@@ -1069,6 +1074,9 @@ namespace VTigerApi
         public string tax1;
         public string tax2;
         public string tax3;
+        public double pre_tax_total;
+        public double received;
+        public double balance;
     }
 
     /// <summary>

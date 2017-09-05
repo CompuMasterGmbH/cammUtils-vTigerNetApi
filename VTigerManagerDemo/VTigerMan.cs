@@ -49,7 +49,26 @@ namespace VTigerManager
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
+            try
+            {
             dataView.DataSource = api.Describe_DataTable(api.RemoteTables[currentTable].ElementType);
+            }
+            catch (VTigerApiSessionTimedOutException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), "ERROR from remote server", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                StatusLabel.Text = "VTiger remote server session timeout error: " + ex.Message;
+                this.loginToolStripMenuItem_Click(null, null);
+            }
+            catch (VTigerApiException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), "ERROR from remote server", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                StatusLabel.Text = "VTiger remote server error: " + ex.Message;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                StatusLabel.Text = "Error: " + ex.Message;
+            }
         }
 
         #region Events
@@ -140,7 +159,7 @@ namespace VTigerManager
             }
             else
             {
-                this.Text = this.Text = "VTiger Demo - connected to VTiger V" + api.VTigerVersion.ToString() + " at " + api.ServiceUrl;
+                this.Text = this.Text = "VTiger Demo - connected as user ID " + api.UserID + " to VTiger V" + api.VTigerVersion.ToString() + " at " + api.ServiceUrl;
             }
         }
 

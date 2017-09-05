@@ -61,12 +61,14 @@
             this.BtnExportTable = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.textBoxSessionID = new System.Windows.Forms.ToolStripTextBox();
+            this.CompareLocalVsRemoteTableButton = new System.Windows.Forms.ToolStripButton();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.tableList = new System.Windows.Forms.TreeView();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.loadThread = new System.ComponentModel.BackgroundWorker();
-            this.CompareLocalVsRemoteTableButton = new System.Windows.Forms.ToolStripButton();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.MainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
@@ -79,7 +81,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.newElementToolStripMenuItem});
+            this.newElementToolStripMenuItem,
+            this.optionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(944, 24);
@@ -94,7 +97,7 @@
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
+            this.fileToolStripMenuItem.Text = "&File";
             // 
             // loginToolStripMenuItem
             // 
@@ -125,19 +128,19 @@
             this.calendarToolStripMenuItem});
             this.newElementToolStripMenuItem.Name = "newElementToolStripMenuItem";
             this.newElementToolStripMenuItem.Size = new System.Drawing.Size(89, 20);
-            this.newElementToolStripMenuItem.Text = "New element";
+            this.newElementToolStripMenuItem.Text = "&New element";
             // 
             // MenuItemNewContact
             // 
             this.MenuItemNewContact.Name = "MenuItemNewContact";
-            this.MenuItemNewContact.Size = new System.Drawing.Size(121, 22);
+            this.MenuItemNewContact.Size = new System.Drawing.Size(152, 22);
             this.MenuItemNewContact.Text = "Contact";
             this.MenuItemNewContact.Click += new System.EventHandler(this.MenuItemNewContact_Click);
             // 
             // calendarToolStripMenuItem
             // 
             this.calendarToolStripMenuItem.Name = "calendarToolStripMenuItem";
-            this.calendarToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.calendarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.calendarToolStripMenuItem.Text = "Calendar";
             this.calendarToolStripMenuItem.Click += new System.EventHandler(this.calendarToolStripMenuItem_Click);
             // 
@@ -386,6 +389,16 @@
             this.textBoxSessionID.Name = "textBoxSessionID";
             this.textBoxSessionID.Size = new System.Drawing.Size(100, 23);
             // 
+            // CompareLocalVsRemoteTableButton
+            // 
+            this.CompareLocalVsRemoteTableButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.CompareLocalVsRemoteTableButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.CompareLocalVsRemoteTableButton.Name = "CompareLocalVsRemoteTableButton";
+            this.CompareLocalVsRemoteTableButton.Size = new System.Drawing.Size(172, 19);
+            this.CompareLocalVsRemoteTableButton.Text = "Compare local vs remote table";
+            this.CompareLocalVsRemoteTableButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.CompareLocalVsRemoteTableButton.Click += new System.EventHandler(this.CompareLocalVsRemoteTableButton_Click);
+            // 
             // splitter1
             // 
             this.splitter1.Location = new System.Drawing.Point(156, 0);
@@ -419,15 +432,22 @@
             this.StatusLabel.Size = new System.Drawing.Size(10, 17);
             this.StatusLabel.Text = " ";
             // 
-            // CompareLocalVsRemoteTableButton
+            // optionsToolStripMenuItem
             // 
-            this.CompareLocalVsRemoteTableButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.CompareLocalVsRemoteTableButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.CompareLocalVsRemoteTableButton.Name = "CompareLocalVsRemoteTableButton";
-            this.CompareLocalVsRemoteTableButton.Size = new System.Drawing.Size(172, 19);
-            this.CompareLocalVsRemoteTableButton.Text = "Compare local vs remote table";
-            this.CompareLocalVsRemoteTableButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.CompareLocalVsRemoteTableButton.Click += new System.EventHandler(this.CompareLocalVsRemoteTableButton_Click);
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem});
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.optionsToolStripMenuItem.Text = "&Options";
+            // 
+            // ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem
+            // 
+            this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Checked = true;
+            this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Name = "ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem";
+            this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
+            this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Text = "Ignore SSL certificate errors of remote server";
+            this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Click += new System.EventHandler(this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem_Click);
             // 
             // VTigerMan
             // 
@@ -499,6 +519,8 @@
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStripTextBox textBoxSessionID;
         private System.Windows.Forms.ToolStripButton CompareLocalVsRemoteTableButton;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem;
     }
 }
 

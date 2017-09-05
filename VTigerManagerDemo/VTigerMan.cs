@@ -44,6 +44,7 @@ namespace VTigerManager
         private void VTigerMan_Load(object sender, EventArgs e)
         {
             formTitle();
+            VTiger.IgnoreSslCertificateErrors = this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Checked;
             loginToolStripMenuItem_Click(null, null);
         }
 
@@ -529,11 +530,10 @@ namespace VTigerManager
             {
                 string firstname = GetInput("firstname");
                 string lastname = GetInput("lastname");
-                string account_id = GetInput("account_id");
-
                 StatusLabel.Text = "Creating element";
-                api.AddContact(firstname, lastname, api.UserID);
-                StatusLabel.Text = "Successfully created element";
+                VTigerContact newContact = api.AddContact(firstname, lastname, api.UserID);
+                StatusLabel.Text = "Successfully created element with ID " + newContact.id.ToString();
+                MessageBox.Show(this, "Successfully created element with ID " + newContact.id.ToString() + " / contact no. " + newContact.contact_no, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 ShowPage(currentPage);
             }
             catch (Exception ex)
@@ -703,6 +703,12 @@ namespace VTigerManager
                 MessageBox.Show(this, ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 StatusLabel.Text = "Error: " + ex.Message;
             }
+        }
+
+        private void ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Checked = !this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Checked;
+            VTiger.IgnoreSslCertificateErrors = this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Checked;
         }
     }
 }

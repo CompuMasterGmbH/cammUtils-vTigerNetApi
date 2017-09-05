@@ -226,6 +226,11 @@ namespace VTigerApi
             #endregion
         }
 
+        /// <summary>
+        /// Ignore errors and continue when connecting to a remote server with an invalid certificate
+        /// </summary>
+        public static bool IgnoreSslCertificateErrors { get; set; }
+
         #region Basic Access
 
         /// <summary>
@@ -1007,14 +1012,13 @@ namespace VTigerApi
             return Create<VTigerAccount>(element);
         }
 
-        public VTigerContact AddContact(string firstname, string lastname, string user_id)
+        public VTigerContact AddContact(string firstname, string lastname, string assigned_user_id)
         {
             VTigerContact element = new VTigerContact(
                 lastname,
-                user_id);
+                assigned_user_id);
             element.firstname = firstname;
-            //element.
-                return Update<VTigerContact>(element);
+            // return Update<VTigerContact>(element);
             return Create<VTigerContact>(element);
         }
 
@@ -1234,6 +1238,14 @@ namespace VTigerApi
         private static string HttpGet(string url)
         {
             HttpWebRequest webRequest = GetWebRequest(url);
+            if (IgnoreSslCertificateErrors)
+            {
+                ServicePointManager.ServerCertificateValidationCallback += delegate { return true; };
+            }
+            else
+            {
+                ServicePointManager.ServerCertificateValidationCallback = null;
+            }
             HttpWebResponse response = (HttpWebResponse)webRequest.GetResponse();
             string jsonResponse = string.Empty;
             using (StreamReader sr = new StreamReader(response.GetResponseStream()))
@@ -1246,6 +1258,14 @@ namespace VTigerApi
         private static string HttpPost(string url, string parameters)
         {
             HttpWebRequest webRequest = GetWebRequest(url);
+            if (IgnoreSslCertificateErrors)
+            {
+                ServicePointManager.ServerCertificateValidationCallback += delegate { return true; };
+            }
+            else
+            {
+                ServicePointManager.ServerCertificateValidationCallback = null;
+            }
             webRequest.ContentType = "application/x-www-form-urlencoded";
 
             webRequest.Method = "POST";
@@ -1274,6 +1294,14 @@ namespace VTigerApi
 
         private static HttpWebRequest GetWebRequest(string formattedUri)
         {
+            if (IgnoreSslCertificateErrors)
+            {
+                ServicePointManager.ServerCertificateValidationCallback += delegate { return true; };
+            }
+            else
+            {
+                ServicePointManager.ServerCertificateValidationCallback = null;
+            }
             // Create the request’s URI.      
             Uri serviceUri = new Uri(formattedUri, UriKind.Absolute);
             // Return the HttpWebRequest.        

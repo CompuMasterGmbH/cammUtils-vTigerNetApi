@@ -1,5 +1,6 @@
 ﻿/*
-Copyright 2011 Björn Zeutzheim
+Copyright 2011, 2017 CompuMaster GmbH
+Authors: Björn Zeutzheim + Jochen Wezel
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

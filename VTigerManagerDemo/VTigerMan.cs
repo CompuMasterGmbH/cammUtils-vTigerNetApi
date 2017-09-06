@@ -14,7 +14,7 @@ namespace VTigerManager
 
         private int currentPage;
         private string currentTable;
-        private int pageLimit = 20;
+        private int pageLimit;
 
         private bool editMode;
         private bool EditMode
@@ -43,10 +43,10 @@ namespace VTigerManager
 
         private void VTigerMan_Load(object sender, EventArgs e)
         {
+            this.toolStripComboBoxPageSize.Text = AssignNewPagingSize((string)Properties.Settings.Default["PagingSize"]);
             formTitle();
             VTiger.IgnoreSslCertificateErrors = this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Checked;
             loginToolStripMenuItem_Click(null, null);
-            this.toolStripComboBoxPageSize.Text = this.pageLimit.ToString();
             ShowData(null);
         }
 
@@ -322,6 +322,7 @@ namespace VTigerManager
                 return;
             try
             {
+                if ((api == null) || (currentTable == null)) { throw new InvalidOperationException("API or table object null - bugfix required"); }
                 StatusLabel.Text = "Retriving elements...";
                 currentPage = pageNum;
                 EditMode = false;
@@ -335,24 +336,27 @@ namespace VTigerManager
                 DataTable dt = api.Query(query);
                 dataView.DataSource = dt;
                 StatusLabel.Text = "Successfully retrived elements";
+                dataView.Enabled = true;
             }
             catch (VTigerApiSessionTimedOutException ex)
             {
                 MessageBox.Show(this, ex.ToString(), "ERROR from remote server", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 StatusLabel.Text = "VTiger remote server session timeout error: " + ex.Message;
                 this.loginToolStripMenuItem_Click(null, null);
+                ShowTablesMetaData(null);
             }
             catch (VTigerApiException ex)
             {
                 MessageBox.Show(this, ex.ToString(), "ERROR from remote server", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 StatusLabel.Text = "VTiger remote server error: " + ex.Message;
+                ShowTablesMetaData(null);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(this, ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 StatusLabel.Text = "Error: " + ex.Message;
+                ShowTablesMetaData(null);
             }
-            dataView.Enabled = true;
         }
 
         public void UpdateOderByList()
@@ -817,16 +821,37 @@ namespace VTigerManager
 
         private void toolStripComboBoxPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (this.toolStripComboBoxPageSize.Text)
+            AssignNewPagingSize(this.toolStripComboBoxPageSize.Text);
+            if (!(api == null) && !(currentTable == null)) { ShowPage(currentPage); } // refresh current's table view
+        }
+
+        /// <summary>
+        /// Assign the new paging size to the toolbar control + save as user setting for next application launch + return as valid value for toolbar combobox
+        /// </summary>
+        /// <param name="size"></param>
+        /// <returns></returns>
+        private string AssignNewPagingSize(string size)
+        {
+            string result;
+            switch (size)
             {
-                case "∞": 
+                case "":
+                case null:
+                    this.pageLimit = 50;
+                    result = "50";
+                    break;
+                case "∞":
                     this.pageLimit = System.Int32.MaxValue;
-                    break;  
-                default: 
-                    this.pageLimit = System.Int32.Parse(this.toolStripComboBoxPageSize.Text);
+                    result = "∞";
+                    break;
+                default:
+                    this.pageLimit = System.Int32.Parse(size);
+                    result = this.pageLimit.ToString();
                     break;
             }
-            ShowPage(currentPage); // refresh current's table view
+            Properties.Settings.Default["PagingSize"] = size;
+            Properties.Settings.Default.Save();
+            return result;
         }
     }
 }

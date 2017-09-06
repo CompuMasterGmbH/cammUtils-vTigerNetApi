@@ -11,5 +11,8 @@
     <Setting Name="VTigerAppKey" Type="System.String" Scope="User">
       <Value Profile="(Default)">imU69FrtsqTBlAo</Value>
     </Setting>
+    <Setting Name="PagingSize" Type="System.String" Scope="User">
+      <Value Profile="(Default)">50</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

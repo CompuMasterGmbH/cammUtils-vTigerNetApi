@@ -58,5 +58,17 @@ namespace VTigerManager.Properties {
                 this["VTigerAppKey"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("50")]
+        public string PagingSize {
+            get {
+                return ((string)(this["PagingSize"]));
+            }
+            set {
+                this["PagingSize"] = value;
+            }
+        }
     }
 }

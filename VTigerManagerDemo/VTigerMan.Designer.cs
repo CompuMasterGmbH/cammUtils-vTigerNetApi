@@ -37,6 +37,11 @@
             this.newElementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItemNewContact = new System.Windows.Forms.ToolStripMenuItem();
             this.calendarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.newRecordForEveryTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bulkInsert1500ContactRecordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
             this.dataView = new VTigerUserControls.KeyValueDataGridView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -58,25 +63,22 @@
             this.LPage = new System.Windows.Forms.ToolStripLabel();
             this.BtnPageNext = new System.Windows.Forms.ToolStripButton();
             this.BtnPageLast = new System.Windows.Forms.ToolStripButton();
+            this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripComboBoxPageSize = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.BtnExportTable = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripLabelSessionID = new System.Windows.Forms.ToolStripLabel();
             this.textBoxSessionID = new System.Windows.Forms.ToolStripTextBox();
             this.CompareLocalVsRemoteTableButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.tableList = new System.Windows.Forms.TreeView();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.loadThread = new System.ComponentModel.BackgroundWorker();
-            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newRecordForEveryTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripLabelSessionID = new System.Windows.Forms.ToolStripLabel();
-            this.bulkInsert1500ContactRecordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.MainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
@@ -110,14 +112,14 @@
             // loginToolStripMenuItem
             // 
             this.loginToolStripMenuItem.Name = "loginToolStripMenuItem";
-            this.loginToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loginToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.loginToolStripMenuItem.Text = "Login";
             this.loginToolStripMenuItem.Click += new System.EventHandler(this.loginToolStripMenuItem_Click);
             // 
             // logoutToolStripMenuItem
             // 
             this.logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.logoutToolStripMenuItem.Text = "Logout";
             this.logoutToolStripMenuItem.Visible = false;
             this.logoutToolStripMenuItem.Click += new System.EventHandler(this.logoutToolStripMenuItem_Click);
@@ -125,7 +127,7 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -144,16 +146,52 @@
             // MenuItemNewContact
             // 
             this.MenuItemNewContact.Name = "MenuItemNewContact";
-            this.MenuItemNewContact.Size = new System.Drawing.Size(210, 22);
+            this.MenuItemNewContact.Size = new System.Drawing.Size(269, 22);
             this.MenuItemNewContact.Text = "Contact";
             this.MenuItemNewContact.Click += new System.EventHandler(this.MenuItemNewContact_Click);
             // 
             // calendarToolStripMenuItem
             // 
             this.calendarToolStripMenuItem.Name = "calendarToolStripMenuItem";
-            this.calendarToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.calendarToolStripMenuItem.Size = new System.Drawing.Size(269, 22);
             this.calendarToolStripMenuItem.Text = "Calendar";
             this.calendarToolStripMenuItem.Click += new System.EventHandler(this.calendarToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(266, 6);
+            // 
+            // newRecordForEveryTypeToolStripMenuItem
+            // 
+            this.newRecordForEveryTypeToolStripMenuItem.Name = "newRecordForEveryTypeToolStripMenuItem";
+            this.newRecordForEveryTypeToolStripMenuItem.Size = new System.Drawing.Size(269, 22);
+            this.newRecordForEveryTypeToolStripMenuItem.Text = "Bulk insert: new record for every type";
+            this.newRecordForEveryTypeToolStripMenuItem.Click += new System.EventHandler(this.newRecordForEveryTypeToolStripMenuItem_Click);
+            // 
+            // bulkInsert1500ContactRecordsToolStripMenuItem
+            // 
+            this.bulkInsert1500ContactRecordsToolStripMenuItem.Name = "bulkInsert1500ContactRecordsToolStripMenuItem";
+            this.bulkInsert1500ContactRecordsToolStripMenuItem.Size = new System.Drawing.Size(269, 22);
+            this.bulkInsert1500ContactRecordsToolStripMenuItem.Text = "Bulk insert: 1500 contact records";
+            this.bulkInsert1500ContactRecordsToolStripMenuItem.Click += new System.EventHandler(this.bulkInsert1500ContactRecordsToolStripMenuItem_Click);
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem});
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.optionsToolStripMenuItem.Text = "&Options";
+            // 
+            // ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem
+            // 
+            this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Checked = true;
+            this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Name = "ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem";
+            this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
+            this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Text = "Ignore SSL certificate errors of remote server";
+            this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Click += new System.EventHandler(this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem_Click);
             // 
             // MainPanel
             // 
@@ -263,18 +301,20 @@
             this.BtnUpdate,
             this.BtnDelete,
             this.BtnViewMode,
+            this.toolStripSeparator5,
             this.BtnPageFirst,
             this.BtnPagePrev,
             this.LPage,
             this.BtnPageNext,
             this.BtnPageLast,
             this.toolStripLabel4,
-            this.toolStripTextBox1,
+            this.toolStripComboBoxPageSize,
             this.toolStripSeparator3,
             this.BtnExportTable,
             this.toolStripButton2,
             this.toolStripLabelSessionID,
             this.textBoxSessionID,
+            this.toolStripSeparator4,
             this.CompareLocalVsRemoteTableButton,
             this.toolStripSeparator2});
             this.BtnSwitchTableStyle.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
@@ -380,6 +420,32 @@
             this.BtnPageLast.Size = new System.Drawing.Size(27, 19);
             this.BtnPageLast.Text = ">>";
             // 
+            // toolStripLabel4
+            // 
+            this.toolStripLabel4.Name = "toolStripLabel4";
+            this.toolStripLabel4.Size = new System.Drawing.Size(60, 15);
+            this.toolStripLabel4.Text = "Page limit";
+            // 
+            // toolStripComboBoxPageSize
+            // 
+            this.toolStripComboBoxPageSize.Items.AddRange(new object[] {
+            "5",
+            "10",
+            "50",
+            "100",
+            "1000",
+            "10000",
+            "∞"});
+            this.toolStripComboBoxPageSize.Name = "toolStripComboBoxPageSize";
+            this.toolStripComboBoxPageSize.Size = new System.Drawing.Size(75, 23);
+            this.toolStripComboBoxPageSize.Text = "20";
+            this.toolStripComboBoxPageSize.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxPageSize_SelectedIndexChanged);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 23);
+            // 
             // BtnExportTable
             // 
             this.BtnExportTable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -400,6 +466,12 @@
             this.toolStripButton2.Text = "Describe table";
             this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
+            // toolStripLabelSessionID
+            // 
+            this.toolStripLabelSessionID.Name = "toolStripLabelSessionID";
+            this.toolStripLabelSessionID.Size = new System.Drawing.Size(89, 15);
+            this.toolStripLabelSessionID.Text = "Remote session";
+            // 
             // textBoxSessionID
             // 
             this.textBoxSessionID.Name = "textBoxSessionID";
@@ -414,6 +486,11 @@
             this.CompareLocalVsRemoteTableButton.Text = "Compare local vs remote table";
             this.CompareLocalVsRemoteTableButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.CompareLocalVsRemoteTableButton.Click += new System.EventHandler(this.CompareLocalVsRemoteTableButton_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 23);
             // 
             // splitter1
             // 
@@ -448,77 +525,15 @@
             this.StatusLabel.Size = new System.Drawing.Size(10, 17);
             this.StatusLabel.Text = " ";
             // 
-            // optionsToolStripMenuItem
+            // toolStripSeparator4
             // 
-            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem});
-            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.optionsToolStripMenuItem.Text = "&Options";
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 23);
             // 
-            // ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem
+            // toolStripSeparator5
             // 
-            this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Checked = true;
-            this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Name = "ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem";
-            this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
-            this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Text = "Ignore SSL certificate errors of remote server";
-            this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Click += new System.EventHandler(this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem_Click);
-            // 
-            // newRecordForEveryTypeToolStripMenuItem
-            // 
-            this.newRecordForEveryTypeToolStripMenuItem.Name = "newRecordForEveryTypeToolStripMenuItem";
-            this.newRecordForEveryTypeToolStripMenuItem.Size = new System.Drawing.Size(269, 22);
-            this.newRecordForEveryTypeToolStripMenuItem.Text = "Bulk insert: new record for every type";
-            this.newRecordForEveryTypeToolStripMenuItem.Click += new System.EventHandler(this.newRecordForEveryTypeToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(207, 6);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 23);
-            // 
-            // toolStripLabel4
-            // 
-            this.toolStripLabel4.Name = "toolStripLabel4";
-            this.toolStripLabel4.Size = new System.Drawing.Size(60, 15);
-            this.toolStripLabel4.Text = "Page limit";
-            // 
-            // toolStripTextBox1
-            // 
-            this.toolStripTextBox1.Items.AddRange(new object[] {
-            "5",
-            "10",
-            "50",
-            "100",
-            "1000",
-            "10000",
-            "∞"});
-            this.toolStripTextBox1.Name = "toolStripTextBox1";
-            this.toolStripTextBox1.Size = new System.Drawing.Size(75, 23);
-            this.toolStripTextBox1.Text = "20";
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 23);
-            // 
-            // toolStripLabelSessionID
-            // 
-            this.toolStripLabelSessionID.Name = "toolStripLabelSessionID";
-            this.toolStripLabelSessionID.Size = new System.Drawing.Size(89, 15);
-            this.toolStripLabelSessionID.Text = "Remote session";
-            // 
-            // bulkInsert1500ContactRecordsToolStripMenuItem
-            // 
-            this.bulkInsert1500ContactRecordsToolStripMenuItem.Name = "bulkInsert1500ContactRecordsToolStripMenuItem";
-            this.bulkInsert1500ContactRecordsToolStripMenuItem.Size = new System.Drawing.Size(269, 22);
-            this.bulkInsert1500ContactRecordsToolStripMenuItem.Text = "Bulk insert: 1500 contact records";
-            this.bulkInsert1500ContactRecordsToolStripMenuItem.Click += new System.EventHandler(this.bulkInsert1500ContactRecordsToolStripMenuItem_Click);
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 23);
             // 
             // VTigerMan
             // 
@@ -595,11 +610,13 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem newRecordForEveryTypeToolStripMenuItem;
         private System.Windows.Forms.ToolStripLabel toolStripLabel4;
-        private System.Windows.Forms.ToolStripComboBox toolStripTextBox1;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboBoxPageSize;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripLabel toolStripLabelSessionID;
         private System.Windows.Forms.ToolStripMenuItem bulkInsert1500ContactRecordsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }
 

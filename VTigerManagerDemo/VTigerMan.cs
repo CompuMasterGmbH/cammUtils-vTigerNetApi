@@ -46,6 +46,7 @@ namespace VTigerManager
             formTitle();
             VTiger.IgnoreSslCertificateErrors = this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Checked;
             loginToolStripMenuItem_Click(null, null);
+            this.toolStripComboBoxPageSize.Text = this.pageLimit.ToString();
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
@@ -111,7 +112,6 @@ namespace VTigerManager
                 MainPanel.Enabled = true;
                 logoutToolStripMenuItem.Visible = true;
                 loginToolStripMenuItem.Visible = false;
-                toolStripLabelSessionID.Visible = true;
                 textBoxSessionID.Text = api.SessionName;
                 FillRemoteTableList();
             }
@@ -125,8 +125,7 @@ namespace VTigerManager
                 logoutToolStripMenuItem.Visible = false;
                 loginToolStripMenuItem.Visible = true;
                 tableList.Nodes.Clear();
-                toolStripLabelSessionID.Visible = false;
-                textBoxSessionID.Text = "";
+                textBoxSessionID.Text = "N/A";
                 StatusLabel.Text = "Failed to login: " + ex.Message;
                 this.Refresh();
                 System.Windows.Forms.MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -178,8 +177,7 @@ namespace VTigerManager
             logoutToolStripMenuItem.Visible = false;
             loginToolStripMenuItem.Visible = true;
             dataView.DataSource = null;
-            toolStripLabelSessionID.Visible = false;
-            textBoxSessionID.Text = "";
+            textBoxSessionID.Text = "N/A";
             tableList.Nodes.Clear();
             formTitle();
         }
@@ -781,6 +779,20 @@ namespace VTigerManager
                 MessageBox.Show(this, ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 StatusLabel.Text = "Error: " + ex.Message;
             }
+        }
+
+        private void toolStripComboBoxPageSize_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (this.toolStripComboBoxPageSize.Text)
+            {
+                case "∞": 
+                    this.pageLimit = System.Int32.MaxValue;
+                    break;  
+                default: 
+                    this.pageLimit = System.Int32.Parse(this.toolStripComboBoxPageSize.Text);
+                    break;
+            }
+            ShowPage(currentPage); // refresh current's table view
         }
     }
 }

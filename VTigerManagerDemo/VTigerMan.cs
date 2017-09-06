@@ -47,13 +47,14 @@ namespace VTigerManager
             VTiger.IgnoreSslCertificateErrors = this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Checked;
             loginToolStripMenuItem_Click(null, null);
             this.toolStripComboBoxPageSize.Text = this.pageLimit.ToString();
+            ShowData(null);
         }
 
-        private void toolStripButton2_Click(object sender, EventArgs e)
+        private void toolStripButtonTableDescription_Click(object sender, EventArgs e)
         {
             try
             {
-                dataView.DataSource = api.Describe_DataTable(api.RemoteTables[currentTable].ElementType);
+                ShowTablesMetaData(api.Describe_DataTable(api.RemoteTables[currentTable].ElementType));
             }
             catch (VTigerApiSessionTimedOutException ex)
             {
@@ -177,6 +178,7 @@ namespace VTigerManager
             logoutToolStripMenuItem.Visible = false;
             loginToolStripMenuItem.Visible = true;
             dataView.DataSource = null;
+            ShowData(null);
             textBoxSessionID.Text = "N/A";
             tableList.Nodes.Clear();
             formTitle();
@@ -259,7 +261,7 @@ namespace VTigerManager
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             currentTable = e.Node.Text;
-            LQueryTable.Text = currentTable;
+            toolStripLabelQueryTable.Text = currentTable;
             ShowPage(0);
 
         }
@@ -267,6 +269,51 @@ namespace VTigerManager
         private void BtnRefresh_Click(object sender, EventArgs e)
         {
             ShowPage(currentPage);
+        }
+
+        private void ShowData(System.Data.DataTable data)
+        {
+            EditMode = false;
+            dataView.Enabled = false;
+            toolStripSwitchTableStyle.Visible = false;
+            toolStripQueryOptions.Visible = false;
+            SwitchVisibilityEditAndViewControls(false);
+            this.Refresh();
+            dataView.DataSource = data;
+        }
+
+        private void SwitchVisibilityEditAndViewControls(bool visible)
+        {
+            this.BtnDelete.Visible = visible;
+            this.BtnExportTable.Visible = visible;
+            this.BtnNew.Visible = visible;
+            this.BtnUpdate.Visible = visible;
+            this.BtnViewMode.Visible = visible;
+            this.BtnQuery.Visible = visible;
+            this.BtnPagePrev.Visible = visible;
+            this.BtnPageNext.Visible = visible;
+            this.BtnPageFirst.Visible = visible;
+            this.BtnPageLast.Visible = visible;
+            this.toolStripLabelPage.Visible = visible;
+            this.toolStripComboBoxPageSize.Visible = visible;
+            this.toolStripLabelSelectFrom.Visible = visible;
+            this.toolStripLabelWhereClause.Visible = visible;
+            this.toolStripLabelOrderBy.Visible = visible;
+            this.toolStripLabelPagingSize.Visible = visible;
+            this.toolStripSeparatorPaging.Visible = visible;
+            this.toolStripSeparatorExport.Visible = visible;
+            this.toolStripSeparatorPaging.Visible = visible;
+        }
+
+        private void ShowTablesMetaData(System.Data.DataTable data)
+        {
+            //EditMode = false;
+            //dataView.Enabled = false;
+            toolStripSwitchTableStyle.Visible = true;
+            toolStripQueryOptions.Visible = false;
+            SwitchVisibilityEditAndViewControls(false);
+            this.Refresh();
+            dataView.DataSource = data;
         }
 
         private void ShowPage(int pageNum)
@@ -280,6 +327,9 @@ namespace VTigerManager
                 EditMode = false;
                 UpdatePageCaption();
                 dataView.Enabled = false;
+                toolStripSwitchTableStyle.Visible = true;
+                toolStripQueryOptions.Visible = true;
+                SwitchVisibilityEditAndViewControls(true);
                 this.Refresh();
                 string query = String.Format("select * from {0} limit {1},{2};", currentTable, currentPage * pageLimit, pageLimit);
                 DataTable dt = api.Query(query);
@@ -309,11 +359,11 @@ namespace VTigerManager
         {
             try
             {
-            EdOrderBy.Items.Clear();
+            toolStripComboboxOrderBy.Items.Clear();
             if (dataView.DataSource != null)
                 foreach (DataColumn col in (dataView.DataSource as DataTable).Columns)
                 {
-                    EdOrderBy.Items.Add(col.Caption);
+                    toolStripComboboxOrderBy.Items.Add(col.Caption);
                 }
             }
             catch (Exception ex)
@@ -325,7 +375,7 @@ namespace VTigerManager
 
         private void UpdatePageCaption()
         {
-            LPage.Text = String.Format("Page {0} / ?", currentPage + 1);
+            toolStripLabelPage.Text = String.Format("Page {0} / ?", currentPage + 1);
         }
 
         private void BtnPageNext_Click(object sender, EventArgs e)
@@ -579,16 +629,16 @@ namespace VTigerManager
                 this.Refresh();
 
                 string query;
-                if (EdOrderBy.Text == "")
+                if (toolStripComboboxOrderBy.Text == "")
                     query = String.Format("SELECT * FROM {0} WHERE {1} LIMIT {2},{3};",
                         currentTable,
-                        EdQuery.Text,
+                        toolStripTextboxQueryWhereClause.Text,
                         currentPage * pageLimit, pageLimit);
                 else
                     query = String.Format("SELECT * FROM {0} WHERE {1} ORDER BY {2} LIMIT {3},{4};",
                         currentTable,
-                        EdQuery.Text,
-                        EdOrderBy.Text,
+                        toolStripTextboxQueryWhereClause.Text,
+                        toolStripComboboxOrderBy.Text,
                         currentPage * pageLimit, pageLimit);
                 DataTable dt = api.Query(query);
                 dataView.DataSource = dt;
@@ -687,7 +737,7 @@ namespace VTigerManager
                     row["DataType"] = col.DataType.ToString();
                     diffDescriptionDataTable.Rows.Add(row);
                 }
-                dataView.DataSource = diffDescriptionDataTable;
+                ShowTablesMetaData(diffDescriptionDataTable);
             }
             catch (VTigerApiSessionTimedOutException ex)
             {
@@ -740,7 +790,7 @@ namespace VTigerManager
             newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Contacts", newRecordID, newRecordNo, newRecordCreationException);
 
             // show results to GUI
-            dataView.DataSource = results;
+            ShowData(results);
         }
 
         private void newRecordForEveryTypeToolStripMenuItem_AddResultRecord(System.Data.DataTable resultsTable, string typeName, string primaryKeyID, string primaryKeyNo, Exception ex)

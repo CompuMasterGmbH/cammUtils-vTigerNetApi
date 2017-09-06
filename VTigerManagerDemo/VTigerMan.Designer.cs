@@ -37,53 +37,53 @@
             this.newElementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItemNewContact = new System.Windows.Forms.ToolStripMenuItem();
             this.calendarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparatorMenuNewElementBulkInsert = new System.Windows.Forms.ToolStripSeparator();
             this.newRecordForEveryTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bulkInsert1500ContactRecordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
             this.dataView = new VTigerUserControls.KeyValueDataGridView();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.LQueryTable = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
-            this.EdQuery = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
-            this.EdOrderBy = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripQueryOptions = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabelSelectFrom = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripLabelQueryTable = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripLabelWhereClause = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripTextboxQueryWhereClause = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripLabelOrderBy = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripComboboxOrderBy = new System.Windows.Forms.ToolStripComboBox();
             this.BtnQuery = new System.Windows.Forms.ToolStripButton();
-            this.BtnSwitchTableStyle = new System.Windows.Forms.ToolStrip();
+            this.toolStripSwitchTableStyle = new System.Windows.Forms.ToolStrip();
             this.BtnRefresh = new System.Windows.Forms.ToolStripButton();
             this.BtnNew = new System.Windows.Forms.ToolStripButton();
             this.BtnUpdate = new System.Windows.Forms.ToolStripButton();
             this.BtnDelete = new System.Windows.Forms.ToolStripButton();
             this.BtnViewMode = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparatorPaging = new System.Windows.Forms.ToolStripSeparator();
             this.BtnPageFirst = new System.Windows.Forms.ToolStripButton();
             this.BtnPagePrev = new System.Windows.Forms.ToolStripButton();
-            this.LPage = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripLabelPage = new System.Windows.Forms.ToolStripLabel();
             this.BtnPageNext = new System.Windows.Forms.ToolStripButton();
             this.BtnPageLast = new System.Windows.Forms.ToolStripButton();
-            this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripLabelPagingSize = new System.Windows.Forms.ToolStripLabel();
             this.toolStripComboBoxPageSize = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparatorExport = new System.Windows.Forms.ToolStripSeparator();
             this.BtnExportTable = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonTableDescription = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabelSessionID = new System.Windows.Forms.ToolStripLabel();
             this.textBoxSessionID = new System.Windows.Forms.ToolStripTextBox();
             this.CompareLocalVsRemoteTableButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.tableList = new System.Windows.Forms.TreeView();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.loadThread = new System.ComponentModel.BackgroundWorker();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparatorServerSession = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparatorMetaInfos = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.MainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
-            this.toolStrip1.SuspendLayout();
-            this.BtnSwitchTableStyle.SuspendLayout();
+            this.toolStripQueryOptions.SuspendLayout();
+            this.toolStripSwitchTableStyle.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -136,7 +136,7 @@
             this.newElementToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuItemNewContact,
             this.calendarToolStripMenuItem,
-            this.toolStripSeparator1,
+            this.toolStripSeparatorMenuNewElementBulkInsert,
             this.newRecordForEveryTypeToolStripMenuItem,
             this.bulkInsert1500ContactRecordsToolStripMenuItem});
             this.newElementToolStripMenuItem.Name = "newElementToolStripMenuItem";
@@ -157,10 +157,10 @@
             this.calendarToolStripMenuItem.Text = "Calendar";
             this.calendarToolStripMenuItem.Click += new System.EventHandler(this.calendarToolStripMenuItem_Click);
             // 
-            // toolStripSeparator1
+            // toolStripSeparatorMenuNewElementBulkInsert
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(266, 6);
+            this.toolStripSeparatorMenuNewElementBulkInsert.Name = "toolStripSeparatorMenuNewElementBulkInsert";
+            this.toolStripSeparatorMenuNewElementBulkInsert.Size = new System.Drawing.Size(266, 6);
             // 
             // newRecordForEveryTypeToolStripMenuItem
             // 
@@ -199,8 +199,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.MainPanel.Controls.Add(this.dataView);
-            this.MainPanel.Controls.Add(this.toolStrip1);
-            this.MainPanel.Controls.Add(this.BtnSwitchTableStyle);
+            this.MainPanel.Controls.Add(this.toolStripQueryOptions);
+            this.MainPanel.Controls.Add(this.toolStripSwitchTableStyle);
             this.MainPanel.Controls.Add(this.splitter1);
             this.MainPanel.Controls.Add(this.tableList);
             this.MainPanel.Enabled = false;
@@ -227,61 +227,61 @@
             this.dataView.TabIndex = 8;
             this.dataView.DataSourceChanged += new System.EventHandler(this.dataView_DataSourceChanged);
             // 
-            // toolStrip1
+            // toolStripQueryOptions
             // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel1,
-            this.LQueryTable,
-            this.toolStripLabel2,
-            this.EdQuery,
-            this.toolStripLabel3,
-            this.EdOrderBy,
+            this.toolStripQueryOptions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabelSelectFrom,
+            this.toolStripLabelQueryTable,
+            this.toolStripLabelWhereClause,
+            this.toolStripTextboxQueryWhereClause,
+            this.toolStripLabelOrderBy,
+            this.toolStripComboboxOrderBy,
             this.BtnQuery});
-            this.toolStrip1.Location = new System.Drawing.Point(159, 46);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(785, 25);
-            this.toolStrip1.TabIndex = 7;
-            this.toolStrip1.Text = "toolStrip1";
+            this.toolStripQueryOptions.Location = new System.Drawing.Point(159, 46);
+            this.toolStripQueryOptions.Name = "toolStripQueryOptions";
+            this.toolStripQueryOptions.Size = new System.Drawing.Size(785, 25);
+            this.toolStripQueryOptions.TabIndex = 7;
+            this.toolStripQueryOptions.Text = "toolStrip1";
             // 
-            // toolStripLabel1
+            // toolStripLabelSelectFrom
             // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(90, 22);
-            this.toolStripLabel1.Text = "SELECT * FROM";
+            this.toolStripLabelSelectFrom.Name = "toolStripLabelSelectFrom";
+            this.toolStripLabelSelectFrom.Size = new System.Drawing.Size(90, 22);
+            this.toolStripLabelSelectFrom.Text = "SELECT * FROM";
             // 
-            // LQueryTable
+            // toolStripLabelQueryTable
             // 
-            this.LQueryTable.Name = "LQueryTable";
-            this.LQueryTable.Size = new System.Drawing.Size(51, 22);
-            this.LQueryTable.Text = "<Table>";
+            this.toolStripLabelQueryTable.Name = "toolStripLabelQueryTable";
+            this.toolStripLabelQueryTable.Size = new System.Drawing.Size(51, 22);
+            this.toolStripLabelQueryTable.Text = "<Table>";
             // 
-            // toolStripLabel2
+            // toolStripLabelWhereClause
             // 
-            this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(46, 22);
-            this.toolStripLabel2.Text = "WHERE";
+            this.toolStripLabelWhereClause.Name = "toolStripLabelWhereClause";
+            this.toolStripLabelWhereClause.Size = new System.Drawing.Size(46, 22);
+            this.toolStripLabelWhereClause.Text = "WHERE";
             // 
-            // EdQuery
+            // toolStripTextboxQueryWhereClause
             // 
-            this.EdQuery.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.EdQuery.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.EdQuery.Name = "EdQuery";
-            this.EdQuery.Size = new System.Drawing.Size(150, 25);
-            this.EdQuery.Text = "firstname like \'m%\'";
+            this.toolStripTextboxQueryWhereClause.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.toolStripTextboxQueryWhereClause.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.toolStripTextboxQueryWhereClause.Name = "toolStripTextboxQueryWhereClause";
+            this.toolStripTextboxQueryWhereClause.Size = new System.Drawing.Size(150, 25);
+            this.toolStripTextboxQueryWhereClause.Text = "firstname like \'m%\'";
             // 
-            // toolStripLabel3
+            // toolStripLabelOrderBy
             // 
-            this.toolStripLabel3.Name = "toolStripLabel3";
-            this.toolStripLabel3.Size = new System.Drawing.Size(61, 22);
-            this.toolStripLabel3.Text = "ORDER BY";
+            this.toolStripLabelOrderBy.Name = "toolStripLabelOrderBy";
+            this.toolStripLabelOrderBy.Size = new System.Drawing.Size(61, 22);
+            this.toolStripLabelOrderBy.Text = "ORDER BY";
             // 
-            // EdOrderBy
+            // toolStripComboboxOrderBy
             // 
-            this.EdOrderBy.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.EdOrderBy.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.EdOrderBy.Name = "EdOrderBy";
-            this.EdOrderBy.Size = new System.Drawing.Size(80, 25);
-            this.EdOrderBy.Text = "id";
+            this.toolStripComboboxOrderBy.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.toolStripComboboxOrderBy.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.toolStripComboboxOrderBy.Name = "toolStripComboboxOrderBy";
+            this.toolStripComboboxOrderBy.Size = new System.Drawing.Size(80, 25);
+            this.toolStripComboboxOrderBy.Text = "id";
             // 
             // BtnQuery
             // 
@@ -293,36 +293,36 @@
             this.BtnQuery.Text = "Query";
             this.BtnQuery.Click += new System.EventHandler(this.BtnQuery_Click);
             // 
-            // BtnSwitchTableStyle
+            // toolStripSwitchTableStyle
             // 
-            this.BtnSwitchTableStyle.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSwitchTableStyle.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.BtnRefresh,
             this.BtnNew,
             this.BtnUpdate,
             this.BtnDelete,
             this.BtnViewMode,
-            this.toolStripSeparator5,
+            this.toolStripSeparatorPaging,
             this.BtnPageFirst,
             this.BtnPagePrev,
-            this.LPage,
+            this.toolStripLabelPage,
             this.BtnPageNext,
             this.BtnPageLast,
-            this.toolStripLabel4,
+            this.toolStripLabelPagingSize,
             this.toolStripComboBoxPageSize,
-            this.toolStripSeparator3,
+            this.toolStripSeparatorExport,
             this.BtnExportTable,
-            this.toolStripButton2,
-            this.toolStripLabelSessionID,
-            this.textBoxSessionID,
-            this.toolStripSeparator4,
+            this.toolStripSeparatorMetaInfos,
             this.CompareLocalVsRemoteTableButton,
-            this.toolStripSeparator2});
-            this.BtnSwitchTableStyle.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.BtnSwitchTableStyle.Location = new System.Drawing.Point(159, 0);
-            this.BtnSwitchTableStyle.Name = "BtnSwitchTableStyle";
-            this.BtnSwitchTableStyle.Size = new System.Drawing.Size(785, 46);
-            this.BtnSwitchTableStyle.TabIndex = 6;
-            this.BtnSwitchTableStyle.Text = "Switch table-style";
+            this.toolStripButtonTableDescription,
+            this.toolStripSeparatorServerSession,
+            this.toolStripLabelSessionID,
+            this.textBoxSessionID});
+            this.toolStripSwitchTableStyle.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.toolStripSwitchTableStyle.Location = new System.Drawing.Point(159, 0);
+            this.toolStripSwitchTableStyle.Name = "toolStripSwitchTableStyle";
+            this.toolStripSwitchTableStyle.Size = new System.Drawing.Size(785, 46);
+            this.toolStripSwitchTableStyle.TabIndex = 6;
+            this.toolStripSwitchTableStyle.Text = "Switch table-style";
             // 
             // BtnRefresh
             // 
@@ -374,6 +374,11 @@
             this.BtnViewMode.Text = "Change view-mode";
             this.BtnViewMode.Click += new System.EventHandler(this.BtnViewMode_Click);
             // 
+            // toolStripSeparatorPaging
+            // 
+            this.toolStripSeparatorPaging.Name = "toolStripSeparatorPaging";
+            this.toolStripSeparatorPaging.Size = new System.Drawing.Size(6, 23);
+            // 
             // BtnPageFirst
             // 
             this.BtnPageFirst.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -394,11 +399,12 @@
             this.BtnPagePrev.Text = "<";
             this.BtnPagePrev.Click += new System.EventHandler(this.BtnPagePrev_Click);
             // 
-            // LPage
+            // toolStripLabelPage
             // 
-            this.LPage.Name = "LPage";
-            this.LPage.Size = new System.Drawing.Size(58, 15);
-            this.LPage.Text = "Page 1 / ?";
+            this.toolStripLabelPage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripLabelPage.Name = "toolStripLabelPage";
+            this.toolStripLabelPage.Size = new System.Drawing.Size(58, 15);
+            this.toolStripLabelPage.Text = "Page 1 / ?";
             // 
             // BtnPageNext
             // 
@@ -422,9 +428,10 @@
             // 
             // toolStripLabel4
             // 
-            this.toolStripLabel4.Name = "toolStripLabel4";
-            this.toolStripLabel4.Size = new System.Drawing.Size(60, 15);
-            this.toolStripLabel4.Text = "Page limit";
+            this.toolStripLabelPagingSize.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripLabelPagingSize.Name = "toolStripLabel4";
+            this.toolStripLabelPagingSize.Size = new System.Drawing.Size(60, 15);
+            this.toolStripLabelPagingSize.Text = "Page limit";
             // 
             // toolStripComboBoxPageSize
             // 
@@ -441,10 +448,10 @@
             this.toolStripComboBoxPageSize.Text = "20";
             this.toolStripComboBoxPageSize.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxPageSize_SelectedIndexChanged);
             // 
-            // toolStripSeparator3
+            // toolStripSeparatorExport
             // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 23);
+            this.toolStripSeparatorExport.Name = "toolStripSeparatorExport";
+            this.toolStripSeparatorExport.Size = new System.Drawing.Size(6, 23);
             // 
             // BtnExportTable
             // 
@@ -458,16 +465,17 @@
             // 
             // toolStripButton2
             // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(85, 19);
-            this.toolStripButton2.Text = "Describe table";
-            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
+            this.toolStripButtonTableDescription.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonTableDescription.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButtonTableDescription.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonTableDescription.Name = "toolStripButton2";
+            this.toolStripButtonTableDescription.Size = new System.Drawing.Size(85, 19);
+            this.toolStripButtonTableDescription.Text = "Describe table";
+            this.toolStripButtonTableDescription.Click += new System.EventHandler(this.toolStripButtonTableDescription_Click);
             // 
             // toolStripLabelSessionID
             // 
+            this.toolStripLabelSessionID.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripLabelSessionID.Name = "toolStripLabelSessionID";
             this.toolStripLabelSessionID.Size = new System.Drawing.Size(89, 15);
             this.toolStripLabelSessionID.Text = "Remote session";
@@ -486,11 +494,6 @@
             this.CompareLocalVsRemoteTableButton.Text = "Compare local vs remote table";
             this.CompareLocalVsRemoteTableButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.CompareLocalVsRemoteTableButton.Click += new System.EventHandler(this.CompareLocalVsRemoteTableButton_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 23);
             // 
             // splitter1
             // 
@@ -525,15 +528,15 @@
             this.StatusLabel.Size = new System.Drawing.Size(10, 17);
             this.StatusLabel.Text = " ";
             // 
-            // toolStripSeparator4
+            // toolStripSeparatorServerSession
             // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 23);
+            this.toolStripSeparatorServerSession.Name = "toolStripSeparatorServerSession";
+            this.toolStripSeparatorServerSession.Size = new System.Drawing.Size(6, 23);
             // 
-            // toolStripSeparator5
+            // toolStripSeparatorMetaInfos
             // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 23);
+            this.toolStripSeparatorMetaInfos.Name = "toolStripSeparatorMetaInfos";
+            this.toolStripSeparatorMetaInfos.Size = new System.Drawing.Size(6, 23);
             // 
             // VTigerMan
             // 
@@ -554,10 +557,10 @@
             this.MainPanel.ResumeLayout(false);
             this.MainPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataView)).EndInit();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
-            this.BtnSwitchTableStyle.ResumeLayout(false);
-            this.BtnSwitchTableStyle.PerformLayout();
+            this.toolStripQueryOptions.ResumeLayout(false);
+            this.toolStripQueryOptions.PerformLayout();
+            this.toolStripSwitchTableStyle.ResumeLayout(false);
+            this.toolStripSwitchTableStyle.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -580,7 +583,7 @@
         private System.Windows.Forms.ToolStripMenuItem newElementToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem MenuItemNewContact;
         private System.Windows.Forms.ToolStripMenuItem calendarToolStripMenuItem;
-        private System.Windows.Forms.ToolStrip BtnSwitchTableStyle;
+        private System.Windows.Forms.ToolStrip toolStripSwitchTableStyle;
         private System.Windows.Forms.ToolStripButton BtnRefresh;
         private System.Windows.Forms.ToolStripButton BtnNew;
         private System.Windows.Forms.ToolStripButton BtnUpdate;
@@ -588,35 +591,35 @@
         private System.Windows.Forms.ToolStripButton BtnViewMode;
         private System.Windows.Forms.ToolStripButton BtnPageFirst;
         private System.Windows.Forms.ToolStripButton BtnPagePrev;
-        private System.Windows.Forms.ToolStripLabel LPage;
+        private System.Windows.Forms.ToolStripLabel toolStripLabelPage;
         private System.Windows.Forms.ToolStripButton BtnPageNext;
         private System.Windows.Forms.ToolStripButton BtnPageLast;
         private System.Windows.Forms.TreeView tableList;
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripTextBox EdQuery;
+        private System.Windows.Forms.ToolStrip toolStripQueryOptions;
+        private System.Windows.Forms.ToolStripTextBox toolStripTextboxQueryWhereClause;
         private System.Windows.Forms.ToolStripButton BtnQuery;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
-        private System.Windows.Forms.ToolStripLabel LQueryTable;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+        private System.Windows.Forms.ToolStripLabel toolStripLabelSelectFrom;
+        private System.Windows.Forms.ToolStripLabel toolStripLabelQueryTable;
+        private System.Windows.Forms.ToolStripLabel toolStripLabelWhereClause;
         private VTigerUserControls.KeyValueDataGridView dataView;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel3;
-        private System.Windows.Forms.ToolStripComboBox EdOrderBy;
+        private System.Windows.Forms.ToolStripLabel toolStripLabelOrderBy;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboboxOrderBy;
         private System.Windows.Forms.ToolStripButton BtnExportTable;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton toolStripButtonTableDescription;
         private System.Windows.Forms.ToolStripTextBox textBoxSessionID;
         private System.Windows.Forms.ToolStripButton CompareLocalVsRemoteTableButton;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparatorMenuNewElementBulkInsert;
         private System.Windows.Forms.ToolStripMenuItem newRecordForEveryTypeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel4;
+        private System.Windows.Forms.ToolStripLabel toolStripLabelPagingSize;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBoxPageSize;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparatorExport;
         private System.Windows.Forms.ToolStripLabel toolStripLabelSessionID;
         private System.Windows.Forms.ToolStripMenuItem bulkInsert1500ContactRecordsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparatorPaging;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparatorMetaInfos;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparatorServerSession;
     }
 }
 

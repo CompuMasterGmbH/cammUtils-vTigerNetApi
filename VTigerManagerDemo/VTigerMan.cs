@@ -764,7 +764,64 @@ namespace VTigerManager
             string newRecordID;
             string newRecordNo;
 
+            // try to create new account
+            StatusLabel.Text = "Creating new account . . ."; this.Refresh();
+            newRecordCreationException = null;
+            newRecordID = null;
+            newRecordNo = null;
+            try
+            {
+                VTigerAccount newAcount = api.AddAccount("TestAccount " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), api.UserID);
+                newRecordID = newAcount.id;
+                newRecordNo = newAcount.account_no;
+            }
+            catch (Exception ex) { newRecordCreationException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Account", newRecordID, newRecordNo, newRecordCreationException);
+
+            // try to create new asset
+            StatusLabel.Text = "Creating new asset . . ."; this.Refresh();
+            newRecordCreationException = null;
+            newRecordID = null;
+            newRecordNo = null;
+            try
+            {
+                VTigerAsset newAsset = api.AddAsset("TestProduct", "s/n 0000", DateTime.Now.ToString("yyyy-MM-dd"), DateTime.Now.ToString("yyyy-MM-dd"), Assetstatus.Outofservice, "TestAsset " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), "TestAccount", api.UserID);
+                newRecordID = newAsset.id;
+                newRecordNo = newAsset.asset_no;
+            }
+            catch (Exception ex) { newRecordCreationException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Asset", newRecordID, newRecordNo, newRecordCreationException);
+
+            // try to create new calendar
+            StatusLabel.Text = "Creating new calendar entry . . ."; this.Refresh();
+            newRecordCreationException = null;
+            newRecordID = null;
+            newRecordNo = null;
+            try
+            {
+                VTigerCalendar newCalendar = api.AddCalendar(api.UserID, "TestCalendarEntry", DateTime.Now, DateTime.Now.AddDays(3), TaskStatus.Planned);
+                newRecordID = newCalendar.id;
+                newRecordNo = "N/A";
+            }
+            catch (Exception ex) { newRecordCreationException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Calendar", newRecordID, newRecordNo, newRecordCreationException);
+
+            // try to create new campaign
+            StatusLabel.Text = "Creating new campaign . . ."; this.Refresh();
+            newRecordCreationException = null;
+            newRecordID = null;
+            newRecordNo = null;
+            try
+            {
+                VTigerCampaign newCampaign = api.AddCampaign("TestCampaign " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), DateTime.Now, api.UserID);
+                newRecordID = newCampaign.id;
+                newRecordNo = newCampaign.campaign_no;
+            }
+            catch (Exception ex) { newRecordCreationException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Campaigns", newRecordID, newRecordNo, newRecordCreationException);
+
             // try to create new contact
+            StatusLabel.Text = "Creating new contact . . ."; this.Refresh();
             newRecordCreationException = null;
             newRecordID = null;
             newRecordNo = null;
@@ -776,6 +833,261 @@ namespace VTigerManager
             }
             catch (Exception ex) { newRecordCreationException = ex; }
             newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Contacts", newRecordID, newRecordNo, newRecordCreationException);
+
+            // don't try to create new currency
+            // don't try to create new documentFolders
+
+            // try to create new document
+            StatusLabel.Text = "Creating new document . . ."; this.Refresh();
+            newRecordCreationException = null;
+            newRecordID = null;
+            newRecordNo = null;
+            try
+            {
+                VTigerDocument newDocument = api.AddDocument("TestNote " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), api.UserID);
+                newRecordID = newDocument.id;
+                newRecordNo = "N/A";
+            }
+            catch (Exception ex) { newRecordCreationException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Documents", newRecordID, newRecordNo, newRecordCreationException);
+
+            // don't try to create new email
+
+            // try to create new event
+            StatusLabel.Text = "Creating new event . . ."; this.Refresh();
+            newRecordCreationException = null;
+            newRecordID = null;
+            newRecordNo = null;
+            try
+            {
+                VTigerEvent newEvent = api.AddEvent("TestEvent " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), DateTime.Now.ToString("yyyy-MM-dd"), DateTime.Now.ToString("yyyy-MM-dd"), DateTime.Now.ToString("HH:mm:ss"),"23:59:59", 4, Eventstatus.Planned, Activitytype.Meeting, api.UserID);
+                newRecordID = newEvent.id;
+                newRecordNo = "N/A";
+            }
+            catch (Exception ex) { newRecordCreationException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Events", newRecordID, newRecordNo, newRecordCreationException);
+
+            // try to create new faq
+            StatusLabel.Text = "Creating new faq entry . . ."; this.Refresh();
+            newRecordCreationException = null;
+            newRecordID = null;
+            newRecordNo = null;
+            try
+            {
+                VTigerFaq newFaq = api.AddFaq(Faqstatus.Draft, "TestFaq " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), "TestAnswer");
+                newRecordID = newFaq.id;
+                newRecordNo = newFaq.faq_no;
+            }
+            catch (Exception ex) { newRecordCreationException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Faq", newRecordID, newRecordNo, newRecordCreationException);
+
+            // don't try to create new group
+
+            // try to create new helpdesk
+            StatusLabel.Text = "Creating new helpdesk entry . . ."; this.Refresh();
+            newRecordCreationException = null;
+            newRecordID = null;
+            newRecordNo = null;
+            try
+            {
+                VTigerHelpDesk newHelpdesk = api.AddHelpDesk(api.UserID, Ticketstatus.Open, "TestHelpDesk " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"));
+                newRecordID = newHelpdesk.id;
+                newRecordNo = newHelpdesk.ticket_no;
+            }
+            catch (Exception ex) { newRecordCreationException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "HelpDesk", newRecordID, newRecordNo, newRecordCreationException);
+
+            // try to create new invoice
+            StatusLabel.Text = "Creating new invoice . . ."; this.Refresh();
+            newRecordCreationException = null;
+            newRecordID = null;
+            newRecordNo = null;
+            try
+            {
+                VTigerInvoice newInvoice = api.AddInvoice("TestInvoice " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), "TestBillStreet", "TestShippingStreet", "TestAccount", api.UserID);
+                newRecordID = newInvoice.id;
+                newRecordNo = newInvoice.invoice_no;
+            }
+            catch (Exception ex) { newRecordCreationException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Invoice", newRecordID, newRecordNo, newRecordCreationException);
+
+            // try to create new lead
+            StatusLabel.Text = "Creating new lead . . ."; this.Refresh();
+            newRecordCreationException = null;
+            newRecordID = null;
+            newRecordNo = null;
+            try
+            {
+                VTigerLead newLead = api.AddLead("TestLeadFamilyName " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), "TestLeadCompany", api.UserID);
+                newRecordID = newLead.id;
+                newRecordNo = newLead.lead_no;
+            }
+            catch (Exception ex) { newRecordCreationException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Leads", newRecordID, newRecordNo, newRecordCreationException);
+
+            // don't try to create new ModComment
+
+            // try to create new PBXManager
+            StatusLabel.Text = "Creating new PBXManager . . ."; this.Refresh();
+            newRecordCreationException = null;
+            newRecordID = null;
+            newRecordNo = null;
+            try
+            {
+                VTigerPBXManager newPBXManager = api.AddPBXManager("TestPBXManagerCallFrom " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), "TestPBXManagerCallTo");
+                newRecordID = newPBXManager.id;
+                newRecordNo = "N/A";
+            }
+            catch (Exception ex) { newRecordCreationException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "PBXManager", newRecordID, newRecordNo, newRecordCreationException);
+
+            // try to create new potential
+            StatusLabel.Text = "Creating new potential . . ."; this.Refresh();
+            newRecordCreationException = null;
+            newRecordID = null;
+            newRecordNo = null;
+            try
+            {
+                VTigerPotential newPotential = api.AddPotential("TestPotential " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), "RelatedTo", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), Sales_stage.Needs_Analysis, api.UserID);
+                newRecordID = newPotential.id;
+                newRecordNo = newPotential.potential_no;
+            }
+            catch (Exception ex) { newRecordCreationException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Potentials", newRecordID, newRecordNo, newRecordCreationException);
+
+            // try to create new PriceBook
+            StatusLabel.Text = "Creating new pricebook . . ."; this.Refresh();
+            newRecordCreationException = null;
+            newRecordID = null;
+            newRecordNo = null;
+            try
+            {
+                VTigerPriceBook newPriceBook = api.AddPriceBook("TestPriceBook " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), api.UserID);
+                newRecordID = newPriceBook.id;
+                newRecordNo = newPriceBook.pricebook_no;
+            }
+            catch (Exception ex) { newRecordCreationException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "PriceBooks", newRecordID, newRecordNo, newRecordCreationException);
+
+            // try to create new Product
+            StatusLabel.Text = "Creating new product . . ."; this.Refresh();
+            newRecordCreationException = null;
+            newRecordID = null;
+            newRecordNo = null;
+            try
+            {
+                VTigerProduct newProduct = api.AddProduct("TestProduct " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"));
+                newRecordID = newProduct.id;
+                newRecordNo = newProduct.product_no;
+            }
+            catch (Exception ex) { newRecordCreationException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Products", newRecordID, newRecordNo, newRecordCreationException);
+
+            // try to create new project
+            // BUT: AddProject not available!!!
+            //StatusLabel.Text = "Creating new project . . ."; this.Refresh();
+            //newRecordCreationException = null;
+            //newRecordID = null;
+            //newRecordNo = null;
+            //try
+            //{
+            //    VTigerProject newProject = api.AddProject("TestProject " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), api.UserID);
+            //    newRecordID = newProject.id;
+            //    newRecordNo = newProject.project_no;
+            //}
+            //catch (Exception ex) { newRecordCreationException = ex; }
+            //newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Project", newRecordID, newRecordNo, newRecordCreationException);
+
+            // don't try to create new ProjectMileStone
+            // don't try to create new ProjectTask
+
+            // try to create new PurchaseOrder
+            StatusLabel.Text = "Creating new purchase order . . ."; this.Refresh();
+            newRecordCreationException = null;
+            newRecordID = null;
+            newRecordNo = null;
+            try
+            {
+                VTigerPurchaseOrder newPurchaseOrder = api.AddPurchaseOrder("TestPurchaseOrder " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), "VendorID", PoStatus.Created, "TestBillStreet", "TestShippingStreet", api.UserID);
+                newRecordID = newPurchaseOrder.id;
+                newRecordNo = newPurchaseOrder.purchaseorder_no;
+            }
+            catch (Exception ex) { newRecordCreationException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "PurchaseOrder", newRecordID, newRecordNo, newRecordCreationException);
+
+            // try to create new quote
+            StatusLabel.Text = "Creating new quote . . ."; this.Refresh();
+            newRecordCreationException = null;
+            newRecordID = null;
+            newRecordNo = null;
+            try
+            {
+                VTigerQuote newQuote = api.AddQuote("TestQuote " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), Quotestage.Created, "TestBillStreet", "TestShippingStreet", "TestAccountID", api.UserID);
+                newRecordID = newQuote.id;
+                newRecordNo = newQuote.quote_no;
+            }
+            catch (Exception ex) { newRecordCreationException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Quotes", newRecordID, newRecordNo, newRecordCreationException);
+
+            // try to create new salesorder
+            StatusLabel.Text = "Creating new salesorder . . ."; this.Refresh();
+            newRecordCreationException = null;
+            newRecordID = null;
+            newRecordNo = null;
+            try
+            {
+                VTigerSalesOrder newSalesOrder = api.AddSalesOrder("TestFamilyName " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), SoStatus.Created, "TestBillStreet", "TestShippingStreet", Invoicestatus.Created, "TestAccountID", api.UserID);
+                newRecordID = newSalesOrder.id;
+                newRecordNo = newSalesOrder.salesorder_no;
+            }
+            catch (Exception ex) { newRecordCreationException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "SalesOrders", newRecordID, newRecordNo, newRecordCreationException);
+
+            // try to create new ServiceContract
+            StatusLabel.Text = "Creating new vendor . . ."; this.Refresh();
+            newRecordCreationException = null;
+            newRecordID = null;
+            newRecordNo = null;
+            try
+            {
+                VTigerServiceContract newServiceContract = api.AddServiceContract("TestServiceContract " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), api.UserID);
+                newRecordID = newServiceContract.id;
+                newRecordNo = newServiceContract.contract_no;
+            }
+            catch (Exception ex) { newRecordCreationException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "ServiceContracts", newRecordID, newRecordNo, newRecordCreationException);
+
+            // try to create new Service
+            StatusLabel.Text = "Creating new vendor . . ."; this.Refresh();
+            newRecordCreationException = null;
+            newRecordID = null;
+            newRecordNo = null;
+            try
+            {
+                VTigerService newService = api.AddService("TestService " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"));
+                newRecordID = newService.id;
+                newRecordNo = newService.service_no;
+            }
+            catch (Exception ex) { newRecordCreationException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Services", newRecordID, newRecordNo, newRecordCreationException);
+
+            // don't try to create new SMSNotifier
+
+            // try to create new Vendor
+            StatusLabel.Text = "Creating new vendor . . ."; this.Refresh();
+            newRecordCreationException = null;
+            newRecordID = null;
+            newRecordNo = null;
+            try
+            {
+                VTigerVendor newVendor = api.AddVendor("TestVendor " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"));
+                newRecordID = newVendor.id;
+                newRecordNo = newVendor.vendor_no;
+            }
+            catch (Exception ex) { newRecordCreationException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Vendors", newRecordID, newRecordNo, newRecordCreationException);
+
+            StatusLabel.Text = "Bulk insert completed, see results for success status";
 
             // show results to GUI
             ShowData(results);
@@ -797,8 +1109,10 @@ namespace VTigerManager
             {
                 for (int myCounter = 0; myCounter < 1500; myCounter++)
                 {
+                    StatusLabel.Text = "Bulk creation of new contacts " + (myCounter + 1).ToString() + " / 1500";
                     VTigerContact newContact = api.AddContact("TestFirstName #" + myCounter.ToString(), "TestFamilyName " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), api.UserID);
                 }
+                StatusLabel.Text = "Bulk insert of 1500 contacts completed successfully";
                 MessageBox.Show(this, "Bulk insert of 1500 contacts completed successfully", "Bulk insert - Contacts", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (VTigerApiSessionTimedOutException ex)

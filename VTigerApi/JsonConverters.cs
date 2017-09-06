@@ -54,7 +54,7 @@ namespace VTigerApi
         {
             if (s == "")
                 return 0;
-            return Convert.ToInt32(s);
+            return Convert.ToInt32(s, System.Globalization.CultureInfo.InvariantCulture);
         }
     }
 

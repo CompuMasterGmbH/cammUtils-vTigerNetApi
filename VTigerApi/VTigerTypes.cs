@@ -354,23 +354,38 @@ namespace VTigerApi
         {
             return VTigerType.Undefined;
         }
+        public virtual string RemoteTableName()
+        {
+            return null;
+        }
+        public virtual VTigerEntity CreateNewInstance()
+        {
+            return new VTigerEntity();
+        }
         public string id;
     }
+
 
     /// <summary>
     /// VTiger-Calendar object
     /// </summary>
     public class VTigerCalendar : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerCalendar();
+        }
+        public override string RemoteTableName() { return "Calendar"; }
         public override VTigerType GetElementType() { return VTigerType.Calendar; }
         public VTigerCalendar() { }
-        public VTigerCalendar(string subject, string assigned_user_id, string date_start, string due_date, TaskStatus taskstatus)
+        public VTigerCalendar(string subject, string assigned_user_id, string date_start, string time_start, string due_date, TaskStatus taskstatus)
         {
             this.subject = subject;
             this.assigned_user_id = assigned_user_id;
             this.date_start = date_start;
             this.due_date = due_date;
             this.taskstatus = taskstatus;
+            this.time_start = time_start;
         }
         public string subject; //mandatory
         public string assigned_user_id; //mandatory
@@ -402,6 +417,11 @@ namespace VTigerApi
     /// </summary>
     public class VTigerLead : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerLead();
+        }
+        public override string RemoteTableName() { return "Leads"; }
         public override VTigerType GetElementType() { return VTigerType.Leads; }
         public VTigerLead() { }
         public VTigerLead(string lastname, string company, string assigned_user_id)
@@ -445,6 +465,11 @@ namespace VTigerApi
     /// </summary>
     public class VTigerAccount : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerAccount();
+        }
+        public override string RemoteTableName() { return "Accounts"; }
         public override VTigerType GetElementType() { return VTigerType.Accounts; }
         public VTigerAccount() { }
         public VTigerAccount(string accountname, string assigned_user_id)
@@ -496,6 +521,11 @@ namespace VTigerApi
     /// </summary>
     public class VTigerContact : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerContact();
+        }
+        public override string RemoteTableName() { return "Contacts"; }
         public override VTigerType GetElementType() { return VTigerType.Contacts; }
         public VTigerContact() { }
         public VTigerContact(string lastname, string assigned_user_id)
@@ -556,6 +586,11 @@ namespace VTigerApi
     /// </summary>
     public class VTigerPotential : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerPotential();
+        }
+        public override string RemoteTableName() { return "Potentials"; }
         public override VTigerType GetElementType() { return VTigerType.Potentials; }
         public VTigerPotential() { }
         public VTigerPotential(string potentialname, string related_to, string closingdate, Sales_stage sales_stage, string assigned_user_id)
@@ -588,11 +623,17 @@ namespace VTigerApi
     /// </summary>
     public class VTigerProduct : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerProduct();
+        }
+        public override string RemoteTableName() { return "Products"; }
         public override VTigerType GetElementType() { return VTigerType.Products; }
         public VTigerProduct() { }
-        public VTigerProduct(string productname)
+        public VTigerProduct(string productname, string assigned_user_id)
         {
             this.productname = productname;
+            this.assigned_user_id = assigned_user_id;
         }
         public string productname; //mandatory
         public string product_no;
@@ -613,6 +654,7 @@ namespace VTigerApi
         public string glacct;
         public DateTime createdtime;
         public DateTime modifiedtime;
+        public string modifiedby;
         public double unit_price;
         public double commissionrate;
         public string taxclass;
@@ -620,9 +662,11 @@ namespace VTigerApi
         public double qty_per_unit;
         public double qtyinstock;
         public int reorderlevel;
-        public string assigned_user_id;
+        public string assigned_user_id; //mandatory
         public int qtyindemand;
         public string description;
+        public string imagename;
+        public string purchase_cost;
     }
 
     /// <summary>
@@ -630,6 +674,11 @@ namespace VTigerApi
     /// </summary>
     public class VTigerDocument : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerDocument();
+        }
+        public override string RemoteTableName() { return "Documents"; }
         public override VTigerType GetElementType() { return VTigerType.Documents; }
         public VTigerDocument() { }
         public VTigerDocument(string notes_title, string assigned_user_id)
@@ -658,6 +707,11 @@ namespace VTigerApi
     /// </summary>
     public class VTigerEmail : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerEmail();
+        }
+        public override string RemoteTableName() { return "Emails"; }
         public override VTigerType GetElementType() { return VTigerType.Emails; }
         public VTigerEmail() { }
         public VTigerEmail(string subject, DateTime date_start, string from_email, string[] saved_toid, string assigned_user_id)
@@ -695,6 +749,11 @@ namespace VTigerApi
     /// </summary>
     public class VTigerHelpDesk : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerHelpDesk();
+        }
+        public override string RemoteTableName() { return "HelpDesk"; }
         public override VTigerType GetElementType() { return VTigerType.HelpDesk; }
         public VTigerHelpDesk() { }
         public VTigerHelpDesk(string assigned_user_id, Ticketstatus ticketstatus, string ticket_title)
@@ -726,6 +785,11 @@ namespace VTigerApi
     /// </summary>
     public class VTigerFaq : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerFaq();
+        }
+        public override string RemoteTableName() { return "Faq"; }
         public override VTigerType GetElementType() { return VTigerType.Faq; }
         public VTigerFaq() { }
         public VTigerFaq(Faqstatus faqstatus, string question, string faq_answer)
@@ -749,11 +813,17 @@ namespace VTigerApi
     /// </summary>
     public class VTigerVendor : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerVendor();
+        }
+        public override string RemoteTableName() { return "Vendors"; }
         public override VTigerType GetElementType() { return VTigerType.Vendors; }
         public VTigerVendor() { }
-        public VTigerVendor(string vendorname)
+        public VTigerVendor(string vendorname, string assigned_user_id)
         {
             this.vendorname = vendorname;
+            this.assigned_user_id = assigned_user_id;
         }
         public string vendorname; //mandatory
         public string vendor_no;
@@ -764,6 +834,7 @@ namespace VTigerApi
         public string category;
         public DateTime createdtime;
         public DateTime modifiedtime;
+        public string modifiedby;
         public string street;
         public string pobox;
         public string city;
@@ -771,6 +842,7 @@ namespace VTigerApi
         public string postalcode;
         public string country;
         public string description;
+        public string assigned_user_id;      
     }
 
     /// <summary>
@@ -778,6 +850,11 @@ namespace VTigerApi
     /// </summary>
     public class VTigerPriceBook : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerPriceBook();
+        }
+        public override string RemoteTableName() { return "PriceBooks"; }
         public override VTigerType GetElementType() { return VTigerType.PriceBooks; }
         public VTigerPriceBook() { }
         public VTigerPriceBook(string bookname, string currency_id)
@@ -799,6 +876,11 @@ namespace VTigerApi
     /// </summary>
     public class VTigerQuote : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerQuote();
+        }
+        public override string RemoteTableName() { return "Quotes"; }
         public override VTigerType GetElementType() { return VTigerType.Quotes; }
         public VTigerQuote() { }
         public VTigerQuote(string subject, Quotestage quotestage, string bill_street, 
@@ -866,6 +948,11 @@ namespace VTigerApi
     /// </summary>
     public class VTigerPurchaseOrder : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerPurchaseOrder();
+        }
+        public override string RemoteTableName() { return "PurchaseOrder"; }
         public override VTigerType GetElementType() { return VTigerType.PurchaseOrder; }
         public VTigerPurchaseOrder() { }
         public VTigerPurchaseOrder(string subject, string vendor_id, PoStatus postatus,
@@ -936,6 +1023,11 @@ namespace VTigerApi
     /// </summary>
     public class VTigerSalesOrder : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerSalesOrder();
+        }
+        public override string RemoteTableName() { return "SalesOrder"; }
         public override VTigerType GetElementType() { return VTigerType.SalesOrder; }
         public VTigerSalesOrder() { }
         public VTigerSalesOrder(string subject, SoStatus sostatus, string bill_street, 
@@ -1014,6 +1106,11 @@ namespace VTigerApi
     /// </summary>
     public class VTigerInvoice : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerInvoice();
+        }
+        public override string RemoteTableName() { return "Invoice"; }
         public override VTigerType GetElementType() { return VTigerType.Invoice; }
         public VTigerInvoice() { }
         public VTigerInvoice(string subject, string bill_street, string ship_street, 
@@ -1084,6 +1181,11 @@ namespace VTigerApi
     /// </summary>
     public class VTigerCampaign : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerCampaign();
+        }
+        public override string RemoteTableName() { return "Campaigns"; }
         public override VTigerType GetElementType() { return VTigerType.Campaigns; }
         public VTigerCampaign() { }
         public VTigerCampaign(string campaignname, DateTime closingDate, string assigned_user_id)
@@ -1123,6 +1225,11 @@ namespace VTigerApi
     /// </summary>
     public class VTigerEvent : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerEvent();
+        }
+        public override string RemoteTableName() { return "Events"; }
         public override VTigerType GetElementType() { return VTigerType.Events; }
         public VTigerEvent() { }
         public VTigerEvent(string subject, string date_start, string time_start, string due_date, 
@@ -1168,6 +1275,11 @@ namespace VTigerApi
     /// </summary>
     public class VTigerUser : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerUser();
+        }
+        public override string RemoteTableName() { return "User"; }
         public override VTigerType GetElementType() { return VTigerType.Users; }
         public VTigerUser() { }
         public VTigerUser(string user_name, string user_password, string confirm_password, string last_name, string roleid, string email1)
@@ -1224,15 +1336,24 @@ namespace VTigerApi
     /// </summary>
     public class VTigerPBXManager : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerPBXManager();
+        }
+        public override string RemoteTableName() { return "PBXManager"; }
         public override VTigerType GetElementType() { return VTigerType.PBXManager; }
         public VTigerPBXManager() { }
-        public VTigerPBXManager(string callfrom, string callto)
+        public VTigerPBXManager(string customernumber, string callfrom, string callto, string assigned_user_id)
         {
             this.callfrom = callfrom;
             this.callto = callto;
+            this.customernumber = customernumber;
+            this.assigned_user_id = assigned_user_id;
         }
         public string callfrom; //mandatory
         public string callto; //mandatory
+        public string customernumber; //mandatory
+        public string assigned_user_id; //mandatory
         public string timeofcall;
         public string status;
     }
@@ -1242,6 +1363,11 @@ namespace VTigerApi
     /// </summary>
     public class VTigerServiceContract : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerServiceContract();
+        }
+        public override string RemoteTableName() { return "ServiceContracts"; }
         public override VTigerType GetElementType() { return VTigerType.ServiceContracts; }
         public VTigerServiceContract() { }
         public VTigerServiceContract(string subject, string assigned_user_id)
@@ -1274,6 +1400,11 @@ namespace VTigerApi
     /// </summary>
     public class VTigerService : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerService();
+        }
+        public override string RemoteTableName() { return "Services"; }
         public override VTigerType GetElementType() { return VTigerType.Services; }
         public VTigerService() { }
         public VTigerService(string servicename)
@@ -1305,6 +1436,11 @@ namespace VTigerApi
     /// </summary>
     public class VTigerAsset : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerAsset();
+        }
+        public override string RemoteTableName() { return "Assets"; }
         public override VTigerType GetElementType() { return VTigerType.Assets; }
         public VTigerAsset() { }
         public VTigerAsset(string product, string serialnumber, string datesold, 
@@ -1343,6 +1479,11 @@ namespace VTigerApi
     /// </summary>
     public class VTigerModComment : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerModComment();
+        }
+        public override string RemoteTableName() { return "ModComments"; }
         public override VTigerType GetElementType() { return VTigerType.ModComments; }
         public VTigerModComment() { }
         public VTigerModComment(string commentcontent, string assigned_user_id, string related_to)
@@ -1365,6 +1506,11 @@ namespace VTigerApi
     /// </summary>
     public class VTigerProjectMilestone : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerProjectMilestone();
+        }
+        public override string RemoteTableName() { return "ProjectMilestone"; }
         public override VTigerType GetElementType() { return VTigerType.ProjectMilestone; }
         public VTigerProjectMilestone() { }
         public VTigerProjectMilestone(string projectmilestonename, string projectid, string assigned_user_id)
@@ -1389,6 +1535,11 @@ namespace VTigerApi
     /// </summary>
     public class VTigerProjectTask : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerProjectTask();
+        }
+        public override string RemoteTableName() { return "ProjectTask"; }
         public override VTigerType GetElementType() { return VTigerType.ProjectTask; }
         public VTigerProjectTask() { }
         public VTigerProjectTask(string projecttaskname, string projectid, string assigned_user_id)
@@ -1418,6 +1569,11 @@ namespace VTigerApi
     /// </summary>
     public class VTigerProject : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerProject();
+        }
+        public override string RemoteTableName() { return "Project"; }
         public override VTigerType GetElementType() { return VTigerType.Project; }
         public VTigerProject() { }
         public VTigerProject(string projectname, string assigned_user_id)
@@ -1448,6 +1604,11 @@ namespace VTigerApi
     /// </summary>
     public class VTigerSMSNotifier : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerSMSNotifier();
+        }
+        public override string RemoteTableName() { return "SMSNotifier"; }
         public override VTigerType GetElementType() { return VTigerType.SMSNotifier; }
         public VTigerSMSNotifier() { }
         public VTigerSMSNotifier(string assigned_user_id, string message)
@@ -1466,6 +1627,11 @@ namespace VTigerApi
     /// </summary>
     public class VTigerGroup : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerGroup();
+        }
+        public override string RemoteTableName() { return "Groups"; }
         public override VTigerType GetElementType() { return VTigerType.Groups; }
         public string groupname;
         public string description;
@@ -1476,6 +1642,11 @@ namespace VTigerApi
     /// </summary>
     public class VTigerCurrency : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerCurrency();
+        }
+        public override string RemoteTableName() { return "Currency"; }
         public override VTigerType GetElementType() { return VTigerType.Currency; }
         public VTigerCurrency() { }
         public VTigerCurrency(string defaultid, int deleted)
@@ -1497,6 +1668,11 @@ namespace VTigerApi
     /// </summary>
     public class VTigerDocumentFolder : VTigerEntity
     {
+        public override VTigerEntity CreateNewInstance()
+        {
+            return (VTigerEntity)new VTigerDocumentFolder();
+        }
+        public override string RemoteTableName() { return "DocumentFolders"; }
         public override VTigerType GetElementType() { return VTigerType.DocumentFolders; }
         public VTigerDocumentFolder() { }
         public VTigerDocumentFolder(string foldername, string createdby)

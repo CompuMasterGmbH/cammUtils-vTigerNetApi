@@ -449,6 +449,20 @@ namespace VTigerApi
             return VTiger_Query<T[]>(query);
         }
 
+        public T[] Query<T>() where T : VTigerEntity
+        {
+            return Query<T>(0, System.Int32.MaxValue);
+        }
+
+        public T[] Query<T>(int firstRowIndex, int maxNumberOfRecords) where T : VTigerEntity
+        {
+            T instance = (T)Activator.CreateInstance(typeof(T));
+            string remoteTableName = instance.RemoteTableName();
+            string limitClause = " LIMIT " + firstRowIndex.ToString() + ", " + maxNumberOfRecords.ToString();
+            string sql = "SELECT * FROM " + remoteTableName + limitClause + ";";
+            return VTiger_Query<T[]>(sql);
+        }
+
         /// <summary>
         /// Performs a query on the VTiger database and converts the result into a DataTable
         /// </summary>
@@ -990,6 +1004,7 @@ namespace VTigerApi
                 subject,
                 user_id,
                 DateTimeToVtDate(date_start),
+                DateTimeToVtTime(date_start),
                 DateTimeToVtDate(due_date),
                 taskStatus);
             return Create<VTigerCalendar>(element);
@@ -1034,9 +1049,9 @@ namespace VTigerApi
             return Create<VTigerPotential>(element);
         }
 
-        public VTigerProduct AddProduct(string productname)
+        public VTigerProduct AddProduct(string productname, string assigned_user_id)
         {
-            return Create<VTigerProduct>(new VTigerProduct(productname));
+            return Create<VTigerProduct>(new VTigerProduct(productname, assigned_user_id));
         }
 
         public VTigerDocument AddDocument(string notes_title, string assigned_user_id)
@@ -1077,9 +1092,9 @@ namespace VTigerApi
             return Create<VTigerFaq>(element);
         }
 
-        public VTigerVendor AddVendor(string vendorname)
+        public VTigerVendor AddVendor(string vendorname, string assigned_user_id)
         {
-            return Create<VTigerVendor>(new VTigerVendor(vendorname));
+            return Create<VTigerVendor>(new VTigerVendor(vendorname, assigned_user_id));
         }
 
         public VTigerPriceBook AddPriceBook(string bookname, string currency_id)
@@ -1168,11 +1183,13 @@ namespace VTigerApi
             return Create<VTigerEvent>(element);
         }
 
-        public VTigerPBXManager AddPBXManager(string callfrom, string callto)
+        public VTigerPBXManager AddPBXManager(string customernumber, string callfrom, string callto, string assigned_user_id)
         {
             VTigerPBXManager element = new VTigerPBXManager(
+                customernumber,
                 callfrom,
-                callto);
+                callto,
+                assigned_user_id);
             return Create<VTigerPBXManager>(element);
         }
 
@@ -1277,7 +1294,8 @@ namespace VTigerApi
             }
 
             try
-            { // get the response
+            { 
+                // get the response
                 WebResponse webResponse = webRequest.GetResponse();
                 if (webResponse == null)
                 { return null; }

@@ -68,17 +68,19 @@
             this.toolStripComboBoxPageSize = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripSeparatorExport = new System.Windows.Forms.ToolStripSeparator();
             this.BtnExportTable = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparatorMetaInfos = new System.Windows.Forms.ToolStripSeparator();
+            this.CompareLocalVsRemoteTableButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonTableDescription = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparatorServerSession = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabelSessionID = new System.Windows.Forms.ToolStripLabel();
             this.textBoxSessionID = new System.Windows.Forms.ToolStripTextBox();
-            this.CompareLocalVsRemoteTableButton = new System.Windows.Forms.ToolStripButton();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.tableList = new System.Windows.Forms.TreeView();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.loadThread = new System.ComponentModel.BackgroundWorker();
-            this.toolStripSeparatorServerSession = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparatorMetaInfos = new System.Windows.Forms.ToolStripSeparator();
+            this.testsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.queryFromAllRemoteTablesWithoutErrorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.MainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
@@ -92,7 +94,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.newElementToolStripMenuItem,
-            this.optionsToolStripMenuItem});
+            this.optionsToolStripMenuItem,
+            this.testsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(944, 24);
@@ -426,10 +429,10 @@
             this.BtnPageLast.Size = new System.Drawing.Size(27, 19);
             this.BtnPageLast.Text = ">>";
             // 
-            // toolStripLabel4
+            // toolStripLabelPagingSize
             // 
             this.toolStripLabelPagingSize.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripLabelPagingSize.Name = "toolStripLabel4";
+            this.toolStripLabelPagingSize.Name = "toolStripLabelPagingSize";
             this.toolStripLabelPagingSize.Size = new System.Drawing.Size(60, 15);
             this.toolStripLabelPagingSize.Text = "Page limit";
             // 
@@ -463,15 +466,35 @@
             this.BtnExportTable.Text = "Export";
             this.BtnExportTable.Click += new System.EventHandler(this.BtnExportTable_Click);
             // 
-            // toolStripButton2
+            // toolStripSeparatorMetaInfos
+            // 
+            this.toolStripSeparatorMetaInfos.Name = "toolStripSeparatorMetaInfos";
+            this.toolStripSeparatorMetaInfos.Size = new System.Drawing.Size(6, 23);
+            // 
+            // CompareLocalVsRemoteTableButton
+            // 
+            this.CompareLocalVsRemoteTableButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.CompareLocalVsRemoteTableButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.CompareLocalVsRemoteTableButton.Name = "CompareLocalVsRemoteTableButton";
+            this.CompareLocalVsRemoteTableButton.Size = new System.Drawing.Size(172, 19);
+            this.CompareLocalVsRemoteTableButton.Text = "Compare local vs remote table";
+            this.CompareLocalVsRemoteTableButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.CompareLocalVsRemoteTableButton.Click += new System.EventHandler(this.CompareLocalVsRemoteTableButton_Click);
+            // 
+            // toolStripButtonTableDescription
             // 
             this.toolStripButtonTableDescription.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonTableDescription.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButtonTableDescription.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonTableDescription.Image")));
             this.toolStripButtonTableDescription.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonTableDescription.Name = "toolStripButton2";
+            this.toolStripButtonTableDescription.Name = "toolStripButtonTableDescription";
             this.toolStripButtonTableDescription.Size = new System.Drawing.Size(85, 19);
             this.toolStripButtonTableDescription.Text = "Describe table";
             this.toolStripButtonTableDescription.Click += new System.EventHandler(this.toolStripButtonTableDescription_Click);
+            // 
+            // toolStripSeparatorServerSession
+            // 
+            this.toolStripSeparatorServerSession.Name = "toolStripSeparatorServerSession";
+            this.toolStripSeparatorServerSession.Size = new System.Drawing.Size(6, 23);
             // 
             // toolStripLabelSessionID
             // 
@@ -484,16 +507,6 @@
             // 
             this.textBoxSessionID.Name = "textBoxSessionID";
             this.textBoxSessionID.Size = new System.Drawing.Size(100, 23);
-            // 
-            // CompareLocalVsRemoteTableButton
-            // 
-            this.CompareLocalVsRemoteTableButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.CompareLocalVsRemoteTableButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.CompareLocalVsRemoteTableButton.Name = "CompareLocalVsRemoteTableButton";
-            this.CompareLocalVsRemoteTableButton.Size = new System.Drawing.Size(172, 19);
-            this.CompareLocalVsRemoteTableButton.Text = "Compare local vs remote table";
-            this.CompareLocalVsRemoteTableButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.CompareLocalVsRemoteTableButton.Click += new System.EventHandler(this.CompareLocalVsRemoteTableButton_Click);
             // 
             // splitter1
             // 
@@ -528,15 +541,20 @@
             this.StatusLabel.Size = new System.Drawing.Size(10, 17);
             this.StatusLabel.Text = " ";
             // 
-            // toolStripSeparatorServerSession
+            // testsToolStripMenuItem
             // 
-            this.toolStripSeparatorServerSession.Name = "toolStripSeparatorServerSession";
-            this.toolStripSeparatorServerSession.Size = new System.Drawing.Size(6, 23);
+            this.testsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.queryFromAllRemoteTablesWithoutErrorsToolStripMenuItem});
+            this.testsToolStripMenuItem.Name = "testsToolStripMenuItem";
+            this.testsToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
+            this.testsToolStripMenuItem.Text = "Tests";
             // 
-            // toolStripSeparatorMetaInfos
+            // queryFromAllRemoteTablesWithoutErrorsToolStripMenuItem
             // 
-            this.toolStripSeparatorMetaInfos.Name = "toolStripSeparatorMetaInfos";
-            this.toolStripSeparatorMetaInfos.Size = new System.Drawing.Size(6, 23);
+            this.queryFromAllRemoteTablesWithoutErrorsToolStripMenuItem.Name = "queryFromAllRemoteTablesWithoutErrorsToolStripMenuItem";
+            this.queryFromAllRemoteTablesWithoutErrorsToolStripMenuItem.Size = new System.Drawing.Size(302, 22);
+            this.queryFromAllRemoteTablesWithoutErrorsToolStripMenuItem.Text = "Query from all remote tables without errors";
+            this.queryFromAllRemoteTablesWithoutErrorsToolStripMenuItem.Click += new System.EventHandler(this.queryFromAllRemoteTablesWithoutErrorsToolStripMenuItem_Click);
             // 
             // VTigerMan
             // 
@@ -620,6 +638,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparatorPaging;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparatorMetaInfos;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparatorServerSession;
+        private System.Windows.Forms.ToolStripMenuItem testsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem queryFromAllRemoteTablesWithoutErrorsToolStripMenuItem;
     }
 }
 

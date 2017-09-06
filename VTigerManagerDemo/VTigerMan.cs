@@ -763,6 +763,7 @@ namespace VTigerManager
             Exception newRecordCreationException;
             string newRecordID;
             string newRecordNo;
+            this.Cursor = Cursors.WaitCursor;
 
             // try to create new account
             StatusLabel.Text = "Creating new account . . ."; this.Refresh();
@@ -835,6 +836,7 @@ namespace VTigerManager
             newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Contacts", newRecordID, newRecordNo, newRecordCreationException);
 
             // don't try to create new currency
+            
             // don't try to create new documentFolders
 
             // try to create new document
@@ -934,7 +936,7 @@ namespace VTigerManager
             newRecordNo = null;
             try
             {
-                VTigerPBXManager newPBXManager = api.AddPBXManager("TestPBXManagerCallFrom " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), "TestPBXManagerCallTo");
+                VTigerPBXManager newPBXManager = api.AddPBXManager("TestCustomerNo", "TestPBXManagerCallFrom " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), "TestPBXManagerCallTo", api.UserID);
                 newRecordID = newPBXManager.id;
                 newRecordNo = "N/A";
             }
@@ -962,7 +964,9 @@ namespace VTigerManager
             newRecordNo = null;
             try
             {
-                VTigerPriceBook newPriceBook = api.AddPriceBook("TestPriceBook " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), api.UserID);
+                //VTigerCurrency currency = api.Query<VTigerCurrency>("SELECT * FROM Currency LIMIT 0, 1")[0];
+                VTigerCurrency currency = api.Query<VTigerCurrency>(0, 1)[0];
+                VTigerPriceBook newPriceBook = api.AddPriceBook("TestPriceBook " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), currency.id);
                 newRecordID = newPriceBook.id;
                 newRecordNo = newPriceBook.pricebook_no;
             }
@@ -976,7 +980,7 @@ namespace VTigerManager
             newRecordNo = null;
             try
             {
-                VTigerProduct newProduct = api.AddProduct("TestProduct " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"));
+                VTigerProduct newProduct = api.AddProduct("TestProduct " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), api.UserID);
                 newRecordID = newProduct.id;
                 newRecordNo = newProduct.product_no;
             }
@@ -1044,21 +1048,22 @@ namespace VTigerManager
             newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "SalesOrders", newRecordID, newRecordNo, newRecordCreationException);
 
             // try to create new ServiceContract
-            StatusLabel.Text = "Creating new vendor . . ."; this.Refresh();
-            newRecordCreationException = null;
-            newRecordID = null;
-            newRecordNo = null;
-            try
-            {
-                VTigerServiceContract newServiceContract = api.AddServiceContract("TestServiceContract " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), api.UserID);
-                newRecordID = newServiceContract.id;
-                newRecordNo = newServiceContract.contract_no;
-            }
-            catch (Exception ex) { newRecordCreationException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "ServiceContracts", newRecordID, newRecordNo, newRecordCreationException);
+            //usually times out with vtiger V7.0 --> temporarily disabled code
+            //StatusLabel.Text = "Creating new service contract . . ."; this.Refresh();
+            //newRecordCreationException = null;
+            //newRecordID = null;
+            //newRecordNo = null;
+            //try
+            //{
+            //    VTigerServiceContract newServiceContract = api.AddServiceContract("TestServiceContract " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), api.UserID);
+            //    newRecordID = newServiceContract.id;
+            //    newRecordNo = newServiceContract.contract_no;
+            //}
+            //catch (Exception ex) { newRecordCreationException = ex; }
+            //newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "ServiceContracts", newRecordID, newRecordNo, newRecordCreationException);
 
             // try to create new Service
-            StatusLabel.Text = "Creating new vendor . . ."; this.Refresh();
+            StatusLabel.Text = "Creating new service . . ."; this.Refresh();
             newRecordCreationException = null;
             newRecordID = null;
             newRecordNo = null;
@@ -1080,17 +1085,18 @@ namespace VTigerManager
             newRecordNo = null;
             try
             {
-                VTigerVendor newVendor = api.AddVendor("TestVendor " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"));
+                VTigerVendor newVendor = api.AddVendor("TestVendor " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), api.UserID);
                 newRecordID = newVendor.id;
                 newRecordNo = newVendor.vendor_no;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
             newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Vendors", newRecordID, newRecordNo, newRecordCreationException);
 
-            StatusLabel.Text = "Bulk insert completed, see results for success status";
-
             // show results to GUI
             ShowData(results);
+            this.Cursor = Cursors.Default;
+            StatusLabel.Text = "Bulk insert completed, see results for success status";
+            MessageBox.Show(this, "Bulk insert completed, see results for success status", "Bulk insert - all available item types", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void newRecordForEveryTypeToolStripMenuItem_AddResultRecord(System.Data.DataTable resultsTable, string typeName, string primaryKeyID, string primaryKeyNo, Exception ex)
@@ -1105,6 +1111,7 @@ namespace VTigerManager
 
         private void bulkInsert1500ContactRecordsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.WaitCursor;
             try
             {
                 for (int myCounter = 0; myCounter < 1500; myCounter++)
@@ -1112,22 +1119,26 @@ namespace VTigerManager
                     StatusLabel.Text = "Bulk creation of new contacts " + (myCounter + 1).ToString() + " / 1500";
                     VTigerContact newContact = api.AddContact("TestFirstName #" + myCounter.ToString(), "TestFamilyName " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), api.UserID);
                 }
+                this.Cursor = Cursors.Default;
                 StatusLabel.Text = "Bulk insert of 1500 contacts completed successfully";
                 MessageBox.Show(this, "Bulk insert of 1500 contacts completed successfully", "Bulk insert - Contacts", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (VTigerApiSessionTimedOutException ex)
             {
+                this.Cursor = Cursors.Default;
                 MessageBox.Show(this, ex.ToString(), "ERROR from remote server", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 StatusLabel.Text = "VTiger remote server session timeout error: " + ex.Message;
                 this.loginToolStripMenuItem_Click(null, null);
             }
             catch (VTigerApiException ex)
             {
+                this.Cursor = Cursors.Default;
                 MessageBox.Show(this, ex.ToString(), "ERROR from remote server", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 StatusLabel.Text = "VTiger remote server error: " + ex.Message;
             }
             catch (Exception ex)
             {
+                this.Cursor = Cursors.Default;
                 MessageBox.Show(this, ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 StatusLabel.Text = "Error: " + ex.Message;
             }
@@ -1166,6 +1177,326 @@ namespace VTigerManager
             Properties.Settings.Default["PagingSize"] = size;
             Properties.Settings.Default.Save();
             return result;
+        }
+
+        private void queryFromAllRemoteTablesWithoutErrorsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // prepare result table
+            System.Data.DataTable results = new DataTable("root");
+            results.Columns.Add("TypeName", typeof(string));
+            results.Columns.Add("PrimaryKeyID", typeof(string));
+            results.Columns.Add("PrimaryKeyNo", typeof(string));
+            results.Columns.Add("Exception", typeof(string));
+
+            Exception loadException;
+            this.Cursor = Cursors.WaitCursor;
+
+            // try to load first row of Account
+            StatusLabel.Text = "Loading 1 row of Account . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerAccount>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Account", "", (loadException == null ? "OK" : "Error"), loadException);
+
+            // try to load first row of Asset
+            StatusLabel.Text = "Loading 1 row of Asset . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerAsset>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Asset", "", (loadException == null ? "OK" : "Error"), loadException);
+
+            // try to load first row of Calendar
+            StatusLabel.Text = "Loading 1 row of Calendar . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerCalendar>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Calendar", "", (loadException == null ? "OK" : "Error"), loadException);
+
+            // try to load first row of Campaign
+            StatusLabel.Text = "Loading 1 row of Campaign . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerCampaign>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Campaign", "", (loadException == null ? "OK" : "Error"), loadException);
+
+            // try to load first row of Contact
+            StatusLabel.Text = "Loading 1 row of Contact . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerContact>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Contact", "", (loadException == null ? "OK" : "Error"), loadException);
+
+            // try to load first row of Currency
+            StatusLabel.Text = "Loading 1 row of Currency . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerCurrency>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Currency", "", (loadException == null ? "OK" : "Error"), loadException);
+
+            // try to load first row of Document
+            StatusLabel.Text = "Loading 1 row of Document . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerDocument>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Document", "", (loadException == null ? "OK" : "Error"), loadException);
+
+            // try to load first row of DocumentFolders
+            StatusLabel.Text = "Loading 1 row of DocumentFolders . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerDocumentFolder>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "DocumentFolders", "", (loadException == null ? "OK" : "Error"), loadException);
+
+            // try to load first row of EMail
+            StatusLabel.Text = "Loading 1 row of EMail . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerEmail>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "EMail", "", (loadException == null ? "OK" : "Error"), loadException);
+
+            // try to load first row of Event
+            StatusLabel.Text = "Loading 1 row of Event . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerEvent>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Event", "", (loadException == null ? "OK" : "Error"), loadException);
+
+            // try to load first row of Faq
+            StatusLabel.Text = "Loading 1 row of Faq . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerFaq>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Faq", "", (loadException == null ? "OK" : "Error"), loadException);
+
+            // try to load first row of Group
+            StatusLabel.Text = "Loading 1 row of Group . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerGroup>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Group", "", (loadException == null ? "OK" : "Error"), loadException);
+
+            // try to load first row of HelpDesk
+            StatusLabel.Text = "Loading 1 row of HelpDesk . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerHelpDesk>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "HelpDesk", "", (loadException == null ? "OK" : "Error"), loadException);
+
+            // try to load first row of Invoice
+            StatusLabel.Text = "Loading 1 row of Invoice . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerInvoice>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Invoice", "", (loadException == null ? "OK" : "Error"), loadException);
+
+            // try to load first row of Lead
+            StatusLabel.Text = "Loading 1 row of Lead . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerLead>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Lead", "", (loadException == null ? "OK" : "Error"), loadException);
+
+            // try to load first row of ModComment
+            StatusLabel.Text = "Loading 1 row of ModComment . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerModComment>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "ModComment", "", (loadException == null ? "OK" : "Error"), loadException);
+
+            // try to load first row of PBXManager
+            StatusLabel.Text = "Loading 1 row of PBXManager . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerPBXManager>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "PBXManager", "", (loadException == null ? "OK" : "Error"), loadException);
+            
+            // try to load first row of Potential
+            StatusLabel.Text = "Loading 1 row of Potential . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerPotential>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Potential", "", (loadException == null ? "OK" : "Error"), loadException);
+            
+            // try to load first row of PriceBook
+            StatusLabel.Text = "Loading 1 row of PriceBook . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerPriceBook>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "PriceBook", "", (loadException == null ? "OK" : "Error"), loadException);
+
+            // try to load first row of Product
+            StatusLabel.Text = "Loading 1 row of Product . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerProduct>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Product", "", (loadException == null ? "OK" : "Error"), loadException);
+
+            // try to load first row of Project
+            StatusLabel.Text = "Loading 1 row of Project . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerProject>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Project", "", (loadException == null ? "OK" : "Error"), loadException);
+
+            // try to load first row of ProjectMileStone
+            StatusLabel.Text = "Loading 1 row of ProjectMileStone . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerProjectMilestone>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "ProjectMileStone", "", (loadException == null ? "OK" : "Error"), loadException);
+
+            // try to load first row of ProjectTask
+            StatusLabel.Text = "Loading 1 row of ProjectTask . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerProjectTask>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "ProjectTask", "", (loadException == null ? "OK" : "Error"), loadException);
+
+            // try to load first row of PurchaseOrder
+            StatusLabel.Text = "Loading 1 row of PurchaseOrder . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerPurchaseOrder>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "PurchaseOrder", "", (loadException == null ? "OK" : "Error"), loadException);
+
+            // try to load first row of Quote
+            StatusLabel.Text = "Loading 1 row of Quote . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerQuote>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Quote", "", (loadException == null ? "OK" : "Error"), loadException);
+
+            // try to load first row of SalesOrder
+            StatusLabel.Text = "Loading 1 row of SalesOrder . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerSalesOrder>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "SalesOrder", "", (loadException == null ? "OK" : "Error"), loadException);
+
+            // try to load first row of ServiceContract
+            StatusLabel.Text = "Loading 1 row of ServiceContract . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerServiceContract>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "ServiceContract", "", (loadException == null ? "OK" : "Error"), loadException);
+
+            // try to load first row of Service
+            StatusLabel.Text = "Loading 1 row of Service . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerService>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Service", "", (loadException == null ? "OK" : "Error"), loadException);
+
+            // try to load first row of SMSNotifier
+            StatusLabel.Text = "Loading 1 row of SMSNotifier . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerSMSNotifier>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "SMSNotifier", "", (loadException == null ? "OK" : "Error"), loadException);
+
+            // try to load first row of Vendor
+            StatusLabel.Text = "Loading 1 row of Vendor . . ."; this.Refresh();
+            loadException = null;
+            try
+            {
+                api.Query<VTigerVendor>(0, 1);
+            }
+            catch (Exception ex) { loadException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Vendor", "", (loadException == null ? "OK" : "Error"), loadException);
+            
+            // show results to GUI
+            results.Columns["PrimaryKeyID"].ColumnName = "Status";
+            results.Columns.Remove("PrimaryKeyNo");
+            ShowData(results);
+            this.Cursor = Cursors.Default;
+            StatusLabel.Text = "Query test completed, see results for success status";
         }
     }
 }

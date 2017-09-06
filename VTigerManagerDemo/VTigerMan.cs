@@ -691,9 +691,15 @@ namespace VTigerManager
                         sw.Write(sw.NewLine);
                     }
                 }
+                if (MessageBox.Show(this, "Export to " + fileName + " succeeded.\r\n\r\nWould you like to open the file, now?", "Export", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    System.Diagnostics.Process.Start(fileName);
+                }
             }
-            catch
+            catch (Exception ex)
             {
+                MessageBox.Show(this, ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                StatusLabel.Text = "Error: " + ex.Message;
             }
         }
 

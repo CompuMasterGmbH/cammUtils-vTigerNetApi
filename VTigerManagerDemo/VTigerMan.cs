@@ -52,7 +52,7 @@ namespace VTigerManager
         {
             try
             {
-            dataView.DataSource = api.Describe_DataTable(api.RemoteTables[currentTable].ElementType);
+                dataView.DataSource = api.Describe_DataTable(api.RemoteTables[currentTable].ElementType);
             }
             catch (VTigerApiSessionTimedOutException ex)
             {
@@ -111,6 +111,7 @@ namespace VTigerManager
                 MainPanel.Enabled = true;
                 logoutToolStripMenuItem.Visible = true;
                 loginToolStripMenuItem.Visible = false;
+                toolStripLabelSessionID.Visible = true;
                 textBoxSessionID.Text = api.SessionName;
                 FillRemoteTableList();
             }
@@ -124,6 +125,7 @@ namespace VTigerManager
                 logoutToolStripMenuItem.Visible = false;
                 loginToolStripMenuItem.Visible = true;
                 tableList.Nodes.Clear();
+                toolStripLabelSessionID.Visible = false;
                 textBoxSessionID.Text = "";
                 StatusLabel.Text = "Failed to login: " + ex.Message;
                 this.Refresh();
@@ -176,6 +178,8 @@ namespace VTigerManager
             logoutToolStripMenuItem.Visible = false;
             loginToolStripMenuItem.Visible = true;
             dataView.DataSource = null;
+            toolStripLabelSessionID.Visible = false;
+            textBoxSessionID.Text = "";
             tableList.Nodes.Clear();
             formTitle();
         }
@@ -710,5 +714,46 @@ namespace VTigerManager
             this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Checked = !this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Checked;
             VTiger.IgnoreSslCertificateErrors = this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Checked;
         }
+
+        private void newRecordForEveryTypeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // prepare result table
+            System.Data.DataTable results = new DataTable("root");
+            results.Columns.Add("TypeName", typeof(string));
+            results.Columns.Add("PrimaryKeyID", typeof(string));
+            results.Columns.Add("PrimaryKeyNo", typeof(string));
+            results.Columns.Add("Exception", typeof(string));
+
+            Exception newRecordCreationException;
+            string newRecordID;
+            string newRecordNo;
+
+            // try to create new contact
+            newRecordCreationException = null;
+            newRecordID = null;
+            newRecordNo = null;
+            try
+            {
+                VTigerContact newContact = api.AddContact("TestFirstName", "TestFamilyName " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), api.UserID);
+                newRecordID = newContact.id;
+                newRecordNo = newContact.contact_no;
+            }
+            catch (Exception ex) { newRecordCreationException = ex; }
+            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Contacts", newRecordID, newRecordNo, newRecordCreationException);
+
+            // show results to GUI
+            dataView.DataSource = results;
+        }
+
+        private void newRecordForEveryTypeToolStripMenuItem_AddResultRecord(System.Data.DataTable resultsTable, string typeName, string primaryKeyID, string primaryKeyNo, Exception ex)
+        {
+            System.Data.DataRow NewRow = resultsTable.NewRow();
+            NewRow["TypeName"] = typeName;
+            NewRow["PrimaryKeyID"] = primaryKeyID;
+            NewRow["PrimaryKeyNo"] = primaryKeyNo;
+            NewRow["Exception"] = ex;
+            resultsTable.Rows.Add(NewRow);
+        }
+        
     }
 }

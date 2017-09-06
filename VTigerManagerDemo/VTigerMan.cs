@@ -667,31 +667,9 @@ namespace VTigerManager
         {
             try
             {
-                using (StreamWriter sw = new StreamWriter(fileName, false, System.Text.Encoding.Default))
-                {
-                    int numberOfColumns = datatable.Columns.Count;
-
-                    for (int i = 0; i < numberOfColumns; i++)
-                    {
-                        sw.Write(datatable.Columns[i]);
-                        if (i < numberOfColumns - 1)
-                            sw.Write(seperator);
-                    }
-                    sw.Write(sw.NewLine);
-
-                    foreach (DataRow dr in datatable.Rows)
-                    {
-                        for (int i = 0; i < numberOfColumns; i++)
-                        {
-                            sw.Write(dr[i].ToString());
-
-                            if (i < numberOfColumns - 1)
-                                sw.Write(seperator);
-                        }
-                        sw.Write(sw.NewLine);
-                    }
-                }
-                if (MessageBox.Show(this, "Export to " + fileName + " succeeded.\r\n\r\nWould you like to open the file, now?", "Export", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                CompuMaster.Data.Csv.WriteDataTableToCsvFile(fileName, datatable, true, CompuMaster.Data.Csv.WriteLineEncodings.Default, System.Globalization.CultureInfo.CurrentCulture, "UTF-8");
+                DialogResult UserChoiceOpenFileImmediately = MessageBox.Show(this, "Export to " + fileName + " succeeded.\r\n\r\nWould you like to open the file, now?", "Export", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (UserChoiceOpenFileImmediately == DialogResult.Yes)
                 {
                     System.Diagnostics.Process.Start(fileName);
                 }

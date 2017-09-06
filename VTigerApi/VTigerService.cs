@@ -336,7 +336,7 @@ namespace VTigerApi
         public void Logout()
         {
             VTigerGetJson<JsonObject>("logout",
-                String.Format("sessionName={0}", sessionName), false);
+                String.Format("sessionName={0}", sessionName), true);
             sessionName = null;
             remoteTables = null;
         }

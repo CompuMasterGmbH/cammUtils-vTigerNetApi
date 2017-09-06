@@ -754,6 +754,33 @@ namespace VTigerManager
             NewRow["Exception"] = ex;
             resultsTable.Rows.Add(NewRow);
         }
-        
+
+        private void bulkInsert1500ContactRecordsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                for (int myCounter = 0; myCounter < 1500; myCounter++)
+                {
+                    VTigerContact newContact = api.AddContact("TestFirstName #" + myCounter.ToString(), "TestFamilyName " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), api.UserID);
+                }
+                MessageBox.Show(this, "Bulk insert of 1500 contacts completed successfully", "Bulk insert - Contacts", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (VTigerApiSessionTimedOutException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), "ERROR from remote server", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                StatusLabel.Text = "VTiger remote server session timeout error: " + ex.Message;
+                this.loginToolStripMenuItem_Click(null, null);
+            }
+            catch (VTigerApiException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), "ERROR from remote server", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                StatusLabel.Text = "VTiger remote server error: " + ex.Message;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                StatusLabel.Text = "Error: " + ex.Message;
+            }
+        }
     }
 }

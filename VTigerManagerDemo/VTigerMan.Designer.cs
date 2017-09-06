@@ -76,6 +76,7 @@
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabelSessionID = new System.Windows.Forms.ToolStripLabel();
+            this.bulkInsert1500ContactRecordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.MainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
@@ -134,7 +135,8 @@
             this.MenuItemNewContact,
             this.calendarToolStripMenuItem,
             this.toolStripSeparator1,
-            this.newRecordForEveryTypeToolStripMenuItem});
+            this.newRecordForEveryTypeToolStripMenuItem,
+            this.bulkInsert1500ContactRecordsToolStripMenuItem});
             this.newElementToolStripMenuItem.Name = "newElementToolStripMenuItem";
             this.newElementToolStripMenuItem.Size = new System.Drawing.Size(89, 20);
             this.newElementToolStripMenuItem.Text = "&New element";
@@ -466,8 +468,8 @@
             // newRecordForEveryTypeToolStripMenuItem
             // 
             this.newRecordForEveryTypeToolStripMenuItem.Name = "newRecordForEveryTypeToolStripMenuItem";
-            this.newRecordForEveryTypeToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
-            this.newRecordForEveryTypeToolStripMenuItem.Text = "New record for every type";
+            this.newRecordForEveryTypeToolStripMenuItem.Size = new System.Drawing.Size(269, 22);
+            this.newRecordForEveryTypeToolStripMenuItem.Text = "Bulk insert: new record for every type";
             this.newRecordForEveryTypeToolStripMenuItem.Click += new System.EventHandler(this.newRecordForEveryTypeToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
@@ -510,6 +512,13 @@
             this.toolStripLabelSessionID.Name = "toolStripLabelSessionID";
             this.toolStripLabelSessionID.Size = new System.Drawing.Size(89, 15);
             this.toolStripLabelSessionID.Text = "Remote session";
+            // 
+            // bulkInsert1500ContactRecordsToolStripMenuItem
+            // 
+            this.bulkInsert1500ContactRecordsToolStripMenuItem.Name = "bulkInsert1500ContactRecordsToolStripMenuItem";
+            this.bulkInsert1500ContactRecordsToolStripMenuItem.Size = new System.Drawing.Size(269, 22);
+            this.bulkInsert1500ContactRecordsToolStripMenuItem.Text = "Bulk insert: 1500 contact records";
+            this.bulkInsert1500ContactRecordsToolStripMenuItem.Click += new System.EventHandler(this.bulkInsert1500ContactRecordsToolStripMenuItem_Click);
             // 
             // VTigerMan
             // 
@@ -590,6 +599,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripLabel toolStripLabelSessionID;
+        private System.Windows.Forms.ToolStripMenuItem bulkInsert1500ContactRecordsToolStripMenuItem;
     }
 }
 

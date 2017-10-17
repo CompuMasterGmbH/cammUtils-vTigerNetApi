@@ -50,6 +50,13 @@ If you have any trouble building queries or you have problems regarding the data
 ## About
 This project started as part of an internship and at last, this API would have never existed, if our trainee didn't get that chance by having an internship.
 
+## VTiger demo portals
+To connect your application with a running instance quickly, you might consider using a public VTiger demo portal. Here is a list of external vendors providing a public VTiger demo poral:
+
+* https://demo.vtiger.com/
+* https://www.vtexperts.com/vtiger-7-0-open-source-demo/
+* https://www.bitco4you.de/vtiger-crm/unser-demosystem-fuer-vtiger-6-5
+
 ## Other useful links
 * http://sourceforge.net/projects/vtigercrm/ The previous vtiger project website
 * https://wiki.vtiger.com The official VTiger Wiki
@@ -57,6 +64,6 @@ This project started as part of an internship and at last, this API would have n
 * https://hub.docker.com/r/pimuzzo/vtiger/ Quick guide for a VTiger V6 docker setup to run this tool against a test instance
 
 ## VTiger Version Support
-* V5: not supported / login fails with DATABASE_QUERY_ERROR: Database error while performing required operation
+* V5: supported
 * V6: supported
-* V7: (to be) supported (feedback welcome!)
+* V7: (to be) supported (feedback welcome!) - please report any issues you find!

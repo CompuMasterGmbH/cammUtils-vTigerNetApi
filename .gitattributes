@@ -1,0 +1,4 @@
+*/_CreateNewNuGetPackage/* linguist-vendored
+NDoc/* linguist-vendored
+*.cmd  linguist-vendored
+*.ps1  linguist-vendored

@@ -71,7 +71,7 @@ namespace VTigerUserControls
             }
         }
 
-        private DataTable GenerateKeyValueTable(DataTable inputTable)
+        internal DataTable GenerateKeyValueTable(DataTable inputTable)
         {
             originalTable = inputTable;
             if (inputTable == null)
@@ -100,7 +100,7 @@ namespace VTigerUserControls
             return outputTable;
         }
 
-        private DataTable ReadKeyValueTable(DataTable oldTable, DataTable inputTable)
+        internal DataTable ReadKeyValueTable(DataTable oldTable, DataTable inputTable)
         {
             if (inputTable == null)
                 return null;

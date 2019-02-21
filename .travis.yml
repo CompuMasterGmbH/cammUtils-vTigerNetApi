@@ -1,0 +1,18 @@
+language: csharp
+solution: VTiger.sln
+mono:
+  - latest
+  
+#dotnet: 
+#  - 1.0.1
+#  - 2.0.0-Preview1
+#  - latest
+dist: trusty
+#sudo: required
+#mono: none
+install:
+  - nuget restore VTiger.sln
+#  - nuget install NUnit.Runners -Version 3.4.1 -OutputDirectory testrunner
+script:
+  - xbuild /p:Configuration=Release VTiger.sln
+#  - mono ./testrunner/NUnit.ConsoleRunner.3.4.1/tools/nunit3-console.exe ./CompuMaster.Test.Tools.Data/bin/CompuMaster.Test.Tools.Data.dll

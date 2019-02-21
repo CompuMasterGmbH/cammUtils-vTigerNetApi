@@ -278,7 +278,7 @@ namespace VTigerApi
         {
             string token = GetChallenge(username).token;
 
-            string key = getMd5Hash(token + accessKey);
+            string key = GetMD5Hash(token + accessKey);
 
             VTigerLogin loginResult = VTigerGetJson<VTigerLogin>("login",
                 String.Format("username={0}&accessKey={1}", username, key), true);
@@ -1236,7 +1236,7 @@ namespace VTigerApi
         //====================================================================
         #region Helpers
 
-        private static string getMd5Hash(string input)
+        private static string GetMD5Hash(string input)
         {
             if ((input == null) || (input.Length == 0))
             {

@@ -16,7 +16,7 @@ namespace VTigerUserControls
     {
         bool showKeyValueTable;
 
-        DataTable dataTable
+        public DataTable DataTable
         {
             get
             {
@@ -43,12 +43,12 @@ namespace VTigerUserControls
             }
             set
             {
-                if (showKeyValueTable != value && dataTable != null)
+                if (showKeyValueTable != value && DataTable != null)
                 {
                     if (value)
-                        dataTable = GenerateKeyValueTable(dataTable);
+                        DataTable = GenerateKeyValueTable(DataTable);
                     else
-                        dataTable = ReadKeyValueTable(originalTable, dataTable);
+                        DataTable = ReadKeyValueTable(originalTable, DataTable);
                 }
                 showKeyValueTable = value;
             }
@@ -58,16 +58,16 @@ namespace VTigerUserControls
         {
             get
             {
-                if (showKeyValueTable && dataTable != null)
-                    return ReadKeyValueTable(originalTable, dataTable);
+                if (showKeyValueTable && DataTable != null)
+                    return ReadKeyValueTable(originalTable, DataTable);
                 else
                     return base.DataSource;
             }
             set
             {
                 base.DataSource = value;
-                if (showKeyValueTable && dataTable != null)
-                    dataTable = GenerateKeyValueTable(dataTable);
+                if (showKeyValueTable && DataTable != null)
+                    DataTable = GenerateKeyValueTable(DataTable);
             }
         }
 

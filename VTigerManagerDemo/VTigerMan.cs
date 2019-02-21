@@ -44,13 +44,13 @@ namespace VTigerManager
         private void VTigerMan_Load(object sender, EventArgs e)
         {
             this.toolStripComboBoxPageSize.Text = AssignNewPagingSize((string)Properties.Settings.Default["PagingSize"]);
-            formTitle();
+            FormTitle();
             VTiger.IgnoreSslCertificateErrors = this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Checked;
-            loginToolStripMenuItem_Click(null, null);
+            LoginToolStripMenuItem_Click(null, null);
             ShowData(null);
         }
 
-        private void toolStripButtonTableDescription_Click(object sender, EventArgs e)
+        private void ToolStripButtonTableDescription_Click(object sender, EventArgs e)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace VTigerManager
             {
                 MessageBox.Show(this, ex.ToString(), "ERROR from remote server", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 StatusLabel.Text = "VTiger remote server session timeout error: " + ex.Message;
-                this.loginToolStripMenuItem_Click(null, null);
+                this.LoginToolStripMenuItem_Click(null, null);
             }
             catch (VTigerApiException ex)
             {
@@ -131,15 +131,15 @@ namespace VTigerManager
                 this.Refresh();
                 System.Windows.Forms.MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            formTitle();
+            FormTitle();
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void loginToolStripMenuItem_Click(object sender, EventArgs e)
+        private void LoginToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (LoginWindow login = new LoginWindow())
             {
@@ -154,7 +154,7 @@ namespace VTigerManager
         /// Update the form's title
         /// </summary>
         /// <param name="instanceDescription"></param>
-        private void formTitle()
+        private void FormTitle()
         {
             if (api == null || api.SessionName == null || api.SessionName == "")
             {
@@ -166,7 +166,7 @@ namespace VTigerManager
             }
         }
 
-        private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
+        private void LogoutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
@@ -181,7 +181,7 @@ namespace VTigerManager
             ShowData(null);
             textBoxSessionID.Text = "N/A";
             tableList.Nodes.Clear();
-            formTitle();
+            FormTitle();
         }
 
         //========== treeView1 ==========
@@ -258,7 +258,7 @@ namespace VTigerManager
         //    }
         //}
 
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        private void TreeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             currentTable = e.Node.Text;
             toolStripLabelQueryTable.Text = currentTable;
@@ -342,7 +342,7 @@ namespace VTigerManager
             {
                 MessageBox.Show(this, ex.ToString(), "ERROR from remote server", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 StatusLabel.Text = "VTiger remote server session timeout error: " + ex.Message;
-                this.loginToolStripMenuItem_Click(null, null);
+                this.LoginToolStripMenuItem_Click(null, null);
                 ShowTablesMetaData(null);
             }
             catch (VTigerApiException ex)
@@ -453,7 +453,7 @@ namespace VTigerManager
             return true;
         }
 
-        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void DataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             changed = true;
         }
@@ -524,7 +524,7 @@ namespace VTigerManager
             {
                 MessageBox.Show(this, ex.ToString(), "ERROR from remote server", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 StatusLabel.Text = "VTiger remote server session timeout error: " + ex.Message;
-                this.loginToolStripMenuItem_Click(null, null);
+                this.LoginToolStripMenuItem_Click(null, null);
             }
             catch (VTigerApiException ex)
             {
@@ -599,7 +599,7 @@ namespace VTigerManager
             }
         }
 
-        private void calendarToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CalendarToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
@@ -656,7 +656,7 @@ namespace VTigerManager
             }
         }
 
-        private void dataView_DataSourceChanged(object sender, EventArgs e)
+        private void DataView_DataSourceChanged(object sender, EventArgs e)
         {
             UpdateOderByList();
         }
@@ -731,7 +731,7 @@ namespace VTigerManager
             {
                 MessageBox.Show(this, ex.ToString(), "ERROR from remote server", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 StatusLabel.Text = "VTiger remote server session timeout error: " + ex.Message;
-                this.loginToolStripMenuItem_Click(null, null);
+                this.LoginToolStripMenuItem_Click(null, null);
             }
             catch (VTigerApiException ex)
             {
@@ -745,13 +745,13 @@ namespace VTigerManager
             }
         }
 
-        private void ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem_Click(object sender, EventArgs e)
+        private void IgnoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Checked = !this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Checked;
             VTiger.IgnoreSslCertificateErrors = this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Checked;
         }
 
-        private void newRecordForEveryTypeToolStripMenuItem_Click(object sender, EventArgs e)
+        private void NewRecordForEveryTypeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // prepare result table
             System.Data.DataTable results = new DataTable("root");
@@ -777,7 +777,7 @@ namespace VTigerManager
                 newRecordNo = newAcount.account_no;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Account", newRecordID, newRecordNo, newRecordCreationException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Account", newRecordID, newRecordNo, newRecordCreationException);
 
             // try to create new asset
             StatusLabel.Text = "Creating new asset . . ."; this.Refresh();
@@ -791,7 +791,7 @@ namespace VTigerManager
                 newRecordNo = newAsset.asset_no;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Asset", newRecordID, newRecordNo, newRecordCreationException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Asset", newRecordID, newRecordNo, newRecordCreationException);
 
             // try to create new calendar
             StatusLabel.Text = "Creating new calendar entry . . ."; this.Refresh();
@@ -805,7 +805,7 @@ namespace VTigerManager
                 newRecordNo = "N/A";
             }
             catch (Exception ex) { newRecordCreationException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Calendar", newRecordID, newRecordNo, newRecordCreationException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Calendar", newRecordID, newRecordNo, newRecordCreationException);
 
             // try to create new campaign
             StatusLabel.Text = "Creating new campaign . . ."; this.Refresh();
@@ -819,7 +819,7 @@ namespace VTigerManager
                 newRecordNo = newCampaign.campaign_no;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Campaigns", newRecordID, newRecordNo, newRecordCreationException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Campaigns", newRecordID, newRecordNo, newRecordCreationException);
 
             // try to create new contact
             StatusLabel.Text = "Creating new contact . . ."; this.Refresh();
@@ -833,7 +833,7 @@ namespace VTigerManager
                 newRecordNo = newContact.contact_no;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Contacts", newRecordID, newRecordNo, newRecordCreationException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Contacts", newRecordID, newRecordNo, newRecordCreationException);
 
             // don't try to create new currency
             
@@ -851,7 +851,7 @@ namespace VTigerManager
                 newRecordNo = "N/A";
             }
             catch (Exception ex) { newRecordCreationException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Documents", newRecordID, newRecordNo, newRecordCreationException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Documents", newRecordID, newRecordNo, newRecordCreationException);
 
             // don't try to create new email
 
@@ -867,7 +867,7 @@ namespace VTigerManager
                 newRecordNo = "N/A";
             }
             catch (Exception ex) { newRecordCreationException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Events", newRecordID, newRecordNo, newRecordCreationException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Events", newRecordID, newRecordNo, newRecordCreationException);
 
             // try to create new faq
             StatusLabel.Text = "Creating new faq entry . . ."; this.Refresh();
@@ -881,7 +881,7 @@ namespace VTigerManager
                 newRecordNo = newFaq.faq_no;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Faq", newRecordID, newRecordNo, newRecordCreationException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Faq", newRecordID, newRecordNo, newRecordCreationException);
 
             // don't try to create new group
 
@@ -897,7 +897,7 @@ namespace VTigerManager
                 newRecordNo = newHelpdesk.ticket_no;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "HelpDesk", newRecordID, newRecordNo, newRecordCreationException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "HelpDesk", newRecordID, newRecordNo, newRecordCreationException);
 
             // try to create new invoice
             StatusLabel.Text = "Creating new invoice . . ."; this.Refresh();
@@ -911,7 +911,7 @@ namespace VTigerManager
                 newRecordNo = newInvoice.invoice_no;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Invoice", newRecordID, newRecordNo, newRecordCreationException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Invoice", newRecordID, newRecordNo, newRecordCreationException);
 
             // try to create new lead
             StatusLabel.Text = "Creating new lead . . ."; this.Refresh();
@@ -925,7 +925,7 @@ namespace VTigerManager
                 newRecordNo = newLead.lead_no;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Leads", newRecordID, newRecordNo, newRecordCreationException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Leads", newRecordID, newRecordNo, newRecordCreationException);
 
             // don't try to create new ModComment
 
@@ -941,7 +941,7 @@ namespace VTigerManager
                 newRecordNo = "N/A";
             }
             catch (Exception ex) { newRecordCreationException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "PBXManager", newRecordID, newRecordNo, newRecordCreationException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "PBXManager", newRecordID, newRecordNo, newRecordCreationException);
 
             // try to create new potential
             StatusLabel.Text = "Creating new potential . . ."; this.Refresh();
@@ -955,7 +955,7 @@ namespace VTigerManager
                 newRecordNo = newPotential.potential_no;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Potentials", newRecordID, newRecordNo, newRecordCreationException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Potentials", newRecordID, newRecordNo, newRecordCreationException);
 
             // try to create new PriceBook
             StatusLabel.Text = "Creating new pricebook . . ."; this.Refresh();
@@ -971,7 +971,7 @@ namespace VTigerManager
                 newRecordNo = newPriceBook.pricebook_no;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "PriceBooks", newRecordID, newRecordNo, newRecordCreationException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "PriceBooks", newRecordID, newRecordNo, newRecordCreationException);
 
             // try to create new Product
             StatusLabel.Text = "Creating new product . . ."; this.Refresh();
@@ -985,7 +985,7 @@ namespace VTigerManager
                 newRecordNo = newProduct.product_no;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Products", newRecordID, newRecordNo, newRecordCreationException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Products", newRecordID, newRecordNo, newRecordCreationException);
 
             // try to create new project
             // BUT: AddProject not available!!!
@@ -1017,7 +1017,7 @@ namespace VTigerManager
                 newRecordNo = newPurchaseOrder.purchaseorder_no;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "PurchaseOrder", newRecordID, newRecordNo, newRecordCreationException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "PurchaseOrder", newRecordID, newRecordNo, newRecordCreationException);
 
             // try to create new quote
             StatusLabel.Text = "Creating new quote . . ."; this.Refresh();
@@ -1031,7 +1031,7 @@ namespace VTigerManager
                 newRecordNo = newQuote.quote_no;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Quotes", newRecordID, newRecordNo, newRecordCreationException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Quotes", newRecordID, newRecordNo, newRecordCreationException);
 
             // try to create new salesorder
             StatusLabel.Text = "Creating new salesorder . . ."; this.Refresh();
@@ -1045,7 +1045,7 @@ namespace VTigerManager
                 newRecordNo = newSalesOrder.salesorder_no;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "SalesOrders", newRecordID, newRecordNo, newRecordCreationException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "SalesOrders", newRecordID, newRecordNo, newRecordCreationException);
 
             // try to create new ServiceContract
             //usually times out with vtiger V7.0 --> temporarily disabled code
@@ -1074,7 +1074,7 @@ namespace VTigerManager
                 newRecordNo = newService.service_no;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Services", newRecordID, newRecordNo, newRecordCreationException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Services", newRecordID, newRecordNo, newRecordCreationException);
 
             // don't try to create new SMSNotifier
 
@@ -1090,7 +1090,7 @@ namespace VTigerManager
                 newRecordNo = newVendor.vendor_no;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Vendors", newRecordID, newRecordNo, newRecordCreationException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Vendors", newRecordID, newRecordNo, newRecordCreationException);
 
             // show results to GUI
             ShowData(results);
@@ -1099,7 +1099,7 @@ namespace VTigerManager
             MessageBox.Show(this, "Bulk insert completed, see results for success status", "Bulk insert - all available item types", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void newRecordForEveryTypeToolStripMenuItem_AddResultRecord(System.Data.DataTable resultsTable, string typeName, string primaryKeyID, string primaryKeyNo, Exception ex)
+        private void NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(System.Data.DataTable resultsTable, string typeName, string primaryKeyID, string primaryKeyNo, Exception ex)
         {
             System.Data.DataRow NewRow = resultsTable.NewRow();
             NewRow["TypeName"] = typeName;
@@ -1109,7 +1109,7 @@ namespace VTigerManager
             resultsTable.Rows.Add(NewRow);
         }
 
-        private void bulkInsert1500ContactRecordsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void BulkInsert1500ContactRecordsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
             try
@@ -1128,7 +1128,7 @@ namespace VTigerManager
                 this.Cursor = Cursors.Default;
                 MessageBox.Show(this, ex.ToString(), "ERROR from remote server", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 StatusLabel.Text = "VTiger remote server session timeout error: " + ex.Message;
-                this.loginToolStripMenuItem_Click(null, null);
+                this.LoginToolStripMenuItem_Click(null, null);
             }
             catch (VTigerApiException ex)
             {
@@ -1144,7 +1144,7 @@ namespace VTigerManager
             }
         }
 
-        private void toolStripComboBoxPageSize_SelectedIndexChanged(object sender, EventArgs e)
+        private void ToolStripComboBoxPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             AssignNewPagingSize(this.toolStripComboBoxPageSize.Text);
             if (!(api == null) && !(currentTable == null)) { ShowPage(currentPage); } // refresh current's table view
@@ -1179,7 +1179,7 @@ namespace VTigerManager
             return result;
         }
 
-        private void queryFromAllRemoteTablesWithoutErrorsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void QueryFromAllRemoteTablesWithoutErrorsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // prepare result table
             System.Data.DataTable results = new DataTable("root");
@@ -1199,7 +1199,7 @@ namespace VTigerManager
                 api.Query<VTigerAccount>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Account", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Account", "", (loadException == null ? "OK" : "Error"), loadException);
 
             // try to load first row of Asset
             StatusLabel.Text = "Loading 1 row of Asset . . ."; this.Refresh();
@@ -1209,7 +1209,7 @@ namespace VTigerManager
                 api.Query<VTigerAsset>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Asset", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Asset", "", (loadException == null ? "OK" : "Error"), loadException);
 
             // try to load first row of Calendar
             StatusLabel.Text = "Loading 1 row of Calendar . . ."; this.Refresh();
@@ -1219,7 +1219,7 @@ namespace VTigerManager
                 api.Query<VTigerCalendar>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Calendar", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Calendar", "", (loadException == null ? "OK" : "Error"), loadException);
 
             // try to load first row of Campaign
             StatusLabel.Text = "Loading 1 row of Campaign . . ."; this.Refresh();
@@ -1229,7 +1229,7 @@ namespace VTigerManager
                 api.Query<VTigerCampaign>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Campaign", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Campaign", "", (loadException == null ? "OK" : "Error"), loadException);
 
             // try to load first row of Contact
             StatusLabel.Text = "Loading 1 row of Contact . . ."; this.Refresh();
@@ -1239,7 +1239,7 @@ namespace VTigerManager
                 api.Query<VTigerContact>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Contact", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Contact", "", (loadException == null ? "OK" : "Error"), loadException);
 
             // try to load first row of Currency
             StatusLabel.Text = "Loading 1 row of Currency . . ."; this.Refresh();
@@ -1249,7 +1249,7 @@ namespace VTigerManager
                 api.Query<VTigerCurrency>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Currency", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Currency", "", (loadException == null ? "OK" : "Error"), loadException);
 
             // try to load first row of Document
             StatusLabel.Text = "Loading 1 row of Document . . ."; this.Refresh();
@@ -1259,7 +1259,7 @@ namespace VTigerManager
                 api.Query<VTigerDocument>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Document", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Document", "", (loadException == null ? "OK" : "Error"), loadException);
 
             // try to load first row of DocumentFolders
             StatusLabel.Text = "Loading 1 row of DocumentFolders . . ."; this.Refresh();
@@ -1269,7 +1269,7 @@ namespace VTigerManager
                 api.Query<VTigerDocumentFolder>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "DocumentFolders", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "DocumentFolders", "", (loadException == null ? "OK" : "Error"), loadException);
 
             // try to load first row of EMail
             StatusLabel.Text = "Loading 1 row of EMail . . ."; this.Refresh();
@@ -1279,7 +1279,7 @@ namespace VTigerManager
                 api.Query<VTigerEmail>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "EMail", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "EMail", "", (loadException == null ? "OK" : "Error"), loadException);
 
             // try to load first row of Event
             StatusLabel.Text = "Loading 1 row of Event . . ."; this.Refresh();
@@ -1289,7 +1289,7 @@ namespace VTigerManager
                 api.Query<VTigerEvent>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Event", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Event", "", (loadException == null ? "OK" : "Error"), loadException);
 
             // try to load first row of Faq
             StatusLabel.Text = "Loading 1 row of Faq . . ."; this.Refresh();
@@ -1299,7 +1299,7 @@ namespace VTigerManager
                 api.Query<VTigerFaq>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Faq", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Faq", "", (loadException == null ? "OK" : "Error"), loadException);
 
             // try to load first row of Group
             StatusLabel.Text = "Loading 1 row of Group . . ."; this.Refresh();
@@ -1309,7 +1309,7 @@ namespace VTigerManager
                 api.Query<VTigerGroup>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Group", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Group", "", (loadException == null ? "OK" : "Error"), loadException);
 
             // try to load first row of HelpDesk
             StatusLabel.Text = "Loading 1 row of HelpDesk . . ."; this.Refresh();
@@ -1319,7 +1319,7 @@ namespace VTigerManager
                 api.Query<VTigerHelpDesk>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "HelpDesk", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "HelpDesk", "", (loadException == null ? "OK" : "Error"), loadException);
 
             // try to load first row of Invoice
             StatusLabel.Text = "Loading 1 row of Invoice . . ."; this.Refresh();
@@ -1329,7 +1329,7 @@ namespace VTigerManager
                 api.Query<VTigerInvoice>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Invoice", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Invoice", "", (loadException == null ? "OK" : "Error"), loadException);
 
             // try to load first row of Lead
             StatusLabel.Text = "Loading 1 row of Lead . . ."; this.Refresh();
@@ -1339,7 +1339,7 @@ namespace VTigerManager
                 api.Query<VTigerLead>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Lead", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Lead", "", (loadException == null ? "OK" : "Error"), loadException);
 
             // try to load first row of ModComment
             StatusLabel.Text = "Loading 1 row of ModComment . . ."; this.Refresh();
@@ -1349,7 +1349,7 @@ namespace VTigerManager
                 api.Query<VTigerModComment>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "ModComment", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "ModComment", "", (loadException == null ? "OK" : "Error"), loadException);
 
             // try to load first row of PBXManager
             StatusLabel.Text = "Loading 1 row of PBXManager . . ."; this.Refresh();
@@ -1359,7 +1359,7 @@ namespace VTigerManager
                 api.Query<VTigerPBXManager>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "PBXManager", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "PBXManager", "", (loadException == null ? "OK" : "Error"), loadException);
             
             // try to load first row of Potential
             StatusLabel.Text = "Loading 1 row of Potential . . ."; this.Refresh();
@@ -1369,7 +1369,7 @@ namespace VTigerManager
                 api.Query<VTigerPotential>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Potential", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Potential", "", (loadException == null ? "OK" : "Error"), loadException);
             
             // try to load first row of PriceBook
             StatusLabel.Text = "Loading 1 row of PriceBook . . ."; this.Refresh();
@@ -1379,7 +1379,7 @@ namespace VTigerManager
                 api.Query<VTigerPriceBook>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "PriceBook", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "PriceBook", "", (loadException == null ? "OK" : "Error"), loadException);
 
             // try to load first row of Product
             StatusLabel.Text = "Loading 1 row of Product . . ."; this.Refresh();
@@ -1389,7 +1389,7 @@ namespace VTigerManager
                 api.Query<VTigerProduct>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Product", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Product", "", (loadException == null ? "OK" : "Error"), loadException);
 
             // try to load first row of Project
             StatusLabel.Text = "Loading 1 row of Project . . ."; this.Refresh();
@@ -1399,7 +1399,7 @@ namespace VTigerManager
                 api.Query<VTigerProject>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Project", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Project", "", (loadException == null ? "OK" : "Error"), loadException);
 
             // try to load first row of ProjectMileStone
             StatusLabel.Text = "Loading 1 row of ProjectMileStone . . ."; this.Refresh();
@@ -1409,7 +1409,7 @@ namespace VTigerManager
                 api.Query<VTigerProjectMilestone>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "ProjectMileStone", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "ProjectMileStone", "", (loadException == null ? "OK" : "Error"), loadException);
 
             // try to load first row of ProjectTask
             StatusLabel.Text = "Loading 1 row of ProjectTask . . ."; this.Refresh();
@@ -1419,7 +1419,7 @@ namespace VTigerManager
                 api.Query<VTigerProjectTask>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "ProjectTask", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "ProjectTask", "", (loadException == null ? "OK" : "Error"), loadException);
 
             // try to load first row of PurchaseOrder
             StatusLabel.Text = "Loading 1 row of PurchaseOrder . . ."; this.Refresh();
@@ -1429,7 +1429,7 @@ namespace VTigerManager
                 api.Query<VTigerPurchaseOrder>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "PurchaseOrder", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "PurchaseOrder", "", (loadException == null ? "OK" : "Error"), loadException);
 
             // try to load first row of Quote
             StatusLabel.Text = "Loading 1 row of Quote . . ."; this.Refresh();
@@ -1439,7 +1439,7 @@ namespace VTigerManager
                 api.Query<VTigerQuote>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Quote", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Quote", "", (loadException == null ? "OK" : "Error"), loadException);
 
             // try to load first row of SalesOrder
             StatusLabel.Text = "Loading 1 row of SalesOrder . . ."; this.Refresh();
@@ -1449,7 +1449,7 @@ namespace VTigerManager
                 api.Query<VTigerSalesOrder>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "SalesOrder", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "SalesOrder", "", (loadException == null ? "OK" : "Error"), loadException);
 
             // try to load first row of ServiceContract
             StatusLabel.Text = "Loading 1 row of ServiceContract . . ."; this.Refresh();
@@ -1459,7 +1459,7 @@ namespace VTigerManager
                 api.Query<VTigerServiceContract>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "ServiceContract", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "ServiceContract", "", (loadException == null ? "OK" : "Error"), loadException);
 
             // try to load first row of Service
             StatusLabel.Text = "Loading 1 row of Service . . ."; this.Refresh();
@@ -1469,7 +1469,7 @@ namespace VTigerManager
                 api.Query<VTigerService>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Service", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Service", "", (loadException == null ? "OK" : "Error"), loadException);
 
             // try to load first row of SMSNotifier
             StatusLabel.Text = "Loading 1 row of SMSNotifier . . ."; this.Refresh();
@@ -1479,7 +1479,7 @@ namespace VTigerManager
                 api.Query<VTigerSMSNotifier>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "SMSNotifier", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "SMSNotifier", "", (loadException == null ? "OK" : "Error"), loadException);
 
             // try to load first row of Vendor
             StatusLabel.Text = "Loading 1 row of Vendor . . ."; this.Refresh();
@@ -1489,7 +1489,7 @@ namespace VTigerManager
                 api.Query<VTigerVendor>(0, 1);
             }
             catch (Exception ex) { loadException = ex; }
-            newRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Vendor", "", (loadException == null ? "OK" : "Error"), loadException);
+            NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Vendor", "", (loadException == null ? "OK" : "Error"), loadException);
             
             // show results to GUI
             results.Columns["PrimaryKeyID"].ColumnName = "Status";

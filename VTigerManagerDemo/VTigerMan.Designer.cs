@@ -117,7 +117,7 @@
             this.loginToolStripMenuItem.Name = "loginToolStripMenuItem";
             this.loginToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.loginToolStripMenuItem.Text = "Login";
-            this.loginToolStripMenuItem.Click += new System.EventHandler(this.loginToolStripMenuItem_Click);
+            this.loginToolStripMenuItem.Click += new System.EventHandler(this.LoginToolStripMenuItem_Click);
             // 
             // logoutToolStripMenuItem
             // 
@@ -125,14 +125,14 @@
             this.logoutToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.logoutToolStripMenuItem.Text = "Logout";
             this.logoutToolStripMenuItem.Visible = false;
-            this.logoutToolStripMenuItem.Click += new System.EventHandler(this.logoutToolStripMenuItem_Click);
+            this.logoutToolStripMenuItem.Click += new System.EventHandler(this.LogoutToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
             // newElementToolStripMenuItem
             // 
@@ -158,7 +158,7 @@
             this.calendarToolStripMenuItem.Name = "calendarToolStripMenuItem";
             this.calendarToolStripMenuItem.Size = new System.Drawing.Size(269, 22);
             this.calendarToolStripMenuItem.Text = "Calendar";
-            this.calendarToolStripMenuItem.Click += new System.EventHandler(this.calendarToolStripMenuItem_Click);
+            this.calendarToolStripMenuItem.Click += new System.EventHandler(this.CalendarToolStripMenuItem_Click);
             // 
             // toolStripSeparatorMenuNewElementBulkInsert
             // 
@@ -170,14 +170,14 @@
             this.newRecordForEveryTypeToolStripMenuItem.Name = "newRecordForEveryTypeToolStripMenuItem";
             this.newRecordForEveryTypeToolStripMenuItem.Size = new System.Drawing.Size(269, 22);
             this.newRecordForEveryTypeToolStripMenuItem.Text = "Bulk insert: new record for every type";
-            this.newRecordForEveryTypeToolStripMenuItem.Click += new System.EventHandler(this.newRecordForEveryTypeToolStripMenuItem_Click);
+            this.newRecordForEveryTypeToolStripMenuItem.Click += new System.EventHandler(this.NewRecordForEveryTypeToolStripMenuItem_Click);
             // 
             // bulkInsert1500ContactRecordsToolStripMenuItem
             // 
             this.bulkInsert1500ContactRecordsToolStripMenuItem.Name = "bulkInsert1500ContactRecordsToolStripMenuItem";
             this.bulkInsert1500ContactRecordsToolStripMenuItem.Size = new System.Drawing.Size(269, 22);
             this.bulkInsert1500ContactRecordsToolStripMenuItem.Text = "Bulk insert: 1500 contact records";
-            this.bulkInsert1500ContactRecordsToolStripMenuItem.Click += new System.EventHandler(this.bulkInsert1500ContactRecordsToolStripMenuItem_Click);
+            this.bulkInsert1500ContactRecordsToolStripMenuItem.Click += new System.EventHandler(this.BulkInsert1500ContactRecordsToolStripMenuItem_Click);
             // 
             // optionsToolStripMenuItem
             // 
@@ -194,7 +194,7 @@
             this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Name = "ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem";
             this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
             this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Text = "Ignore SSL certificate errors of remote server";
-            this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Click += new System.EventHandler(this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem_Click);
+            this.ignoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem.Click += new System.EventHandler(this.IgnoreSSLCertificateErrorsOfRemoteServerToolStripMenuItem_Click);
             // 
             // MainPanel
             // 
@@ -228,7 +228,7 @@
             this.dataView.ShowKeyValueTable = false;
             this.dataView.Size = new System.Drawing.Size(785, 335);
             this.dataView.TabIndex = 8;
-            this.dataView.DataSourceChanged += new System.EventHandler(this.dataView_DataSourceChanged);
+            this.dataView.DataSourceChanged += new System.EventHandler(this.DataView_DataSourceChanged);
             // 
             // toolStripQueryOptions
             // 
@@ -449,7 +449,7 @@
             this.toolStripComboBoxPageSize.Name = "toolStripComboBoxPageSize";
             this.toolStripComboBoxPageSize.Size = new System.Drawing.Size(75, 23);
             this.toolStripComboBoxPageSize.Text = "20";
-            this.toolStripComboBoxPageSize.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxPageSize_SelectedIndexChanged);
+            this.toolStripComboBoxPageSize.SelectedIndexChanged += new System.EventHandler(this.ToolStripComboBoxPageSize_SelectedIndexChanged);
             // 
             // toolStripSeparatorExport
             // 
@@ -489,7 +489,7 @@
             this.toolStripButtonTableDescription.Name = "toolStripButtonTableDescription";
             this.toolStripButtonTableDescription.Size = new System.Drawing.Size(85, 19);
             this.toolStripButtonTableDescription.Text = "Describe table";
-            this.toolStripButtonTableDescription.Click += new System.EventHandler(this.toolStripButtonTableDescription_Click);
+            this.toolStripButtonTableDescription.Click += new System.EventHandler(this.ToolStripButtonTableDescription_Click);
             // 
             // toolStripSeparatorServerSession
             // 
@@ -523,7 +523,7 @@
             this.tableList.Name = "tableList";
             this.tableList.Size = new System.Drawing.Size(156, 406);
             this.tableList.TabIndex = 0;
-            this.tableList.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+            this.tableList.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeView1_AfterSelect);
             // 
             // statusStrip1
             // 
@@ -554,7 +554,7 @@
             this.queryFromAllRemoteTablesWithoutErrorsToolStripMenuItem.Name = "queryFromAllRemoteTablesWithoutErrorsToolStripMenuItem";
             this.queryFromAllRemoteTablesWithoutErrorsToolStripMenuItem.Size = new System.Drawing.Size(302, 22);
             this.queryFromAllRemoteTablesWithoutErrorsToolStripMenuItem.Text = "Query from all remote tables without errors";
-            this.queryFromAllRemoteTablesWithoutErrorsToolStripMenuItem.Click += new System.EventHandler(this.queryFromAllRemoteTablesWithoutErrorsToolStripMenuItem_Click);
+            this.queryFromAllRemoteTablesWithoutErrorsToolStripMenuItem.Click += new System.EventHandler(this.QueryFromAllRemoteTablesWithoutErrorsToolStripMenuItem_Click);
             // 
             // VTigerMan
             // 

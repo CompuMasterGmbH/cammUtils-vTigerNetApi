@@ -18,4 +18,4 @@ install:
 script:
 #  - xbuild /p:Configuration="Release via CI" /p:Platform="Any CPU" VTiger.sln
 #  - mono ./testrunner/NUnit.ConsoleRunner.3.4.1/tools/nunit3-console.exe ./VTigerApiUnitTests/bin/VTigerApiUnitTests.dll
-  - msbuild /p:Configuration="Release via CI" /p:Platform="Any CPU" VTiger.sln 
+  - msbuild /p:Configuration="Release via CI" /p:Platform="Any CPU" /p:PostBuildEvent="" VTiger.sln 

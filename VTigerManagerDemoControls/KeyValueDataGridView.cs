@@ -131,20 +131,12 @@ namespace VTigerUserControls
                 foreach (DataRow inRow in inputTable.Rows)
                 {
                     //string colValue = inRow[iCol].ToString();
-                    try
-                    {
-                        
-                        if (string.IsNullOrEmpty(inRow[iCol].ToString()))
-                            row[i] = DBNull.Value;
-                        else
-                            row[i] = inRow[iCol];
-                    }
-                    catch (Exception e)
-                    {
-                        
-                        
-                    }
-                   
+                    if (inRow[iCol] == System.DBNull.Value)
+                        row[i] = DBNull.Value;
+                    else if ((string)inRow[iCol] == "")
+                        row[i] = DBNull.Value;
+                    else
+                        row[i] = inRow[iCol];
                     i++;
                 }
                 outputTable.Rows.Add(row);

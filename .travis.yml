@@ -1,5 +1,7 @@
 language: csharp
 solution: VTiger.sln
+
+#os: windows
 mono:
   - latest
   
@@ -14,6 +16,6 @@ install:
   - nuget restore VTiger.sln
 #  - nuget install NUnit.Runners -Version 3.4.1 -OutputDirectory testrunner
 script:
-#  - xbuild /p:Configuration="Release via CI" VTiger.sln
-#  - mono ./testrunner/NUnit.ConsoleRunner.3.4.1/tools/nunit3-console.exe ./CompuMaster.Test.Tools.Data/bin/CompuMaster.Test.Tools.Data.dll
-  - msbuild /p:Configuration="Release via CI" VTiger.sln
+#  - xbuild /p:Configuration="Release via CI" /p:Platform="Any CPU" VTiger.sln
+#  - mono ./testrunner/NUnit.ConsoleRunner.3.4.1/tools/nunit3-console.exe ./VTigerApiUnitTests/bin/VTigerApiUnitTests.dll
+  - msbuild /p:Configuration="Release via CI" /p:Platform="Any CPU" VTiger.sln 

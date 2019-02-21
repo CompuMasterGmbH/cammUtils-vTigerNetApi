@@ -889,14 +889,14 @@ namespace VTigerApi
             return items[0].id;
         }
 
+        // public T Create<T>(T element) where T : VTigerEntity
+
         /// <summary>
         /// Searches for an entity which matches the specified condition and retrives it's data
         /// </summary>
-        /// <param name="elementType"></param>
         /// <param name="field">The field of the entity which should match the specified value</param>
         /// <param name="value"></param>
         /// <returns></returns>
-        /// public T Create<T>(T element) where T : VTigerEntity
         public T FindEntity<T>(string field, string value) where T : VTigerEntity, new()
         {
             T[] items = Query<T>(String.Format(

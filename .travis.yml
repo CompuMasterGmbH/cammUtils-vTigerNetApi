@@ -14,5 +14,5 @@ install:
   - nuget restore VTiger.sln
 #  - nuget install NUnit.Runners -Version 3.4.1 -OutputDirectory testrunner
 script:
-  - xbuild /p:Configuration=Release VTiger.sln
+  - xbuild /p:Configuration="Release via CI" VTiger.sln
 #  - mono ./testrunner/NUnit.ConsoleRunner.3.4.1/tools/nunit3-console.exe ./CompuMaster.Test.Tools.Data/bin/CompuMaster.Test.Tools.Data.dll

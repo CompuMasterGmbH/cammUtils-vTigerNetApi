@@ -66,4 +66,4 @@ To connect your application with a running instance quickly, you might consider 
 ## VTiger Version Support
 * V5: supported
 * V6: supported
-* V7: (to be) supported (feedback welcome!) - please report any issues you find!
+* V7: supported

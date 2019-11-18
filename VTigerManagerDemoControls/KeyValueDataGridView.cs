@@ -130,10 +130,7 @@ namespace VTigerUserControls
                 int i = 0;
                 foreach (DataRow inRow in inputTable.Rows)
                 {
-                    //string colValue = inRow[iCol].ToString();
-                    if (inRow[iCol] == System.DBNull.Value)
-                        row[i] = DBNull.Value;
-                    else if ((string)inRow[iCol] == "")
+                    if ((inRow[iCol] == null) || (inRow[iCol] == System.DBNull.Value) || ((string)inRow[iCol] == ""))
                         row[i] = DBNull.Value;
                     else
                         row[i] = inRow[iCol];

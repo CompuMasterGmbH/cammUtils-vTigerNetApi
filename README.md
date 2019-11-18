@@ -28,7 +28,7 @@ if (dt.Rows.Count > 0)
 ```
 
 ### Notes
-Please also review https://wiki.vtiger.com/index.php/Webservice_reference_manual for general notes on using the VTiger Webservice API.
+Please also review https://www.vtiger.com/docs/rest-api-for-vtiger and https://community.vtiger.com/help/vtigercrm/developers/third-party-app-integration.html for general notes on using the VTiger Webservice API.
 
 **NOTE 1** about VTiger-Login:
 In order to log in, you need the authentication-key which can be found in user's profile-settings.

@@ -56,6 +56,7 @@ To connect your application with a running instance quickly, you might consider 
 * https://demo.vtiger.com/
 * https://www.vtexperts.com/vtiger-7-0-open-source-demo/
 * https://www.bitco4you.de/vtiger-crm/unser-demosystem-fuer-vtiger-6-5
+* https://simplesistemas.com/demo-de-vtiger-crm
 
 ## Other useful links
 * http://sourceforge.net/projects/vtigercrm/ The previous vtiger project website

@@ -10,6 +10,11 @@
 		<Copyright>2010-2021 CompuMaster GmbH</Copyright>
 		<Description>camm Utils VTigerApi, Apache License v2.0</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/CompuMasterGmbH/cammUtils-vTigerNetApi</PackageProjectUrl>
+		<PackageIcon>logo_64x64.png</PackageIcon>
+		<RepositoryUrl>https://github.com/CompuMasterGmbH/cammUtils-vTigerNetApi.git</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags> CompuMaster camm Utils VTigerAPI VTiger DataTables System.DataTable </PackageTags>
 		<Configurations>Debug;Release;CI_CD</Configurations>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

@@ -135,7 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VTigerApi\VTigerApi.csproj">
-      <Project>{3C40452B-1415-4A82-9326-2045FBDC06AB}</Project>
+      <Project>{368930ec-e1f5-40f2-85fb-614d6ddbee4e}</Project>
       <Name>VTigerApi</Name>
     </ProjectReference>
     <ProjectReference Include="..\VTigerManagerDemoControls\VTiger Manager Demo Controls.csproj">

@@ -55,5 +55,7 @@
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
-
+	<ItemGroup>
+		<InternalsVisibleTo Include="VTigerApiUnitTests" />
+	</ItemGroup>
 </Project>

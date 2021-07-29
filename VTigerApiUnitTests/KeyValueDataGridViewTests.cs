@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Data;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace VTigerApiUnitTests
 {
-    [TestClass]
+    [TestFixture]
     public class KeyValueDataGridViewTests
     {
-        [TestMethod]
+        [Test]
         public void ReadKeyValueTable()
         {
             VTigerUserControls.KeyValueDataGridView TestGrid = new VTigerUserControls.KeyValueDataGridView();
@@ -48,7 +48,7 @@ namespace VTigerApiUnitTests
             System.Console.WriteLine(CompuMaster.Data.DataTables.ConvertToPlainTextTableFixedColumnWidths(Result));
         }
 
-        [TestMethod]
+        [Test]
         public void GenerateKeyValueTable()
         {
             VTigerUserControls.KeyValueDataGridView TestGrid = new VTigerUserControls.KeyValueDataGridView();

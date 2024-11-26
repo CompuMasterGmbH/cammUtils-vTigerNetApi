@@ -4,6 +4,7 @@ using System.Data;
 using System.Windows.Forms;
 using VTigerApi;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace VTigerManager
 {
@@ -150,6 +151,8 @@ namespace VTigerManager
             }
         }
 
+        string frameworkVersion = GetFrameworkVersion();
+
         /// <summary>
         /// Update the form's title
         /// </summary>
@@ -158,11 +161,11 @@ namespace VTigerManager
         {
             if (api == null || api.SessionName == null || api.SessionName == "")
             {
-                this.Text = this.Text = "VTiger Demo";
+                this.Text = this.Text = "VTiger Demo @ " + frameworkVersion;
             }
             else
             {
-                this.Text = this.Text = "VTiger Demo - connected as user ID " + api.UserID + " to VTiger V" + api.VTigerVersion.ToString() + " at " + api.ServiceUrl;
+                this.Text = this.Text = "VTiger Demo @ " + frameworkVersion + " - connected as user ID " + api.UserID + " to VTiger V" + api.VTigerVersion.ToString() + " at " + api.ServiceUrl;
             }
         }
 
@@ -1497,6 +1500,27 @@ namespace VTigerManager
             ShowData(results);
             this.Cursor = Cursors.Default;
             StatusLabel.Text = "Query test completed, see results for success status";
+        }
+
+        static string GetFrameworkVersion()
+        {
+            string frameworkDescription = RuntimeInformation.FrameworkDescription;
+            string version;
+
+            if (frameworkDescription.StartsWith(".NET Framework"))
+            {
+                version = Environment.Version.ToString();
+                return $".NET Framework v{version}";
+            }
+            else if (frameworkDescription.StartsWith(".NET"))
+            {
+                version = Environment.Version.ToString();
+                return $".NET v{version}";
+            }
+            else
+            {
+                return "Unbekanntes Framework";
+            }
         }
     }
 }

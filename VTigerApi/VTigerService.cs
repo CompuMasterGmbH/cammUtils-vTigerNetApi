@@ -20,11 +20,9 @@ using System.IO;
 using System.Text;
 using System.Security.Cryptography;
 using System.Web;
-using Jayrock.Json;
-using Jayrock.Json.Conversion;
-using VTigerApi.Json.Conversion;
 using System.Data;
 using System.Reflection;
+using System.Text.Json;
 
 namespace VTigerApi
 {
@@ -768,31 +766,30 @@ namespace VTigerApi
         /// <summary>
         /// Converts a JsonArray (from a query) into a DataTable
         /// </summary>
-        /// <param name="array"></param>
+        /// <param name="jsonArray"></param>
         /// <returns></returns>
-        public DataTable JsonArrayToDataTable(JsonArray array)
+        public DataTable JsonArrayToDataTable(string jsonArray)
         {
+            var array = JsonSerializer.Deserialize<JsonElement[]>(jsonArray);
             DataTable dt = new DataTable();
-            if (array.Length == 0)
-                return dt;
 
-            object o = array[0];
-            if (o is JsonObject)
+            if (array.Length == 0) return dt;
+
+            foreach (var property in array[0].EnumerateObject())
             {
-                JsonObject[] items = ImportJson<JsonObject[]>(array.ToString());
-
-                foreach (JsonMember member in items[0])
-                    dt.Columns.Add(new DataColumn(member.Name, typeof(string)));
-
-                foreach (JsonObject item in items)
-                    DtConvertAddRow(dt, item);
-
-                if (dt.Columns.Contains("id"))
-                    dt.Columns["id"].SetOrdinal(0);
-
-                return dt;
+                dt.Columns.Add(property.Name, typeof(string));
             }
-            throw new Exception("Only JsonArray of JsonObject can be deserialized to a DataTable");
+
+            foreach (var element in array)
+            {
+                DataRow row = dt.NewRow();
+                foreach (var property in element.EnumerateObject())
+                {
+                    row[property.Name] = property.Value.ToString();
+                }
+                dt.Rows.Add(row);
+            }
+            return dt;
         }
 
         /// <summary>

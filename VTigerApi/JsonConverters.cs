@@ -17,161 +17,128 @@ limitations under the License.
 using System;
 using System.Text;
 using System.Text.Json;
-using Jayrock.Json;
-using Jayrock.Json.Conversion;
-using Jayrock.Json.Conversion.Converters;
+using System.Text.Json.Serialization;
 
 namespace VTigerApi
 {
-    sealed class BooleanImporterEx : BooleanImporter
+    public class BooleanConverter : JsonConverter<bool>
     {
-        protected override object ImportFromString(Jayrock.Json.Conversion.ImportContext context, JsonReader reader)
+        public override bool Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            try
+            if (reader.TokenType == JsonTokenType.String)
             {
-                string val = reader.ReadString().ToLower();
-                return (val == "1") || (val == "true") || (val == "t");
+                string value = reader.GetString().ToLower();
+                return value == "1" || value == "true" || value == "t";
             }
-            catch (FormatException e)
+            if (reader.TokenType == JsonTokenType.Number)
             {
-                throw new JsonException("Error importing JSON String as System.Boolean.", e);
+                return reader.GetInt32() != 0;
             }
-        }
-    }
-
-    sealed class BooleanExporterEx : ExporterBase
-    {
-        public BooleanExporterEx() : base(typeof(Boolean)) { }
-
-        protected override void ExportValue(ExportContext context, object value, JsonWriter writer)
-        {
-            writer.WriteString((bool)value ? "1" : "0");
-        }
-    }
-
-    sealed class Int32ImporterEx : NumberImporterBase
-    {
-        public Int32ImporterEx() : base(typeof(int)) { }
-
-        protected override object ConvertFromString(string s)
-        {
-            if (s == "")
-                return 0;
-            return Convert.ToInt32(s, System.Globalization.CultureInfo.InvariantCulture);
-        }
-    }
-
-    sealed class DateTimeImporterEx : ImporterBase
-    {
-        public DateTimeImporterEx() : base(typeof(DateTime)) { }
-        protected override object ImportFromString(Jayrock.Json.Conversion.ImportContext context, JsonReader reader)
-        {
-            try
+            if (reader.TokenType == JsonTokenType.True || reader.TokenType == JsonTokenType.False)
             {
-                string val = reader.ReadString();
-                return DateTime.Parse(val);
+                return reader.GetBoolean();
             }
-            catch (FormatException e)
-            {
-                throw new JsonException("Error importing JSON String as System.DateTime.", e);
-            }
+            throw new JsonException("Invalid JSON value for boolean conversion.");
+        }
+
+        public override void Write(Utf8JsonWriter writer, bool value, JsonSerializerOptions options)
+        {
+            writer.WriteStringValue(value ? "1" : "0");
         }
     }
 
-    sealed class DateTimeExporterEx : ExporterBase
+    public class Int32Converter : JsonConverter<int>
     {
-        public DateTimeExporterEx() : base(typeof(DateTime)) { }
-
-        protected override void ExportValue(ExportContext context, object value, JsonWriter writer)
+        public override int Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            //writer.WriteString(((DateTime)value).ToString("yyyy-MM-dd hh:mm:ss"));
-            writer.WriteString(((DateTime)value).ToString("s"));
-        }
-    }
-
-    sealed class EnumValueImporter : ImporterBase
-    {
-        public string[] values;
-
-        public EnumValueImporter(Type outputType, string[] valueList)
-            : base(outputType)
-        {
-            values = valueList;
-        }
-
-        protected override object ImportFromString(Jayrock.Json.Conversion.ImportContext context, JsonReader reader)
-        {
-            try
+            if (reader.TokenType == JsonTokenType.String)
             {
-                string val = reader.ReadString();
-                int i = 0;
-                foreach (string item in values)
+                string value = reader.GetString();
+
+                if (string.IsNullOrEmpty(value))
                 {
-                    if (item == val)
-                        return i;
-                    i++;
+                    return 0; // Leere Strings werden als 0 interpretiert
                 }
-                throw new JsonException("Error importing JSON String as " + this.OutputType.FullName + ".");
+
+                if (int.TryParse(value, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out int result))
+                {
+                    return result;
+                }
+
+                throw new JsonException($"Invalid string value for integer conversion: {value}");
             }
-            catch (FormatException e)
+
+            if (reader.TokenType == JsonTokenType.Number)
             {
-                throw new JsonException("Error importing JSON String as " + this.OutputType.FullName + ".", e);
+                return reader.GetInt32(); // Direkte Zahl-Werte
             }
+
+            throw new JsonException($"Unexpected token type {reader.TokenType} for integer conversion.");
+        }
+
+        public override void Write(Utf8JsonWriter writer, int value, JsonSerializerOptions options)
+        {
+            writer.WriteNumberValue(value); // Standardmäßig wird der Wert als Zahl geschrieben
         }
     }
 
-    sealed class EnumValueExporter : ExporterBase
+    public class DateTimeConverter : JsonConverter<DateTime>
     {
-        public string[] values;
-
-        public EnumValueExporter(Type outputType, string[] valueList)
-            : base(outputType)
+        public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            values = valueList;
+            if (reader.TokenType == JsonTokenType.String)
+            {
+                string value = reader.GetString();
+                if (DateTime.TryParse(value, out DateTime result))
+                {
+                    return result;
+                }
+            }
+            throw new JsonException("Invalid JSON value for DateTime.");
         }
 
-        protected override void ExportValue(ExportContext context, object value, JsonWriter writer)
+        public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
         {
-            writer.WriteString(values[(int)value]);
-        }
-    }
-
-    sealed class EmailAdressesImporter : ImporterBase
-    {
-        public EmailAdressesImporter() : base(typeof(EmailAdresses)) { }
-
-        protected override object ImportFromString(Jayrock.Json.Conversion.ImportContext context, JsonReader reader)
-        {
-            try
-            {
-                string val = reader.ReadString();
-                EmailAdresses result = new EmailAdresses();
-                result.Adresses = JsonConvert.Import<string[]>(val);
-                return result;
-            }
-            catch (FormatException e)
-            {
-                throw new JsonException("Error importing JSON String as " + this.OutputType.FullName + ".", e);
-            }
+            writer.WriteStringValue(value.ToString("s"));
         }
     }
 
-    sealed class EmailAdressesExporter : ExporterBase
+    public class EnumConverter<T> : JsonConverter<T> where T : Enum
     {
-        public EmailAdressesExporter() : base(typeof(EmailAdresses)) { }
-
-        protected override void ExportValue(ExportContext context, object value, JsonWriter writer)
+        public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            if (((EmailAdresses)value).Adresses != null)
+            if (reader.TokenType == JsonTokenType.String)
             {
-                StringBuilder sb = new StringBuilder();
-                foreach (string item in ((EmailAdresses)value).Adresses)
-                    sb.Append(item + ",");
-                sb.Remove(sb.Length - 1, 1);
-                writer.WriteString(sb.ToString());
+                string value = reader.GetString();
+                if (Enum.TryParse(typeToConvert, value, true, out object result))
+                {
+                    return (T)result;
+                }
             }
-            else
-                writer.WriteString("");
+            throw new JsonException($"Invalid value for enum {typeToConvert.Name}");
+        }
+
+        public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
+        {
+            writer.WriteStringValue(value.ToString());
+        }
+    }
+
+    public class EmailAdressesConverter : JsonConverter<EmailAdresses>
+    {
+        public override EmailAdresses Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            if (reader.TokenType == JsonTokenType.String)
+            {
+                string value = reader.GetString();
+                return new EmailAdresses { Adresses = value.Split(',') };
+            }
+            throw new JsonException("Invalid value for EmailAdresses.");
+        }
+
+        public override void Write(Utf8JsonWriter writer, EmailAdresses value, JsonSerializerOptions options)
+        {
+            writer.WriteStringValue(string.Join(",", value.Adresses ?? Array.Empty<string>()));
         }
     }
 }

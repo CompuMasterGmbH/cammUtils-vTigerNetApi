@@ -14,11 +14,6 @@
     <Configurations>Debug;CI_CD;Release</Configurations>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release via CI|AnyCPU'">
-    <OutputPath>bin\Release via CI\</OutputPath>
-    <Optimize>true</Optimize>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
   <ItemGroup>
     <Compile Update="KeyValueDataGridView.cs">
       <SubType>Component</SubType>

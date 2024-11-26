@@ -7,5 +7,5 @@ using System.Diagnostics.CodeAnalysis;
 // a specific target and scoped to a namespace, type, member, etc.
 
 [assembly: SuppressMessage("Style", "IDE0017:Initialisierung von Objekten vereinfachen", Justification = "<Ausstehend>")]
-[assembly: SuppressMessage("Style", "CS1591:Fehledes XML-Kommentar für öffentlich sichtbaren Typ oder Element", Justification = "<Ausstehend>")]
+[assembly: SuppressMessage("Style", "CS1591:Fehlender XML-Kommentar für öffentlich sichtbaren Typ oder Element", Justification = "<Ausstehend>")]
 [assembly: SuppressMessage("Style", "CA1416:Diese Aufrufsite ist auf allen Plattformen erreichbar. \"Control.Refresh()\" nur unterstützt für: windows, 6.1 und höhere Versionen.", Justification = "<Ausstehend>")]

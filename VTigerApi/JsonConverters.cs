@@ -16,6 +16,7 @@ limitations under the License.
 */
 using System;
 using System.Text;
+using System.Text.Json;
 using Jayrock.Json;
 using Jayrock.Json.Conversion;
 using Jayrock.Json.Conversion.Converters;
@@ -37,6 +38,7 @@ namespace VTigerApi
             }
         }
     }
+
     sealed class BooleanExporterEx : ExporterBase
     {
         public BooleanExporterEx() : base(typeof(Boolean)) { }
@@ -75,6 +77,7 @@ namespace VTigerApi
             }
         }
     }
+
     sealed class DateTimeExporterEx : ExporterBase
     {
         public DateTimeExporterEx() : base(typeof(DateTime)) { }
@@ -116,6 +119,7 @@ namespace VTigerApi
             }
         }
     }
+
     sealed class EnumValueExporter : ExporterBase
     {
         public string[] values;
@@ -151,6 +155,7 @@ namespace VTigerApi
             }
         }
     }
+
     sealed class EmailAdressesExporter : ExporterBase
     {
         public EmailAdressesExporter() : base(typeof(EmailAdresses)) { }

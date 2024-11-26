@@ -22,6 +22,7 @@ using System.Security.Cryptography;
 using System.Web;
 using Jayrock.Json;
 using Jayrock.Json.Conversion;
+using VTigerApi.Json.Conversion;
 using System.Data;
 using System.Reflection;
 
@@ -276,15 +277,15 @@ namespace VTigerApi
         /// <param name="accessKey">Personal authentication-key provided on the VTiger website</param>
         public void Login(string username, string accessKey)
         {
-            string token = GetChallenge(username).token;
+            string token = GetChallenge(username).Token;
 
             string key = GetMD5Hash(token + accessKey);
 
             VTigerLogin loginResult = VTigerGetJson<VTigerLogin>("login",
                 String.Format("username={0}&accessKey={1}", username, key), true);
 
-            sessionName = loginResult.sessionName;
-            vtigerVersion = loginResult.vtigerVersion;
+            sessionName = loginResult.SessionName;
+            vtigerVersion = loginResult.VTigerVersion;
 
             switch (vtigerVersion)
             {
@@ -327,8 +328,8 @@ namespace VTigerApi
                     }
             }
 
-            webserviceVersion = loginResult.version;
-            userID = loginResult.userId;
+            webserviceVersion = loginResult.Version;
+            userID = loginResult.UserId;
         }
 
         /// <summary>
@@ -351,17 +352,18 @@ namespace VTigerApi
             VTigerTypes typeList = VTigerGetJson<VTigerTypes>("listtypes",
                 String.Format("sessionName={0}", sessionName), false);
 
-            typeList.typeInfo = new VTigerTypeInfo[typeList.types.Length];
-            for (int i = 0; i < typeList.types.Length; i++)
+            typeList.TypeInfo = new VTigerTypeInfo[typeList.Types.Length];
+            for (int i = 0; i < typeList.Types.Length; i++)
             {
-                string typeName = typeList.types[i];
-                if (typeList.information.Contains(typeName))
-                {
-                    typeList.typeInfo[i] = ImportJson<VTigerTypeInfo>(typeList.information[typeName].ToString());
-                    typeList.typeInfo[i].Name = typeName;
-                }
+                string typeName = typeList.Types[i];
+                throw new NotImplementedException("NEEDS CODE REDESIGN AFTER JAYROCK.JSON REPLACED BY SYSTEM.TEXT.JSON");
+                //if (typeList.Information.Contains(typeName))
+                //{
+                //    typeList.TypeInfo[i] = ImportJson<VTigerTypeInfo>(typeList.Information[typeName].ToString());
+                //    typeList.TypeInfo[i].Name = typeName;
+                //}
             }
-            return typeList.typeInfo;
+            return typeList.TypeInfo;
         }
 
         /// <summary>
@@ -393,7 +395,7 @@ namespace VTigerApi
         public DataTable Describe_DataTable(VTigerType elementType)
         {
             VTigerObjectType obj = Describe(elementType);
-            return JsonArrayToDataTable(ImportJson<JsonArray>(ExportJson(obj.fields)));
+            return JsonArrayToDataTable(ImportJson<JsonArray>(ExportJson(obj.Fields)));
         }
 
         #endregion
@@ -500,7 +502,7 @@ namespace VTigerApi
         /// <returns></returns>
         public T Create<T>(T element) where T : VTigerEntity
         {
-            return VTiger_Create<T>(element.elementType, ExportJson(element));
+            return VTiger_Create<T>(element.ElementType, ExportJson(element));
         }
 
         /// <summary>
@@ -510,7 +512,7 @@ namespace VTigerApi
         /// <returns></returns>
         public DataTable Create(VTigerEntity element)
         {
-            return JsonObjectToDataTable(VTiger_Create<JsonObject>(element.elementType, ExportJson(element)));
+            return JsonObjectToDataTable(VTiger_Create<JsonObject>(element.ElementType, ExportJson(element)));
         }
 
         /// <summary>
@@ -721,18 +723,18 @@ namespace VTigerApi
         {
             string response = VTigerExecuteOperation(operation, parameters, post);
             VTigerResult<T> result = ImportJson<VTigerResult<T>>(response);
-            if (!result.success)
+            if (!result.Success)
             {
-                if (result.error.code == "INVALID_SESSIONID")
+                if (result.Error.Code == "INVALID_SESSIONID")
                 {
-                    throw new VTigerApiSessionTimedOutException(result.error);
+                    throw new VTigerApiSessionTimedOutException(result.Error);
                 }
                 else
                 { 
-                    throw new VTigerApiException(result.error);
+                    throw new VTigerApiException(result.Error);
                 }
             }
-            return result.result;
+            return result.Result;
         }
 
         /// <summary>
@@ -886,7 +888,7 @@ namespace VTigerApi
             if (items.Length != 1)
                 throw new Exception(String.Format(
                     "Found multiple elements with the condition {0}='{1}'", field, value));
-            return items[0].id;
+            return items[0].Id;
         }
 
         // public T Create<T>(T element) where T : VTigerEntity
@@ -900,7 +902,7 @@ namespace VTigerApi
         public T FindEntity<T>(string field, string value) where T : VTigerEntity, new()
         {
             T[] items = Query<T>(String.Format(
-                "SELECT * FROM {0} WHERE {1}='{2}';", VTigerTableName((new T()).elementType), field, value));
+                "SELECT * FROM {0} WHERE {1}='{2}';", VTigerTableName((new T()).ElementType), field, value));
             if (items.Length == 0)
                 return null;
                 //throw new Exception(String.Format(
@@ -1033,7 +1035,7 @@ namespace VTigerApi
             VTigerContact element = new VTigerContact(
                 lastname,
                 assigned_user_id);
-            element.firstname = firstname;
+            element.FirstName = firstname;
             // return Update<VTigerContact>(element);
             return Create<VTigerContact>(element);
         }

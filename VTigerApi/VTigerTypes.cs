@@ -14,9 +14,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
 using System;
-using Jayrock.Json;
-using Jayrock.Json.Conversion;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace VTigerApi
 {
@@ -103,156 +104,227 @@ namespace VTigerApi
     //====================================================================
 
     /// <summary>
-    /// A session timeout at the server may required to re-logon again
+    /// A session timeout at the server may require re-login
     /// </summary>
     public class VTigerApiSessionTimedOutException : VTigerApiException
     {
         internal VTigerApiSessionTimedOutException(VTigerError apiError) : base(apiError)
         {
-            base.VTigerErrorCode = apiError.code;
-            base.VTigerMessage = apiError.message;
+            base.VTigerErrorCode = apiError.Code;
+            base.VTigerMessage = apiError.Message;
         }
     }
 
     /// <summary>
     /// An exception as reported by the remote server
     /// </summary>
-    public class VTigerApiException : System.Exception
+    public class VTigerApiException : Exception
     {
         internal VTigerApiException(VTigerError apiError)
         {
-            this.VTigerErrorCode = apiError.code;
-            this.VTigerMessage = apiError.message;
-            /*
-            if ((apiError.code == null) || (apiError.code == ""))
-            {
-                this.Message = "UNKNOWN ERROR: " + apiError.message;
-            }
-            else
-            {
-                this.Message = apiError.code + ": " + apiError.message;
-            }
-            */
+            this.VTigerErrorCode = apiError.Code;
+            this.VTigerMessage = apiError.Message;
         }
+
         /// <summary>
         /// The error code as defined by the VTiger remote server
         /// </summary>
         public string VTigerErrorCode;
+
         /// <summary>
-        /// A human readable error message from the VTiger remote server
+        /// A human-readable error message from the VTiger remote server
         /// </summary>
         public string VTigerMessage;
-        /// <summary>
-        /// The full message from the VTiger remote server (error code + human readable message)
-        /// </summary>
-        public override string Message
-        {
-            get
-            {
-                if ((this.VTigerErrorCode == null) || (this.VTigerErrorCode == ""))
-                {
-                    return "UNKNOWN ERROR: " + this.VTigerMessage;
-                }
-                else
-                {
-                    return this.VTigerErrorCode + ": " + this.VTigerMessage;
-                }
-            }
-        }
 
+        /// <summary>
+        /// The full message from the VTiger remote server (error code + human-readable message)
+        /// </summary>
+        public override string Message =>
+            string.IsNullOrEmpty(VTigerErrorCode)
+                ? $"UNKNOWN ERROR: {VTigerMessage}"
+                : $"{VTigerErrorCode}: {VTigerMessage}";
     }
+
     //====================================================================
     #region VTiger-Access-Classes
 
+    /// <summary>
+    /// Represents the result from a VTiger API call
+    /// </summary>
     public class VTigerResult<T>
     {
-        public bool success;
-        public VTigerError error;
-        public T result; 
+        [JsonPropertyName("success")]
+        public bool Success { get; set; }
+
+        [JsonPropertyName("error")]
+        public VTigerError Error { get; set; }
+
+        /// <summary>
+        /// The result value
+        /// </summary>
+        [JsonPropertyName("result")]
+        public T Result { get; set; }
     }
 
+    /// <summary>
+    /// VTiger error information
+    /// </summary>
     public class VTigerError
     {
-        public string code;
-        public string message;
+        /// <summary>
+        /// An error code from the vtiger API
+        /// </summary>
+        [JsonPropertyName("code")]
+        public string Code { get; set; }
+
+        /// <summary>
+        /// An error message from the vtiger API
+        /// </summary>
+        [JsonPropertyName("message")]
+        public string Message { get; set; }
     }
 
     public class VTigerLogin
     {
-        public string sessionName;
-        public string userId;
-        public string version;
-        public string vtigerVersion;
+        [JsonPropertyName("sessionName")]
+        public string SessionName { get; set; }
+
+        [JsonPropertyName("userId")]
+        public string UserId { get; set; }
+
+        [JsonPropertyName("version")]
+        public string Version { get; set; }
+
+        [JsonPropertyName("vtigerVersion")]
+        public string VTigerVersion { get; set; }
     }
 
     public class VTigerToken
     {
-        public string token;
-        public int serverTime;
-        public int expireTime;
+        [JsonPropertyName("token")]
+        public string Token { get; set; }
+
+        [JsonPropertyName("serverTime")]
+        public int ServerTime { get; set; }
+
+        [JsonPropertyName("expireTime")]
+        public int ExpireTime { get; set; }
     }
 
     public class VTigerTypes
     {
-        public string[] types;
-        public VTigerTypeInfo[] typeInfo;
-        public JsonObject information;
+        [JsonPropertyName("types")]
+        public string[] Types { get; set; }
+
+        [JsonPropertyName("typeInfo")]
+        public VTigerTypeInfo[] TypeInfo { get; set; }
+
+        [JsonPropertyName("information")]
+        public JsonDocument Information { get; set; } // JsonObject wurde durch JsonDocument ersetzt.
     }
 
     public class VTigerTypeInfo
     {
-        public string Name;
-        public string label;
-        public string singular;
-        public bool isEntity;
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+
+        [JsonPropertyName("label")]
+        public string Label { get; set; }
+
+        [JsonPropertyName("singular")]
+        public string Singular { get; set; }
+
+        [JsonPropertyName("isEntity")]
+        public bool IsEntity { get; set; }
     }
 
     //====================================================================
 
     /// <summary>
-    /// Containts the description of a VTiger-object
+    /// Contains the description of a VTiger-object
     /// </summary>
     public class VTigerObjectType
     {
-        public string label;
-        public string name;
-        public bool createable;
-        public bool updateable;
-        public bool deleteable;
-        public bool retrieveable;
-        public VTigerObjectField[] fields;
-        public string idPrefix;
-        public string isEntity;
-        public string labelFields;
+        [JsonPropertyName("label")]
+        public string Label { get; set; }
+
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+
+        [JsonPropertyName("createable")]
+        public bool Createable { get; set; }
+
+        [JsonPropertyName("updateable")]
+        public bool Updateable { get; set; }
+
+        [JsonPropertyName("deleteable")]
+        public bool Deleteable { get; set; }
+
+        [JsonPropertyName("retrieveable")]
+        public bool Retrieveable { get; set; }
+
+        [JsonPropertyName("fields")]
+        public VTigerObjectField[] Fields { get; set; }
+
+        [JsonPropertyName("idPrefix")]
+        public string IdPrefix { get; set; }
+
+        [JsonPropertyName("isEntity")]
+        public string IsEntity { get; set; }
+
+        [JsonPropertyName("labelFields")]
+        public string LabelFields { get; set; }
     }
+
     /// <summary>
     /// Part of VTigerObjectType
     /// </summary>
     public class VTigerObjectField
     {
-        public string label;
-        public string name;
-        public bool mandatory;
-        public VTigerTypeDesc type;
-        public bool nullable;
-        public bool editable;
+        [JsonPropertyName("label")]
+        public string Label { get; set; }
+
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+
+        [JsonPropertyName("mandatory")]
+        public bool Mandatory { get; set; }
+
+        [JsonPropertyName("type")]
+        public VTigerTypeDesc Type { get; set; }
+
+        [JsonPropertyName("nullable")]
+        public bool Nullable { get; set; }
+
+        [JsonPropertyName("editable")]
+        public bool Editable { get; set; }
     }
+
     /// <summary>
     /// Part of VTigerObjectType
     /// </summary>
     public class VTigerTypeDesc
     {
-        public string name;
-        public VTigerPicklistItem[] picklistValues;
-        public string[] refersTo;
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+
+        [JsonPropertyName("picklistValues")]
+        public VTigerPicklistItem[] PicklistValues { get; set; }
+
+        [JsonPropertyName("refersTo")]
+        public string[] RefersTo { get; set; }
     }
+
     /// <summary>
     /// Part of VTigerObjectType
     /// </summary>
     public class VTigerPicklistItem
     {
-        public string label;
-        public string value;
+        [JsonPropertyName("label")]
+        public string Label { get; set; }
+
+        [JsonPropertyName("value")]
+        public string Value { get; set; }
     }
 
     #endregion
@@ -329,18 +401,18 @@ namespace VTigerApi
 
     public partial class VTiger
     {
-        public static Type[] VTigerTypeClasses = 
+        public static Type[] VTigerTypeClasses =
         {
-            typeof(VTigerEntity), 
-            typeof(VTigerCalendar), typeof(VTigerLead), typeof(VTigerAccount), 
-            typeof(VTigerContact), typeof(VTigerPotential), typeof(VTigerProduct),            
-            typeof(VTigerDocument), typeof(VTigerEmail), typeof(VTigerHelpDesk), 
-            typeof(VTigerFaq), typeof(VTigerVendor), typeof(VTigerPriceBook), 
-            typeof(VTigerQuote), typeof(VTigerPurchaseOrder), typeof(VTigerSalesOrder), 
-            typeof(VTigerInvoice), typeof(VTigerCampaign), typeof(VTigerEvent), 
-            typeof(VTigerUser), typeof(VTigerPBXManager), typeof(VTigerServiceContract), 
+            typeof(VTigerEntity),
+            typeof(VTigerCalendar), typeof(VTigerLead), typeof(VTigerAccount),
+            typeof(VTigerContact), typeof(VTigerPotential), typeof(VTigerProduct),
+            typeof(VTigerDocument), typeof(VTigerEmail), typeof(VTigerHelpDesk),
+            typeof(VTigerFaq), typeof(VTigerVendor), typeof(VTigerPriceBook),
+            typeof(VTigerQuote), typeof(VTigerPurchaseOrder), typeof(VTigerSalesOrder),
+            typeof(VTigerInvoice), typeof(VTigerCampaign), typeof(VTigerEvent),
+            typeof(VTigerUser), typeof(VTigerPBXManager), typeof(VTigerServiceContract),
             typeof(VTigerService), typeof(VTigerAsset), typeof(VTigerModComment),
-            typeof(VTigerProjectMilestone), typeof(VTigerProjectTask), 
+            typeof(VTigerProjectMilestone), typeof(VTigerProjectTask),
             typeof(VTigerProject), typeof(VTigerSMSNotifier), typeof(VTigerGroup),
             typeof(VTigerCurrency), typeof(VTigerDocumentFolder)
         };
@@ -350,22 +422,27 @@ namespace VTigerApi
 
     public class VTigerEntity
     {
-        public VTigerType elementType { get { return GetElementType(); } }
+        [JsonIgnore]
+        public VTigerType ElementType => GetElementType();
+
         public virtual VTigerType GetElementType()
         {
             return VTigerType.Undefined;
         }
+
         public virtual string RemoteTableName()
         {
             return null;
         }
+
         public virtual VTigerEntity CreateNewInstance()
         {
             return new VTigerEntity();
         }
-        public string id;
-    }
 
+        [JsonPropertyName("id")]
+        public string Id { get; set; }
+    }
 
     /// <summary>
     /// VTiger-Calendar object
@@ -374,43 +451,93 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerCalendar();
+            return new VTigerCalendar();
         }
+
         public override string RemoteTableName() { return "Calendar"; }
+
         public override VTigerType GetElementType() { return VTigerType.Calendar; }
+
         public VTigerCalendar() { }
-        public VTigerCalendar(string subject, string assigned_user_id, string date_start, string time_start, string due_date, TaskStatus taskstatus)
+
+        public VTigerCalendar(string subject, string assignedUserId, string dateStart, string timeStart, string dueDate, TaskStatus taskStatus)
         {
-            this.subject = subject;
-            this.assigned_user_id = assigned_user_id;
-            this.date_start = date_start;
-            this.due_date = due_date;
-            this.taskstatus = taskstatus;
-            this.time_start = time_start;
+            this.Subject = subject;
+            this.AssignedUserId = assignedUserId;
+            this.DateStart = dateStart;
+            this.DueDate = dueDate;
+            this.TaskStatus = taskStatus;
+            this.TimeStart = timeStart;
         }
-        public string subject; //mandatory
-        public string assigned_user_id; //mandatory
-        public string date_start; //mandatory
-        public string time_start;
-        public string time_end;
-        public string due_date; //mandatory
-        public string parent_id;
-        public string contact_id;
-        public TaskStatus taskstatus; //mandatory
-        public Eventstatus eventstatus;
-        public Taskpriority taskpriority;
-        public bool sendnotification;
-        public DateTime createdtime;
-        public DateTime modifiedtime;
-        public Activitytype activitytype;
-        public Visibility visibility;
-        public string description;
-        public string duration_hours;
-        public Duration_minutes duration_minutes;
-        public string location;
-        public int reminder_time;
-        public RecurringType recurringtype;
-        public bool notime;
+
+        [JsonPropertyName("subject")]
+        public string Subject { get; set; } // mandatory
+
+        [JsonPropertyName("assigned_user_id")]
+        public string AssignedUserId { get; set; } // mandatory
+
+        [JsonPropertyName("date_start")]
+        public string DateStart { get; set; } // mandatory
+
+        [JsonPropertyName("time_start")]
+        public string TimeStart { get; set; }
+
+        [JsonPropertyName("time_end")]
+        public string TimeEnd { get; set; }
+
+        [JsonPropertyName("due_date")]
+        public string DueDate { get; set; } // mandatory
+
+        [JsonPropertyName("parent_id")]
+        public string ParentId { get; set; }
+
+        [JsonPropertyName("contact_id")]
+        public string ContactId { get; set; }
+
+        [JsonPropertyName("taskstatus")]
+        public TaskStatus TaskStatus { get; set; } // mandatory
+
+        [JsonPropertyName("eventstatus")]
+        public Eventstatus EventStatus { get; set; }
+
+        [JsonPropertyName("taskpriority")]
+        public Taskpriority TaskPriority { get; set; }
+
+        [JsonPropertyName("sendnotification")]
+        public bool SendNotification { get; set; }
+
+        [JsonPropertyName("createdtime")]
+        public DateTime CreatedTime { get; set; }
+
+        [JsonPropertyName("modifiedtime")]
+        public DateTime ModifiedTime { get; set; }
+
+        [JsonPropertyName("activitytype")]
+        public Activitytype ActivityType { get; set; }
+
+        [JsonPropertyName("visibility")]
+        public Visibility Visibility { get; set; }
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
+
+        [JsonPropertyName("duration_hours")]
+        public string DurationHours { get; set; }
+
+        [JsonPropertyName("duration_minutes")]
+        public Duration_minutes DurationMinutes { get; set; }
+
+        [JsonPropertyName("location")]
+        public string Location { get; set; }
+
+        [JsonPropertyName("reminder_time")]
+        public int ReminderTime { get; set; }
+
+        [JsonPropertyName("recurringtype")]
+        public RecurringType RecurringType { get; set; }
+
+        [JsonPropertyName("notime")]
+        public bool NoTime { get; set; }
     }
 
     /// <summary>
@@ -420,45 +547,105 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerLead();
+            return new VTigerLead();
         }
+
         public override string RemoteTableName() { return "Leads"; }
+
         public override VTigerType GetElementType() { return VTigerType.Leads; }
+
         public VTigerLead() { }
-        public VTigerLead(string lastname, string company, string assigned_user_id)
+
+        public VTigerLead(string lastName, string company, string assignedUserId)
         {
-            this.lastname = lastname;
-            this.company = company;
-            this.assigned_user_id = assigned_user_id;
+            this.LastName = lastName;
+            this.Company = company;
+            this.AssignedUserId = assignedUserId;
         }
-        public string salutationtype;
-        public string firstname;
-        public string lead_no;
-        public string phone;
-        public string lastname; //mandatory
-        public string mobile;
-        public string company; //mandatory
-        public string fax;
-        public string designation;
-        public string email;
-        public Leadsource leadsource;
-        public string website;
-        public Industry industry;
-        public Leadstatus leadstatus;
-        public int annualrevenue;
-        public Rating rating;
-        public int noofemployees;
-        public string assigned_user_id; //mandatory
-        public string yahooid;
-        public DateTime createdtime;
-        public DateTime modifiedtime;
-        public string lane;
-        public string code;
-        public string city;
-        public string country;
-        public string state;
-        public string pobox;
-        public string description;
+
+        [JsonPropertyName("salutationtype")]
+        public string SalutationType { get; set; }
+
+        [JsonPropertyName("firstname")]
+        public string FirstName { get; set; }
+
+        [JsonPropertyName("lead_no")]
+        public string LeadNo { get; set; }
+
+        [JsonPropertyName("phone")]
+        public string Phone { get; set; }
+
+        [JsonPropertyName("lastname")]
+        public string LastName { get; set; } // mandatory
+
+        [JsonPropertyName("mobile")]
+        public string Mobile { get; set; }
+
+        [JsonPropertyName("company")]
+        public string Company { get; set; } // mandatory
+
+        [JsonPropertyName("fax")]
+        public string Fax { get; set; }
+
+        [JsonPropertyName("designation")]
+        public string Designation { get; set; }
+
+        [JsonPropertyName("email")]
+        public string Email { get; set; }
+
+        [JsonPropertyName("leadsource")]
+        public Leadsource LeadSource { get; set; }
+
+        [JsonPropertyName("website")]
+        public string Website { get; set; }
+
+        [JsonPropertyName("industry")]
+        public Industry Industry { get; set; }
+
+        [JsonPropertyName("leadstatus")]
+        public Leadstatus LeadStatus { get; set; }
+
+        [JsonPropertyName("annualrevenue")]
+        public int AnnualRevenue { get; set; }
+
+        [JsonPropertyName("rating")]
+        public Rating Rating { get; set; }
+
+        [JsonPropertyName("noofemployees")]
+        public int NoOfEmployees { get; set; }
+
+        [JsonPropertyName("assigned_user_id")]
+        public string AssignedUserId { get; set; } // mandatory
+
+        [JsonPropertyName("yahooid")]
+        public string YahooId { get; set; }
+
+        [JsonPropertyName("createdtime")]
+        public DateTime CreatedTime { get; set; }
+
+        [JsonPropertyName("modifiedtime")]
+        public DateTime ModifiedTime { get; set; }
+
+        [JsonPropertyName("lane")]
+        public string Lane { get; set; }
+
+        [JsonPropertyName("code")]
+        public string Code { get; set; }
+
+        [JsonPropertyName("city")]
+        public string City { get; set; }
+
+        [JsonPropertyName("country")]
+        public string Country { get; set; }
+
+        [JsonPropertyName("state")]
+        public string State { get; set; }
+
+        [JsonPropertyName("pobox")]
+        public string POBox { get; set; }
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
     }
 
     /// <summary>
@@ -468,53 +655,131 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerAccount();
+            return new VTigerAccount();
         }
+
         public override string RemoteTableName() { return "Accounts"; }
+
         public override VTigerType GetElementType() { return VTigerType.Accounts; }
+
         public VTigerAccount() { }
+
         public VTigerAccount(string accountname, string assigned_user_id)
         {
-            this.accountname = accountname;
-            this.assigned_user_id = assigned_user_id;
+            this.AccountName = accountname;
+            this.AssignedUserId = assigned_user_id;
         }
-        public string accountname; //mandatory
-        public string account_no;
-        public string phone;
-        public string website;
-        public string fax;
-        public string tickersymbol;
-        public string otherphone;
-        public string account_id;
-        public string email1;
-        public int employees;
-        public string email2;
-        public string ownership;
-        public Rating rating;
-        public Industry industry;
-        public string siccode;
-        public Accounttype accounttype;
-        public int annual_revenue;
-        public bool emailoptout;
-        public bool notify_owner;
-        public string assigned_user_id; //mandatory
-        public DateTime createdtime;
-        public DateTime modifiedtime;
-        public string bill_street;
-        public string ship_street;
-        public string bill_city;
-        public string ship_city;
-        public string bill_state;
-        public string ship_state;
-        public string bill_code;
-        public string ship_code;
-        public string bill_country;
-        public string ship_country;
-        public string bill_pobox;
-        public string ship_pobox;
-        public string description;
-        public string modifiedby;
-        public string isconvertedfromlead;
+
+        [JsonPropertyName("accountname")]
+        public string AccountName { get; set; } // mandatory
+
+        [JsonPropertyName("account_no")]
+        public string AccountNo { get; set; }
+
+        [JsonPropertyName("phone")]
+        public string Phone { get; set; }
+
+        [JsonPropertyName("website")]
+        public string Website { get; set; }
+
+        [JsonPropertyName("fax")]
+        public string Fax { get; set; }
+
+        [JsonPropertyName("tickersymbol")]
+        public string TickerSymbol { get; set; }
+
+        [JsonPropertyName("otherphone")]
+        public string OtherPhone { get; set; }
+
+        [JsonPropertyName("account_id")]
+        public string AccountId { get; set; }
+
+        [JsonPropertyName("email1")]
+        public string Email1 { get; set; }
+
+        [JsonPropertyName("employees")]
+        public int Employees { get; set; }
+
+        [JsonPropertyName("email2")]
+        public string Email2 { get; set; }
+
+        [JsonPropertyName("ownership")]
+        public string Ownership { get; set; }
+
+        [JsonPropertyName("rating")]
+        public Rating Rating { get; set; }
+
+        [JsonPropertyName("industry")]
+        public Industry Industry { get; set; }
+
+        [JsonPropertyName("siccode")]
+        public string SicCode { get; set; }
+
+        [JsonPropertyName("accounttype")]
+        public Accounttype AccountType { get; set; }
+
+        [JsonPropertyName("annual_revenue")]
+        public int AnnualRevenue { get; set; }
+
+        [JsonPropertyName("emailoptout")]
+        public bool EmailOptOut { get; set; }
+
+        [JsonPropertyName("notify_owner")]
+        public bool NotifyOwner { get; set; }
+
+        [JsonPropertyName("assigned_user_id")]
+        public string AssignedUserId { get; set; } // mandatory
+
+        [JsonPropertyName("createdtime")]
+        public DateTime CreatedTime { get; set; }
+
+        [JsonPropertyName("modifiedtime")]
+        public DateTime ModifiedTime { get; set; }
+
+        [JsonPropertyName("bill_street")]
+        public string BillStreet { get; set; }
+
+        [JsonPropertyName("ship_street")]
+        public string ShipStreet { get; set; }
+
+        [JsonPropertyName("bill_city")]
+        public string BillCity { get; set; }
+
+        [JsonPropertyName("ship_city")]
+        public string ShipCity { get; set; }
+
+        [JsonPropertyName("bill_state")]
+        public string BillState { get; set; }
+
+        [JsonPropertyName("ship_state")]
+        public string ShipState { get; set; }
+
+        [JsonPropertyName("bill_code")]
+        public string BillCode { get; set; }
+
+        [JsonPropertyName("ship_code")]
+        public string ShipCode { get; set; }
+
+        [JsonPropertyName("bill_country")]
+        public string BillCountry { get; set; }
+
+        [JsonPropertyName("ship_country")]
+        public string ShipCountry { get; set; }
+
+        [JsonPropertyName("bill_pobox")]
+        public string BillPOBox { get; set; }
+
+        [JsonPropertyName("ship_pobox")]
+        public string ShipPOBox { get; set; }
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
+
+        [JsonPropertyName("modifiedby")]
+        public string ModifiedBy { get; set; }
+
+        [JsonPropertyName("isconvertedfromlead")]
+        public string IsConvertedFromLead { get; set; }
     }
 
     /// <summary>
@@ -524,62 +789,158 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerContact();
+            return new VTigerContact();
         }
+
         public override string RemoteTableName() { return "Contacts"; }
+
         public override VTigerType GetElementType() { return VTigerType.Contacts; }
+
         public VTigerContact() { }
+
         public VTigerContact(string lastname, string assigned_user_id)
         {
-            this.lastname = lastname;
-            this.assigned_user_id = assigned_user_id;
+            this.LastName = lastname;
+            this.AssignedUserId = assigned_user_id;
         }
-        public string salutationtype;
-        public string firstname;
-        public string contact_no;
-        public string phone;
-        public string lastname; //mandatory
-        public string mobile;
-        public string account_id;
-        public string homephone;
-        public Leadsource leadsource;
-        public string otherphone;
-        public string title;
-        public string fax;
-        public string department;
-        public string birthday;
-        public string email;
-        public string contact_id;
-        public string assistant;
-        public string yahooid;
-        public string assistantphone;
-        public bool donotcall;
-        public bool emailoptout;
-        public string assigned_user_id; //mandatory
-        public bool reference;
-        public bool notify_owner;
-        public DateTime createdtime;
-        public DateTime modifiedtime;
-        public bool portal;
-        public string support_start_date;
-        public string support_end_date;
-        public string mailingstreet;
-        public string otherstreet;
-        public string mailingcity;
-        public string othercity;
-        public string mailingstate;
-        public string otherstate;
-        public string mailingzip;
-        public string otherzip;
-        public string mailingcountry;
-        public string othercountry;
-        public string mailingpobox;
-        public string otherpobox;
-        public string description;
-        public string secondaryemail;
-        public string modifiedby;
-        public string imagename;
-        public string isconvertedfromlead;
+
+        [JsonPropertyName("salutationtype")]
+        public string SalutationType { get; set; }
+
+        [JsonPropertyName("firstname")]
+        public string FirstName { get; set; }
+
+        [JsonPropertyName("contact_no")]
+        public string ContactNo { get; set; }
+
+        [JsonPropertyName("phone")]
+        public string Phone { get; set; }
+
+        [JsonPropertyName("lastname")]
+        public string LastName { get; set; } // mandatory
+
+        [JsonPropertyName("mobile")]
+        public string Mobile { get; set; }
+
+        [JsonPropertyName("account_id")]
+        public string AccountId { get; set; }
+
+        [JsonPropertyName("homephone")]
+        public string HomePhone { get; set; }
+
+        [JsonPropertyName("leadsource")]
+        public Leadsource LeadSource { get; set; }
+
+        [JsonPropertyName("otherphone")]
+        public string OtherPhone { get; set; }
+
+        [JsonPropertyName("title")]
+        public string Title { get; set; }
+
+        [JsonPropertyName("fax")]
+        public string Fax { get; set; }
+
+        [JsonPropertyName("department")]
+        public string Department { get; set; }
+
+        [JsonPropertyName("birthday")]
+        public string Birthday { get; set; }
+
+        [JsonPropertyName("email")]
+        public string Email { get; set; }
+
+        [JsonPropertyName("contact_id")]
+        public string ContactId { get; set; }
+
+        [JsonPropertyName("assistant")]
+        public string Assistant { get; set; }
+
+        [JsonPropertyName("yahooid")]
+        public string YahooId { get; set; }
+
+        [JsonPropertyName("assistantphone")]
+        public string AssistantPhone { get; set; }
+
+        [JsonPropertyName("donotcall")]
+        public bool DoNotCall { get; set; }
+
+        [JsonPropertyName("emailoptout")]
+        public bool EmailOptOut { get; set; }
+
+        [JsonPropertyName("assigned_user_id")]
+        public string AssignedUserId { get; set; } // mandatory
+
+        [JsonPropertyName("reference")]
+        public bool Reference { get; set; }
+
+        [JsonPropertyName("notify_owner")]
+        public bool NotifyOwner { get; set; }
+
+        [JsonPropertyName("createdtime")]
+        public DateTime CreatedTime { get; set; }
+
+        [JsonPropertyName("modifiedtime")]
+        public DateTime ModifiedTime { get; set; }
+
+        [JsonPropertyName("portal")]
+        public bool Portal { get; set; }
+
+        [JsonPropertyName("support_start_date")]
+        public string SupportStartDate { get; set; }
+
+        [JsonPropertyName("support_end_date")]
+        public string SupportEndDate { get; set; }
+
+        [JsonPropertyName("mailingstreet")]
+        public string MailingStreet { get; set; }
+
+        [JsonPropertyName("otherstreet")]
+        public string OtherStreet { get; set; }
+
+        [JsonPropertyName("mailingcity")]
+        public string MailingCity { get; set; }
+
+        [JsonPropertyName("othercity")]
+        public string OtherCity { get; set; }
+
+        [JsonPropertyName("mailingstate")]
+        public string MailingState { get; set; }
+
+        [JsonPropertyName("otherstate")]
+        public string OtherState { get; set; }
+
+        [JsonPropertyName("mailingzip")]
+        public string MailingZip { get; set; }
+
+        [JsonPropertyName("otherzip")]
+        public string OtherZip { get; set; }
+
+        [JsonPropertyName("mailingcountry")]
+        public string MailingCountry { get; set; }
+
+        [JsonPropertyName("othercountry")]
+        public string OtherCountry { get; set; }
+
+        [JsonPropertyName("mailingpobox")]
+        public string MailingPOBox { get; set; }
+
+        [JsonPropertyName("otherpobox")]
+        public string OtherPOBox { get; set; }
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
+
+        [JsonPropertyName("secondaryemail")]
+        public string SecondaryEmail { get; set; }
+
+        [JsonPropertyName("modifiedby")]
+        public string ModifiedBy { get; set; }
+
+        [JsonPropertyName("imagename")]
+        public string ImageName { get; set; }
+
+        [JsonPropertyName("isconvertedfromlead")]
+        public string IsConvertedFromLead { get; set; }
     }
 
     /// <summary>
@@ -589,34 +950,68 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerPotential();
+            return new VTigerPotential();
         }
+
         public override string RemoteTableName() { return "Potentials"; }
+
         public override VTigerType GetElementType() { return VTigerType.Potentials; }
+
         public VTigerPotential() { }
+
         public VTigerPotential(string potentialname, string related_to, string closingdate, Sales_stage sales_stage, string assigned_user_id)
         {
-            this.potentialname = potentialname;
-            this.related_to = related_to;
-            this.closingdate = closingdate;
-            this.sales_stage = sales_stage;
-            this.assigned_user_id = assigned_user_id;
+            this.PotentialName = potentialname;
+            this.RelatedTo = related_to;
+            this.ClosingDate = closingdate;
+            this.SalesStage = sales_stage;
+            this.AssignedUserId = assigned_user_id;
         }
-        public string potentialname; //mandatory
-        public string potential_no;
-        public double amount;
-        public string related_to; //mandatory
-        public string closingdate; //mandatory
-        public Opportunity_type opportunity_type;
-        public string nextstep;
-        public Leadsource leadsource;
-        public Sales_stage sales_stage; //mandatory
-        public string assigned_user_id; //mandatory
-        public double probability;
-        public string campaignid;
-        public DateTime createdtime;
-        public DateTime modifiedtime;
-        public string description;
+
+        [JsonPropertyName("potentialname")]
+        public string PotentialName { get; set; } // mandatory
+
+        [JsonPropertyName("potential_no")]
+        public string PotentialNo { get; set; }
+
+        [JsonPropertyName("amount")]
+        public double Amount { get; set; }
+
+        [JsonPropertyName("related_to")]
+        public string RelatedTo { get; set; } // mandatory
+
+        [JsonPropertyName("closingdate")]
+        public string ClosingDate { get; set; } // mandatory
+
+        [JsonPropertyName("opportunity_type")]
+        public Opportunity_type OpportunityType { get; set; }
+
+        [JsonPropertyName("nextstep")]
+        public string NextStep { get; set; }
+
+        [JsonPropertyName("leadsource")]
+        public Leadsource LeadSource { get; set; }
+
+        [JsonPropertyName("sales_stage")]
+        public Sales_stage SalesStage { get; set; } // mandatory
+
+        [JsonPropertyName("assigned_user_id")]
+        public string AssignedUserId { get; set; } // mandatory
+
+        [JsonPropertyName("probability")]
+        public double Probability { get; set; }
+
+        [JsonPropertyName("campaignid")]
+        public string CampaignId { get; set; }
+
+        [JsonPropertyName("createdtime")]
+        public DateTime CreatedTime { get; set; }
+
+        [JsonPropertyName("modifiedtime")]
+        public DateTime ModifiedTime { get; set; }
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
     }
 
     /// <summary>
@@ -626,48 +1021,116 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerProduct();
+            return new VTigerProduct();
         }
+
         public override string RemoteTableName() { return "Products"; }
+
         public override VTigerType GetElementType() { return VTigerType.Products; }
+
         public VTigerProduct() { }
+
         public VTigerProduct(string productname, string assigned_user_id)
         {
-            this.productname = productname;
-            this.assigned_user_id = assigned_user_id;
+            this.ProductName = productname;
+            this.AssignedUserId = assigned_user_id;
         }
-        public string productname; //mandatory
-        public string product_no;
-        public string productcode;
-        public bool discontinued;
-        public string manufacturer;
-        public string productcategory;
-        public string sales_start_date;
-        public string sales_end_date;
-        public string start_date;
-        public string expiry_date;
-        public string website;
-        public string vendor_id;
-        public string mfr_part_no;
-        public string vendor_part_no;
-        public string serial_no;
-        public string productsheet;
-        public string glacct;
-        public DateTime createdtime;
-        public DateTime modifiedtime;
-        public string modifiedby;
-        public double unit_price;
-        public double commissionrate;
-        public string taxclass;
-        public string usageunit;
-        public double qty_per_unit;
-        public double qtyinstock;
-        public int reorderlevel;
-        public string assigned_user_id; //mandatory
-        public int qtyindemand;
-        public string description;
-        public string imagename;
-        public string purchase_cost;
+
+        [JsonPropertyName("productname")]
+        public string ProductName { get; set; } // mandatory
+
+        [JsonPropertyName("product_no")]
+        public string ProductNo { get; set; }
+
+        [JsonPropertyName("productcode")]
+        public string ProductCode { get; set; }
+
+        [JsonPropertyName("discontinued")]
+        public bool Discontinued { get; set; }
+
+        [JsonPropertyName("manufacturer")]
+        public string Manufacturer { get; set; }
+
+        [JsonPropertyName("productcategory")]
+        public string ProductCategory { get; set; }
+
+        [JsonPropertyName("sales_start_date")]
+        public string SalesStartDate { get; set; }
+
+        [JsonPropertyName("sales_end_date")]
+        public string SalesEndDate { get; set; }
+
+        [JsonPropertyName("start_date")]
+        public string StartDate { get; set; }
+
+        [JsonPropertyName("expiry_date")]
+        public string ExpiryDate { get; set; }
+
+        [JsonPropertyName("website")]
+        public string Website { get; set; }
+
+        [JsonPropertyName("vendor_id")]
+        public string VendorId { get; set; }
+
+        [JsonPropertyName("mfr_part_no")]
+        public string MfrPartNo { get; set; }
+
+        [JsonPropertyName("vendor_part_no")]
+        public string VendorPartNo { get; set; }
+
+        [JsonPropertyName("serial_no")]
+        public string SerialNo { get; set; }
+
+        [JsonPropertyName("productsheet")]
+        public string ProductSheet { get; set; }
+
+        [JsonPropertyName("glacct")]
+        public string GlAcct { get; set; }
+
+        [JsonPropertyName("createdtime")]
+        public DateTime CreatedTime { get; set; }
+
+        [JsonPropertyName("modifiedtime")]
+        public DateTime ModifiedTime { get; set; }
+
+        [JsonPropertyName("modifiedby")]
+        public string ModifiedBy { get; set; }
+
+        [JsonPropertyName("unit_price")]
+        public double UnitPrice { get; set; }
+
+        [JsonPropertyName("commissionrate")]
+        public double CommissionRate { get; set; }
+
+        [JsonPropertyName("taxclass")]
+        public string TaxClass { get; set; }
+
+        [JsonPropertyName("usageunit")]
+        public string UsageUnit { get; set; }
+
+        [JsonPropertyName("qty_per_unit")]
+        public double QtyPerUnit { get; set; }
+
+        [JsonPropertyName("qtyinstock")]
+        public double QtyInStock { get; set; }
+
+        [JsonPropertyName("reorderlevel")]
+        public int ReorderLevel { get; set; }
+
+        [JsonPropertyName("assigned_user_id")]
+        public string AssignedUserId { get; set; } // mandatory
+
+        [JsonPropertyName("qtyindemand")]
+        public int QtyInDemand { get; set; }
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
+
+        [JsonPropertyName("imagename")]
+        public string ImageName { get; set; }
+
+        [JsonPropertyName("purchase_cost")]
+        public string PurchaseCost { get; set; }
     }
 
     /// <summary>
@@ -677,30 +1140,62 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerDocument();
+            return new VTigerDocument();
         }
+
         public override string RemoteTableName() { return "Documents"; }
+
         public override VTigerType GetElementType() { return VTigerType.Documents; }
+
         public VTigerDocument() { }
+
         public VTigerDocument(string notes_title, string assigned_user_id)
         {
-            this.notes_title = notes_title;
-            this.assigned_user_id = assigned_user_id;
+            this.NotesTitle = notes_title;
+            this.AssignedUserId = assigned_user_id;
         }
-        public string notes_title; //mandatory
-        public DateTime createdtime;
-        public DateTime modifiedtime;
-        public string filename;
-        public string assigned_user_id; //mandatory
-        public string notecontent;
-        public string filetype;
-        public int filesize;
-        public string filelocationtype;
-        public string fileversion;
-        public bool filestatus;
-        public int filedownloadcount;
-        public string folderid;
-        public string note_no;
+
+        [JsonPropertyName("notes_title")]
+        public string NotesTitle { get; set; } // mandatory
+
+        [JsonPropertyName("createdtime")]
+        public DateTime CreatedTime { get; set; }
+
+        [JsonPropertyName("modifiedtime")]
+        public DateTime ModifiedTime { get; set; }
+
+        [JsonPropertyName("filename")]
+        public string FileName { get; set; }
+
+        [JsonPropertyName("assigned_user_id")]
+        public string AssignedUserId { get; set; } // mandatory
+
+        [JsonPropertyName("notecontent")]
+        public string NoteContent { get; set; }
+
+        [JsonPropertyName("filetype")]
+        public string FileType { get; set; }
+
+        [JsonPropertyName("filesize")]
+        public int FileSize { get; set; }
+
+        [JsonPropertyName("filelocationtype")]
+        public string FileLocationType { get; set; }
+
+        [JsonPropertyName("fileversion")]
+        public string FileVersion { get; set; }
+
+        [JsonPropertyName("filestatus")]
+        public bool FileStatus { get; set; }
+
+        [JsonPropertyName("filedownloadcount")]
+        public int FileDownloadCount { get; set; }
+
+        [JsonPropertyName("folderid")]
+        public string FolderId { get; set; }
+
+        [JsonPropertyName("note_no")]
+        public string NoteNo { get; set; }
     }
 
     /// <summary>
@@ -710,39 +1205,75 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerEmail();
+            return new VTigerEmail();
         }
+
         public override string RemoteTableName() { return "Emails"; }
+
         public override VTigerType GetElementType() { return VTigerType.Emails; }
+
         public VTigerEmail() { }
+
         public VTigerEmail(string subject, DateTime date_start, string from_email, string[] saved_toid, string assigned_user_id)
         {
-            this.date_start = VTiger.DateTimeToVtDate(date_start);
-            this.assigned_user_id = assigned_user_id;
-            this.subject = subject;
-            this.from_email = from_email;
-            //this.saved_toid = JsonConvert.ExportToString(saved_toid);
-            this.saved_toid.Adresses = saved_toid;
-            this.activitytype = "Emails";
+            this.DateStart = date_start.ToString("yyyy-MM-dd HH:mm:ss");
+            this.AssignedUserId = assigned_user_id;
+            this.Subject = subject;
+            this.FromEmail = from_email;
+            this.SavedToId = new EmailAdresses { Adresses = saved_toid };
+            this.ActivityType = "Emails";
         }
-        public string date_start; //mandatory
-        [JsonExcludeExportAttribute]
-        public string parent_type; //Read-only
-        public string activitytype;
-        public string assigned_user_id; //mandatory
-        public string subject; //mandatory
-        public string filename;
-        public string description;
-        public string time_start;
-        public DateTime createdtime;
-        public DateTime modifiedtime;
-        public string access_count;
-        public string from_email; //mandatory
-        public EmailAdresses saved_toid; //mandatory
-        public EmailAdresses ccmail;
-        public EmailAdresses bccmail;
-        public string parent_id;
-        public Email_flag email_flag;
+
+        [JsonPropertyName("date_start")]
+        public string DateStart { get; set; } // mandatory
+
+        [JsonIgnore]
+        public string ParentType { get; set; } // Read-only
+
+        [JsonPropertyName("activitytype")]
+        public string ActivityType { get; set; }
+
+        [JsonPropertyName("assigned_user_id")]
+        public string AssignedUserId { get; set; } // mandatory
+
+        [JsonPropertyName("subject")]
+        public string Subject { get; set; } // mandatory
+
+        [JsonPropertyName("filename")]
+        public string FileName { get; set; }
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
+
+        [JsonPropertyName("time_start")]
+        public string TimeStart { get; set; }
+
+        [JsonPropertyName("createdtime")]
+        public DateTime CreatedTime { get; set; }
+
+        [JsonPropertyName("modifiedtime")]
+        public DateTime ModifiedTime { get; set; }
+
+        [JsonPropertyName("access_count")]
+        public string AccessCount { get; set; }
+
+        [JsonPropertyName("from_email")]
+        public string FromEmail { get; set; } // mandatory
+
+        [JsonPropertyName("saved_toid")]
+        public EmailAdresses SavedToId { get; set; } // mandatory
+
+        [JsonPropertyName("ccmail")]
+        public EmailAdresses CcMail { get; set; }
+
+        [JsonPropertyName("bccmail")]
+        public EmailAdresses BccMail { get; set; }
+
+        [JsonPropertyName("parent_id")]
+        public string ParentId { get; set; }
+
+        [JsonPropertyName("email_flag")]
+        public Email_flag EmailFlag { get; set; }
     }
 
     /// <summary>
@@ -752,33 +1283,69 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerHelpDesk();
+            return new VTigerHelpDesk();
         }
+
         public override string RemoteTableName() { return "HelpDesk"; }
+
         public override VTigerType GetElementType() { return VTigerType.HelpDesk; }
+
         public VTigerHelpDesk() { }
+
         public VTigerHelpDesk(string assigned_user_id, Ticketstatus ticketstatus, string ticket_title)
         {
-            this.assigned_user_id = assigned_user_id;
-            this.ticketstatus = ticketstatus;
-            this.ticket_title = ticket_title;
+            this.AssignedUserId = assigned_user_id;
+            this.TicketStatus = ticketstatus;
+            this.TicketTitle = ticket_title;
         }
-        public string ticket_no;
-        public string assigned_user_id; //mandatory
-        public string parent_id;
-        public Ticketpriorities ticketpriorities;
-        public string product_id;
-        public Ticketseverities ticketseverities;
-        public Ticketstatus ticketstatus; //mandatory
-        public Ticketcategories ticketcategories;
-        public string update_log;
-        public int hours;
-        public int days;
-        public DateTime createdtime;
-        public DateTime modifiedtime;
-        public string ticket_title; //mandatory
-        public string description;
-        public string solution;
+
+        [JsonPropertyName("ticket_no")]
+        public string TicketNo { get; set; }
+
+        [JsonPropertyName("assigned_user_id")]
+        public string AssignedUserId { get; set; } // mandatory
+
+        [JsonPropertyName("parent_id")]
+        public string ParentId { get; set; }
+
+        [JsonPropertyName("ticketpriorities")]
+        public Ticketpriorities TicketPriorities { get; set; }
+
+        [JsonPropertyName("product_id")]
+        public string ProductId { get; set; }
+
+        [JsonPropertyName("ticketseverities")]
+        public Ticketseverities TicketSeverities { get; set; }
+
+        [JsonPropertyName("ticketstatus")]
+        public Ticketstatus TicketStatus { get; set; } // mandatory
+
+        [JsonPropertyName("ticketcategories")]
+        public Ticketcategories TicketCategories { get; set; }
+
+        [JsonPropertyName("update_log")]
+        public string UpdateLog { get; set; }
+
+        [JsonPropertyName("hours")]
+        public int Hours { get; set; }
+
+        [JsonPropertyName("days")]
+        public int Days { get; set; }
+
+        [JsonPropertyName("createdtime")]
+        public DateTime CreatedTime { get; set; }
+
+        [JsonPropertyName("modifiedtime")]
+        public DateTime ModifiedTime { get; set; }
+
+        [JsonPropertyName("ticket_title")]
+        public string TicketTitle { get; set; } // mandatory
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
+
+        [JsonPropertyName("solution")]
+        public string Solution { get; set; }
     }
 
     /// <summary>
@@ -788,25 +1355,45 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerFaq();
+            return new VTigerFaq();
         }
+
         public override string RemoteTableName() { return "Faq"; }
+
         public override VTigerType GetElementType() { return VTigerType.Faq; }
+
         public VTigerFaq() { }
+
         public VTigerFaq(Faqstatus faqstatus, string question, string faq_answer)
         {
-            this.faqstatus = faqstatus;
-            this.question = question;
-            this.faq_answer = faq_answer;
+            this.FaqStatus = faqstatus;
+            this.Question = question;
+            this.FaqAnswer = faq_answer;
         }
-        public string product_id;
-        public string faq_no;
-        public Faqcategories faqcategories;
-        public Faqstatus faqstatus; //mandatory
-        public string question; //mandatory
-        public string faq_answer; //mandatory
-        public DateTime createdtime;
-        public DateTime modifiedtime;
+
+        [JsonPropertyName("product_id")]
+        public string ProductId { get; set; }
+
+        [JsonPropertyName("faq_no")]
+        public string FaqNo { get; set; }
+
+        [JsonPropertyName("faqcategories")]
+        public Faqcategories FaqCategories { get; set; }
+
+        [JsonPropertyName("faqstatus")]
+        public Faqstatus FaqStatus { get; set; } // mandatory
+
+        [JsonPropertyName("question")]
+        public string Question { get; set; } // mandatory
+
+        [JsonPropertyName("faq_answer")]
+        public string FaqAnswer { get; set; } // mandatory
+
+        [JsonPropertyName("createdtime")]
+        public DateTime CreatedTime { get; set; }
+
+        [JsonPropertyName("modifiedtime")]
+        public DateTime ModifiedTime { get; set; }
     }
 
     /// <summary>
@@ -816,34 +1403,74 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerVendor();
+            return new VTigerVendor();
         }
+
         public override string RemoteTableName() { return "Vendors"; }
+
         public override VTigerType GetElementType() { return VTigerType.Vendors; }
+
         public VTigerVendor() { }
+
         public VTigerVendor(string vendorname, string assigned_user_id)
         {
-            this.vendorname = vendorname;
-            this.assigned_user_id = assigned_user_id;
+            this.VendorName = vendorname;
+            this.AssignedUserId = assigned_user_id;
         }
-        public string vendorname; //mandatory
-        public string vendor_no;
-        public string phone;
-        public string email;
-        public string website;
-        public string glacct;
-        public string category;
-        public DateTime createdtime;
-        public DateTime modifiedtime;
-        public string modifiedby;
-        public string street;
-        public string pobox;
-        public string city;
-        public string state;
-        public string postalcode;
-        public string country;
-        public string description;
-        public string assigned_user_id;      
+
+        [JsonPropertyName("vendorname")]
+        public string VendorName { get; set; } // mandatory
+
+        [JsonPropertyName("vendor_no")]
+        public string VendorNo { get; set; }
+
+        [JsonPropertyName("phone")]
+        public string Phone { get; set; }
+
+        [JsonPropertyName("email")]
+        public string Email { get; set; }
+
+        [JsonPropertyName("website")]
+        public string Website { get; set; }
+
+        [JsonPropertyName("glacct")]
+        public string GlAcct { get; set; }
+
+        [JsonPropertyName("category")]
+        public string Category { get; set; }
+
+        [JsonPropertyName("createdtime")]
+        public DateTime CreatedTime { get; set; }
+
+        [JsonPropertyName("modifiedtime")]
+        public DateTime ModifiedTime { get; set; }
+
+        [JsonPropertyName("modifiedby")]
+        public string ModifiedBy { get; set; }
+
+        [JsonPropertyName("street")]
+        public string Street { get; set; }
+
+        [JsonPropertyName("pobox")]
+        public string PoBox { get; set; }
+
+        [JsonPropertyName("city")]
+        public string City { get; set; }
+
+        [JsonPropertyName("state")]
+        public string State { get; set; }
+
+        [JsonPropertyName("postalcode")]
+        public string PostalCode { get; set; }
+
+        [JsonPropertyName("country")]
+        public string Country { get; set; }
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
+
+        [JsonPropertyName("assigned_user_id")]
+        public string AssignedUserId { get; set; }
     }
 
     /// <summary>
@@ -853,23 +1480,41 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerPriceBook();
+            return new VTigerPriceBook();
         }
+
         public override string RemoteTableName() { return "PriceBooks"; }
+
         public override VTigerType GetElementType() { return VTigerType.PriceBooks; }
+
         public VTigerPriceBook() { }
+
         public VTigerPriceBook(string bookname, string currency_id)
         {
-            this.bookname = bookname;
-            this.currency_id = currency_id;
+            this.BookName = bookname;
+            this.CurrencyId = currency_id;
         }
-        public string bookname; //mandatory
-        public string pricebook_no;
-        public bool active;
-        public DateTime createdtime;
-        public DateTime modifiedtime;
-        public string currency_id; //mandatory
-        public string description;
+
+        [JsonPropertyName("bookname")]
+        public string BookName { get; set; } // mandatory
+
+        [JsonPropertyName("pricebook_no")]
+        public string PriceBookNo { get; set; }
+
+        [JsonPropertyName("active")]
+        public bool Active { get; set; }
+
+        [JsonPropertyName("createdtime")]
+        public DateTime CreatedTime { get; set; }
+
+        [JsonPropertyName("modifiedtime")]
+        public DateTime ModifiedTime { get; set; }
+
+        [JsonPropertyName("currency_id")]
+        public string CurrencyId { get; set; } // mandatory
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
     }
 
     /// <summary>
@@ -879,69 +1524,169 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerQuote();
+            return new VTigerQuote();
         }
+
         public override string RemoteTableName() { return "Quotes"; }
+
         public override VTigerType GetElementType() { return VTigerType.Quotes; }
+
         public VTigerQuote() { }
-        public VTigerQuote(string subject, Quotestage quotestage, string bill_street, 
+
+        public VTigerQuote(string subject, Quotestage quotestage, string bill_street,
             string ship_street, string account_id, string assigned_user_id)
         {
-            this.subject = subject;
-            this.quotestage = quotestage;
-            this.account_id = account_id;
-            this.assigned_user_id = assigned_user_id;
-            this.bill_street = bill_street;
-            this.ship_street = ship_street;
+            this.Subject = subject;
+            this.QuoteStage = quotestage;
+            this.AccountId = account_id;
+            this.AssignedUserId = assigned_user_id;
+            this.BillStreet = bill_street;
+            this.ShipStreet = ship_street;
         }
-        public string quote_no;
-        public string subject; //mandatory
-        public string potential_id;
-        public Quotestage quotestage; //mandatory
-        public string validtill;
-        public string contact_id;
-        public string carrier;
-        public double hdnSubTotal;
-        public string shipping;
-        public string assigned_user_id1;
-        public double txtAdjustment;
-        public double hdnGrandTotal;
-        public HdnTaxType hdnTaxType;
-        public double discount_percent;
-        public double discount_amount;
-        public double hdnDiscountPercent;
-        public double hdnDiscountAmount;
-        public double hdnS_H_Amount;
-        public double hdnS_H_Percent;
-        public string account_id; //mandatory
-        public string assigned_user_id; //mandatory
-        public DateTime createdtime;
-        public string modifiedby;
-        public DateTime modifiedtime;
-        public string currency_id;
-        public double conversion_rate;
-        public string bill_street; //mandatory
-        public string ship_street; //mandatory
-        public string bill_city;
-        public string ship_city;
-        public string bill_state;
-        public string ship_state;
-        public string bill_code;
-        public string ship_code;
-        public string bill_country;
-        public string ship_country;
-        public string bill_pobox;
-        public string ship_pobox;
-        public string description;
-        public string terms_conditions;
-        public string productid;
-        public double quantity;
-        public double listprice;
-        public string comment;
-        public string tax1;
-        public string tax2;
-        public string tax3;
-        public double pre_tax_total;
+
+        [JsonPropertyName("quote_no")]
+        public string QuoteNo { get; set; }
+
+        [JsonPropertyName("subject")]
+        public string Subject { get; set; } // mandatory
+
+        [JsonPropertyName("potential_id")]
+        public string PotentialId { get; set; }
+
+        [JsonPropertyName("quotestage")]
+        public Quotestage QuoteStage { get; set; } // mandatory
+
+        [JsonPropertyName("validtill")]
+        public string ValidTill { get; set; }
+
+        [JsonPropertyName("contact_id")]
+        public string ContactId { get; set; }
+
+        [JsonPropertyName("carrier")]
+        public string Carrier { get; set; }
+
+        [JsonPropertyName("hdnSubTotal")]
+        public double HiddenSubTotal { get; set; }
+
+        [JsonPropertyName("shipping")]
+        public string Shipping { get; set; }
+
+        [JsonPropertyName("assigned_user_id1")]
+        public string AssignedUserId1 { get; set; }
+
+        [JsonPropertyName("txtAdjustment")]
+        public double TextAdjustment { get; set; }
+
+        [JsonPropertyName("hdnGrandTotal")]
+        public double HiddenGrandTotal { get; set; }
+
+        [JsonPropertyName("hdnTaxType")]
+        public HdnTaxType HiddenTaxType { get; set; }
+
+        [JsonPropertyName("discount_percent")]
+        public double DiscountPercent { get; set; }
+
+        [JsonPropertyName("discount_amount")]
+        public double DiscountAmount { get; set; }
+
+        [JsonPropertyName("hdnDiscountPercent")]
+        public double HiddenDiscountPercent { get; set; }
+
+        [JsonPropertyName("hdnDiscountAmount")]
+        public double HiddenDiscountAmount { get; set; }
+
+        [JsonPropertyName("hdnS_H_Amount")]
+        public double HiddenShippingHandlingAmount { get; set; }
+
+        [JsonPropertyName("hdnS_H_Percent")]
+        public double HiddenShippingHandlingPercent { get; set; }
+
+        [JsonPropertyName("account_id")]
+        public string AccountId { get; set; } // mandatory
+
+        [JsonPropertyName("assigned_user_id")]
+        public string AssignedUserId { get; set; } // mandatory
+
+        [JsonPropertyName("createdtime")]
+        public DateTime CreatedTime { get; set; }
+
+        [JsonPropertyName("modifiedby")]
+        public string ModifiedBy { get; set; }
+
+        [JsonPropertyName("modifiedtime")]
+        public DateTime ModifiedTime { get; set; }
+
+        [JsonPropertyName("currency_id")]
+        public string CurrencyId { get; set; }
+
+        [JsonPropertyName("conversion_rate")]
+        public double ConversionRate { get; set; }
+
+        [JsonPropertyName("bill_street")]
+        public string BillStreet { get; set; } // mandatory
+
+        [JsonPropertyName("ship_street")]
+        public string ShipStreet { get; set; } // mandatory
+
+        [JsonPropertyName("bill_city")]
+        public string BillCity { get; set; }
+
+        [JsonPropertyName("ship_city")]
+        public string ShipCity { get; set; }
+
+        [JsonPropertyName("bill_state")]
+        public string BillState { get; set; }
+
+        [JsonPropertyName("ship_state")]
+        public string ShipState { get; set; }
+
+        [JsonPropertyName("bill_code")]
+        public string BillCode { get; set; }
+
+        [JsonPropertyName("ship_code")]
+        public string ShipCode { get; set; }
+
+        [JsonPropertyName("bill_country")]
+        public string BillCountry { get; set; }
+
+        [JsonPropertyName("ship_country")]
+        public string ShipCountry { get; set; }
+
+        [JsonPropertyName("bill_pobox")]
+        public string BillPoBox { get; set; }
+
+        [JsonPropertyName("ship_pobox")]
+        public string ShipPoBox { get; set; }
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
+
+        [JsonPropertyName("terms_conditions")]
+        public string TermsConditions { get; set; }
+
+        [JsonPropertyName("productid")]
+        public string ProductId { get; set; }
+
+        [JsonPropertyName("quantity")]
+        public double Quantity { get; set; }
+
+        [JsonPropertyName("listprice")]
+        public double ListPrice { get; set; }
+
+        [JsonPropertyName("comment")]
+        public string Comment { get; set; }
+
+        [JsonPropertyName("tax1")]
+        public string Tax1 { get; set; }
+
+        [JsonPropertyName("tax2")]
+        public string Tax2 { get; set; }
+
+        [JsonPropertyName("tax3")]
+        public string Tax3 { get; set; }
+
+        [JsonPropertyName("pre_tax_total")]
+        public double PreTaxTotal { get; set; }
     }
 
     /// <summary>
@@ -951,72 +1696,178 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerPurchaseOrder();
+            return new VTigerPurchaseOrder();
         }
+
         public override string RemoteTableName() { return "PurchaseOrder"; }
+
         public override VTigerType GetElementType() { return VTigerType.PurchaseOrder; }
+
         public VTigerPurchaseOrder() { }
-        public VTigerPurchaseOrder(string subject, string vendor_id, PoStatus postatus,
-            string bill_street, string ship_street, string assigned_user_id)
+
+        public VTigerPurchaseOrder(string subject, string vendorId, PoStatus poStatus,
+            string billStreet, string shipStreet, string assignedUserId)
         {
-            this.subject = subject;
-            this.vendor_id = vendor_id;
-            this.postatus = postatus;
-            this.assigned_user_id = assigned_user_id;
-            this.bill_street = bill_street;
-            this.ship_street = ship_street;
+            Subject = subject;
+            VendorId = vendorId;
+            PoStatus = poStatus;
+            AssignedUserId = assignedUserId;
+            BillStreet = billStreet;
+            ShipStreet = shipStreet;
         }
-        public string purchaseorder_no;
-        public string subject; //mandatory
-        public string vendor_id; //mandatory
-        public string requisition_no;
-        public string tracking_no;
-        public string contact_id;
-        public string duedate;
-        public string carrier;
-        public double txtAdjustment;
-        public double salescommission;
-        public double exciseduty;
-        public double hdnGrandTotal;
-        public double hdnSubTotal;
-        public HdnTaxType hdnTaxType;
-        public double discount_percent;
-        public double discount_amount;
-        public double hdnDiscountPercent;
-        public double hdnDiscountAmount;
-        public double hdnS_H_Amount;
-        public double hdnS_H_Percent;
-        public PoStatus postatus; //mandatory
-        public string assigned_user_id; //mandatory
-        public DateTime createdtime;
-        public string modifiedby;
-        public DateTime modifiedtime;
-        public string currency_id;
-        public double conversion_rate;
-        public string bill_street; //mandatory
-        public string ship_street; //mandatory
-        public string bill_city;
-        public string ship_city;
-        public string bill_state;
-        public string ship_state;
-        public string bill_code;
-        public string ship_code;
-        public string bill_country;
-        public string ship_country;
-        public string bill_pobox;
-        public string ship_pobox;
-        public string description;
-        public string terms_conditions;
-        public string productid;
-        public double quantity;
-        public double listprice;
-        public string comment;
-        public string tax1;
-        public string tax2;
-        public string tax3;
-        public double pre_tax_total;
-        public double paid;
-        public double balance;
+
+        [JsonPropertyName("purchaseorder_no")]
+        public string PurchaseOrderNo { get; set; }
+
+        [JsonPropertyName("subject")]
+        public string Subject { get; set; } // mandatory
+
+        [JsonPropertyName("vendor_id")]
+        public string VendorId { get; set; } // mandatory
+
+        [JsonPropertyName("requisition_no")]
+        public string RequisitionNo { get; set; }
+
+        [JsonPropertyName("tracking_no")]
+        public string TrackingNo { get; set; }
+
+        [JsonPropertyName("contact_id")]
+        public string ContactId { get; set; }
+
+        [JsonPropertyName("duedate")]
+        public string DueDate { get; set; }
+
+        [JsonPropertyName("carrier")]
+        public string Carrier { get; set; }
+
+        [JsonPropertyName("txtAdjustment")]
+        public double TxtAdjustment { get; set; }
+
+        [JsonPropertyName("salescommission")]
+        public double SalesCommission { get; set; }
+
+        [JsonPropertyName("exciseduty")]
+        public double ExciseDuty { get; set; }
+
+        [JsonPropertyName("hdnGrandTotal")]
+        public double HiddenGrandTotal { get; set; }
+
+        [JsonPropertyName("hdnSubTotal")]
+        public double HiddenSubTotal { get; set; }
+
+        [JsonPropertyName("hdnTaxType")]
+        public HdnTaxType HiddenTaxType { get; set; }
+
+        [JsonPropertyName("discount_percent")]
+        public double DiscountPercent { get; set; }
+
+        [JsonPropertyName("discount_amount")]
+        public double DiscountAmount { get; set; }
+
+        [JsonPropertyName("hdnDiscountPercent")]
+        public double HiddenDiscountPercent { get; set; }
+
+        [JsonPropertyName("hdnDiscountAmount")]
+        public double HiddenDiscountAmount { get; set; }
+
+        [JsonPropertyName("hdnS_H_Amount")]
+        public double HiddenShippingHandlingAmount { get; set; }
+
+        [JsonPropertyName("hdnS_H_Percent")]
+        public double HiddenShippingHandlingPercent { get; set; }
+
+        [JsonPropertyName("postatus")]
+        public PoStatus PoStatus { get; set; } // mandatory
+
+        [JsonPropertyName("assigned_user_id")]
+        public string AssignedUserId { get; set; } // mandatory
+
+        [JsonPropertyName("createdtime")]
+        public DateTime CreatedTime { get; set; }
+
+        [JsonPropertyName("modifiedby")]
+        public string ModifiedBy { get; set; }
+
+        [JsonPropertyName("modifiedtime")]
+        public DateTime ModifiedTime { get; set; }
+
+        [JsonPropertyName("currency_id")]
+        public string CurrencyId { get; set; }
+
+        [JsonPropertyName("conversion_rate")]
+        public double ConversionRate { get; set; }
+
+        [JsonPropertyName("bill_street")]
+        public string BillStreet { get; set; } // mandatory
+
+        [JsonPropertyName("ship_street")]
+        public string ShipStreet { get; set; } // mandatory
+
+        [JsonPropertyName("bill_city")]
+        public string BillCity { get; set; }
+
+        [JsonPropertyName("ship_city")]
+        public string ShipCity { get; set; }
+
+        [JsonPropertyName("bill_state")]
+        public string BillState { get; set; }
+
+        [JsonPropertyName("ship_state")]
+        public string ShipState { get; set; }
+
+        [JsonPropertyName("bill_code")]
+        public string BillCode { get; set; }
+
+        [JsonPropertyName("ship_code")]
+        public string ShipCode { get; set; }
+
+        [JsonPropertyName("bill_country")]
+        public string BillCountry { get; set; }
+
+        [JsonPropertyName("ship_country")]
+        public string ShipCountry { get; set; }
+
+        [JsonPropertyName("bill_pobox")]
+        public string BillPoBox { get; set; }
+
+        [JsonPropertyName("ship_pobox")]
+        public string ShipPoBox { get; set; }
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
+
+        [JsonPropertyName("terms_conditions")]
+        public string TermsConditions { get; set; }
+
+        [JsonPropertyName("productid")]
+        public string ProductId { get; set; }
+
+        [JsonPropertyName("quantity")]
+        public double Quantity { get; set; }
+
+        [JsonPropertyName("listprice")]
+        public double ListPrice { get; set; }
+
+        [JsonPropertyName("comment")]
+        public string Comment { get; set; }
+
+        [JsonPropertyName("tax1")]
+        public string Tax1 { get; set; }
+
+        [JsonPropertyName("tax2")]
+        public string Tax2 { get; set; }
+
+        [JsonPropertyName("tax3")]
+        public string Tax3 { get; set; }
+
+        [JsonPropertyName("pre_tax_total")]
+        public double PreTaxTotal { get; set; }
+
+        [JsonPropertyName("paid")]
+        public double Paid { get; set; }
+
+        [JsonPropertyName("balance")]
+        public double Balance { get; set; }
     }
 
     /// <summary>
@@ -1026,80 +1877,200 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerSalesOrder();
+            return new VTigerSalesOrder();
         }
+
         public override string RemoteTableName() { return "SalesOrder"; }
+
         public override VTigerType GetElementType() { return VTigerType.SalesOrder; }
+
         public VTigerSalesOrder() { }
-        public VTigerSalesOrder(string subject, SoStatus sostatus, string bill_street, 
-            string ship_street, Invoicestatus invoicestatus, string account_id, string assigned_user_id)
+
+        public VTigerSalesOrder(string subject, SoStatus soStatus, string billStreet,
+            string shipStreet, Invoicestatus invoiceStatus, string accountId, string assignedUserId)
         {
-            this.subject = subject;
-            this.sostatus = sostatus;
-            this.account_id = account_id;
-            this.assigned_user_id = assigned_user_id;
-            this.bill_street = bill_street;
-            this.ship_street = ship_street;
-            this.invoicestatus = invoicestatus;
+            Subject = subject;
+            SoStatus = soStatus;
+            AccountId = accountId;
+            AssignedUserId = assignedUserId;
+            BillStreet = billStreet;
+            ShipStreet = shipStreet;
+            InvoiceStatus = invoiceStatus;
         }
-        public string salesorder_no;
-        public string subject; //mandatory
-        public string potential_id;
-        public string customerno;
-        public string quote_id;
-        public string vtiger_purchaseorder;
-        public string contact_id;
-        public string duedate;
-        public string carrier;
-        public string pending;
-        public SoStatus sostatus; //mandatory
-        public double txtAdjustment;
-        public double salescommission;
-        public double exciseduty;
-        public double hdnGrandTotal;
-        public double hdnSubTotal;
-        public HdnTaxType hdnTaxType;
-        public double discount_percent;
-        public double discount_amount;
-        public double hdnDiscountPercent;
-        public double hdnDiscountAmount;
-        public double hdnS_H_Amount;
-        public double hdnS_H_Percent;
-        public string account_id; //mandatory
-        public string assigned_user_id; //mandatory
-        public DateTime createdtime;
-        public string modifiedby;
-        public DateTime modifiedtime;
-        public string currency_id;
-        public double conversion_rate;
-        public string bill_street; //mandatory
-        public string ship_street; //mandatory
-        public string bill_city;
-        public string ship_city;
-        public string bill_state;
-        public string ship_state;
-        public string bill_code;
-        public string ship_code;
-        public string bill_country;
-        public string ship_country;
-        public string bill_pobox;
-        public string ship_pobox;
-        public string description;
-        public string terms_conditions;
-        public bool enable_recurring;
-        public Recurring_frequency recurring_frequency;
-        public string start_period;
-        public string end_period;
-        public Payment_duration payment_duration;
-        public Invoicestatus invoicestatus; //mandatory
-        public string productid;
-        public double quantity;
-        public double listprice;
-        public string comment;
-        public string tax1;
-        public string tax2;
-        public string tax3;
-        public double pre_tax_total;
+
+        [JsonPropertyName("salesorder_no")]
+        public string SalesOrderNo { get; set; }
+
+        [JsonPropertyName("subject")]
+        public string Subject { get; set; } // mandatory
+
+        [JsonPropertyName("potential_id")]
+        public string PotentialId { get; set; }
+
+        [JsonPropertyName("customerno")]
+        public string CustomerNo { get; set; }
+
+        [JsonPropertyName("quote_id")]
+        public string QuoteId { get; set; }
+
+        [JsonPropertyName("vtiger_purchaseorder")]
+        public string VtigerPurchaseOrder { get; set; }
+
+        [JsonPropertyName("contact_id")]
+        public string ContactId { get; set; }
+
+        [JsonPropertyName("duedate")]
+        public string DueDate { get; set; }
+
+        [JsonPropertyName("carrier")]
+        public string Carrier { get; set; }
+
+        [JsonPropertyName("pending")]
+        public string Pending { get; set; }
+
+        [JsonPropertyName("sostatus")]
+        public SoStatus SoStatus { get; set; } // mandatory
+
+        [JsonPropertyName("txtAdjustment")]
+        public double TxtAdjustment { get; set; }
+
+        [JsonPropertyName("salescommission")]
+        public double SalesCommission { get; set; }
+
+        [JsonPropertyName("exciseduty")]
+        public double ExciseDuty { get; set; }
+
+        [JsonPropertyName("hdnGrandTotal")]
+        public double HiddenGrandTotal { get; set; }
+
+        [JsonPropertyName("hdnSubTotal")]
+        public double HiddenSubTotal { get; set; }
+
+        [JsonPropertyName("hdnTaxType")]
+        public HdnTaxType HiddenTaxType { get; set; }
+
+        [JsonPropertyName("discount_percent")]
+        public double DiscountPercent { get; set; }
+
+        [JsonPropertyName("discount_amount")]
+        public double DiscountAmount { get; set; }
+
+        [JsonPropertyName("hdnDiscountPercent")]
+        public double HiddenDiscountPercent { get; set; }
+
+        [JsonPropertyName("hdnDiscountAmount")]
+        public double HiddenDiscountAmount { get; set; }
+
+        [JsonPropertyName("hdnS_H_Amount")]
+        public double HiddenShippingHandlingAmount { get; set; }
+
+        [JsonPropertyName("hdnS_H_Percent")]
+        public double HiddenShippingHandlingPercent { get; set; }
+
+        [JsonPropertyName("account_id")]
+        public string AccountId { get; set; } // mandatory
+
+        [JsonPropertyName("assigned_user_id")]
+        public string AssignedUserId { get; set; } // mandatory
+
+        [JsonPropertyName("createdtime")]
+        public DateTime CreatedTime { get; set; }
+
+        [JsonPropertyName("modifiedby")]
+        public string ModifiedBy { get; set; }
+
+        [JsonPropertyName("modifiedtime")]
+        public DateTime ModifiedTime { get; set; }
+
+        [JsonPropertyName("currency_id")]
+        public string CurrencyId { get; set; }
+
+        [JsonPropertyName("conversion_rate")]
+        public double ConversionRate { get; set; }
+
+        [JsonPropertyName("bill_street")]
+        public string BillStreet { get; set; } // mandatory
+
+        [JsonPropertyName("ship_street")]
+        public string ShipStreet { get; set; } // mandatory
+
+        [JsonPropertyName("bill_city")]
+        public string BillCity { get; set; }
+
+        [JsonPropertyName("ship_city")]
+        public string ShipCity { get; set; }
+
+        [JsonPropertyName("bill_state")]
+        public string BillState { get; set; }
+
+        [JsonPropertyName("ship_state")]
+        public string ShipState { get; set; }
+
+        [JsonPropertyName("bill_code")]
+        public string BillCode { get; set; }
+
+        [JsonPropertyName("ship_code")]
+        public string ShipCode { get; set; }
+
+        [JsonPropertyName("bill_country")]
+        public string BillCountry { get; set; }
+
+        [JsonPropertyName("ship_country")]
+        public string ShipCountry { get; set; }
+
+        [JsonPropertyName("bill_pobox")]
+        public string BillPoBox { get; set; }
+
+        [JsonPropertyName("ship_pobox")]
+        public string ShipPoBox { get; set; }
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
+
+        [JsonPropertyName("terms_conditions")]
+        public string TermsConditions { get; set; }
+
+        [JsonPropertyName("enable_recurring")]
+        public bool EnableRecurring { get; set; }
+
+        [JsonPropertyName("recurring_frequency")]
+        public Recurring_frequency RecurringFrequency { get; set; }
+
+        [JsonPropertyName("start_period")]
+        public string StartPeriod { get; set; }
+
+        [JsonPropertyName("end_period")]
+        public string EndPeriod { get; set; }
+
+        [JsonPropertyName("payment_duration")]
+        public Payment_duration PaymentDuration { get; set; }
+
+        [JsonPropertyName("invoicestatus")]
+        public Invoicestatus InvoiceStatus { get; set; } // mandatory
+
+        [JsonPropertyName("productid")]
+        public string ProductId { get; set; }
+
+        [JsonPropertyName("quantity")]
+        public double Quantity { get; set; }
+
+        [JsonPropertyName("listprice")]
+        public double ListPrice { get; set; }
+
+        [JsonPropertyName("comment")]
+        public string Comment { get; set; }
+
+        [JsonPropertyName("tax1")]
+        public string Tax1 { get; set; }
+
+        [JsonPropertyName("tax2")]
+        public string Tax2 { get; set; }
+
+        [JsonPropertyName("tax3")]
+        public string Tax3 { get; set; }
+
+        [JsonPropertyName("pre_tax_total")]
+        public double PreTaxTotal { get; set; }
     }
 
     /// <summary>
@@ -1109,72 +2080,179 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerInvoice();
+            return new VTigerInvoice();
         }
+
         public override string RemoteTableName() { return "Invoice"; }
+
         public override VTigerType GetElementType() { return VTigerType.Invoice; }
+
         public VTigerInvoice() { }
-        public VTigerInvoice(string subject, string bill_street, string ship_street, 
-            string account_id, string assigned_user_id)
+
+        public VTigerInvoice(string subject, string billStreet, string shipStreet, string accountId, string assignedUserId)
         {
-            this.subject = subject;
-            this.account_id = account_id;
-            this.assigned_user_id = assigned_user_id;
-            this.bill_street = bill_street;
-            this.ship_street = ship_street;
+            Subject = subject;
+            AccountId = accountId;
+            AssignedUserId = assignedUserId;
+            BillStreet = billStreet;
+            ShipStreet = shipStreet;
         }
-        public string subject; //mandatory
-        public string salesorder_id;
-        public string customerno;
-        public string contact_id;
-        public string invoicedate;
-        public string duedate;
-        public string vtiger_purchaseorder;
-        public double txtAdjustment;
-        public double salescommission;
-        public double exciseduty;
-        public double hdnSubTotal;
-        public double hdnGrandTotal;
-        public double hdnS_H_Amount;
-        public double hdnS_H_Percent;
-        public HdnTaxType hdnTaxType;
-        public double hdnDiscountPercent;
-        public double hdnDiscountAmount;
-        public double discount_percent;
-        public double discount_amount;
-        public string account_id; //mandatory
-        public Invoicestatus invoicestatus;
-        public string assigned_user_id; //mandatory
-        public DateTime createdtime;
-        public string modifiedby; 
-        public DateTime modifiedtime;
-        public string currency_id;
-        public double conversion_rate;
-        public string bill_street; //mandatory
-        public string ship_street; //mandatory
-        public string bill_city;
-        public string ship_city;
-        public string bill_state;
-        public string ship_state;
-        public string bill_code;
-        public string ship_code;
-        public string bill_country;
-        public string ship_country;
-        public string bill_pobox;
-        public string ship_pobox;
-        public string description;
-        public string terms_conditions;
-        public string invoice_no;
-        public string productid;
-        public double quantity;
-        public double listprice;
-        public string comment;
-        public string tax1;
-        public string tax2;
-        public string tax3;
-        public double pre_tax_total;
-        public double received;
-        public double balance;
+
+        [JsonPropertyName("subject")]
+        public string Subject { get; set; } // mandatory
+
+        [JsonPropertyName("salesorder_id")]
+        public string SalesOrderId { get; set; }
+
+        [JsonPropertyName("customerno")]
+        public string CustomerNo { get; set; }
+
+        [JsonPropertyName("contact_id")]
+        public string ContactId { get; set; }
+
+        [JsonPropertyName("invoicedate")]
+        public string InvoiceDate { get; set; }
+
+        [JsonPropertyName("duedate")]
+        public string DueDate { get; set; }
+
+        [JsonPropertyName("vtiger_purchaseorder")]
+        public string VtigerPurchaseOrder { get; set; }
+
+        [JsonPropertyName("txtAdjustment")]
+        public double TxtAdjustment { get; set; }
+
+        [JsonPropertyName("salescommission")]
+        public double SalesCommission { get; set; }
+
+        [JsonPropertyName("exciseduty")]
+        public double ExciseDuty { get; set; }
+
+        [JsonPropertyName("hdnSubTotal")]
+        public double HiddenSubTotal { get; set; }
+
+        [JsonPropertyName("hdnGrandTotal")]
+        public double HiddenGrandTotal { get; set; }
+
+        [JsonPropertyName("hdnS_H_Amount")]
+        public double HiddenShippingHandlingAmount { get; set; }
+
+        [JsonPropertyName("hdnS_H_Percent")]
+        public double HiddenShippingHandlingPercent { get; set; }
+
+        [JsonPropertyName("hdnTaxType")]
+        public HdnTaxType HiddenTaxType { get; set; }
+
+        [JsonPropertyName("hdnDiscountPercent")]
+        public double HiddenDiscountPercent { get; set; }
+
+        [JsonPropertyName("hdnDiscountAmount")]
+        public double HiddenDiscountAmount { get; set; }
+
+        [JsonPropertyName("discount_percent")]
+        public double DiscountPercent { get; set; }
+
+        [JsonPropertyName("discount_amount")]
+        public double DiscountAmount { get; set; }
+
+        [JsonPropertyName("account_id")]
+        public string AccountId { get; set; } // mandatory
+
+        [JsonPropertyName("invoicestatus")]
+        public Invoicestatus InvoiceStatus { get; set; }
+
+        [JsonPropertyName("assigned_user_id")]
+        public string AssignedUserId { get; set; } // mandatory
+
+        [JsonPropertyName("createdtime")]
+        public DateTime CreatedTime { get; set; }
+
+        [JsonPropertyName("modifiedby")]
+        public string ModifiedBy { get; set; }
+
+        [JsonPropertyName("modifiedtime")]
+        public DateTime ModifiedTime { get; set; }
+
+        [JsonPropertyName("currency_id")]
+        public string CurrencyId { get; set; }
+
+        [JsonPropertyName("conversion_rate")]
+        public double ConversionRate { get; set; }
+
+        [JsonPropertyName("bill_street")]
+        public string BillStreet { get; set; } // mandatory
+
+        [JsonPropertyName("ship_street")]
+        public string ShipStreet { get; set; } // mandatory
+
+        [JsonPropertyName("bill_city")]
+        public string BillCity { get; set; }
+
+        [JsonPropertyName("ship_city")]
+        public string ShipCity { get; set; }
+
+        [JsonPropertyName("bill_state")]
+        public string BillState { get; set; }
+
+        [JsonPropertyName("ship_state")]
+        public string ShipState { get; set; }
+
+        [JsonPropertyName("bill_code")]
+        public string BillCode { get; set; }
+
+        [JsonPropertyName("ship_code")]
+        public string ShipCode { get; set; }
+
+        [JsonPropertyName("bill_country")]
+        public string BillCountry { get; set; }
+
+        [JsonPropertyName("ship_country")]
+        public string ShipCountry { get; set; }
+
+        [JsonPropertyName("bill_pobox")]
+        public string BillPoBox { get; set; }
+
+        [JsonPropertyName("ship_pobox")]
+        public string ShipPoBox { get; set; }
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
+
+        [JsonPropertyName("terms_conditions")]
+        public string TermsConditions { get; set; }
+
+        [JsonPropertyName("invoice_no")]
+        public string InvoiceNo { get; set; }
+
+        [JsonPropertyName("productid")]
+        public string ProductId { get; set; }
+
+        [JsonPropertyName("quantity")]
+        public double Quantity { get; set; }
+
+        [JsonPropertyName("listprice")]
+        public double ListPrice { get; set; }
+
+        [JsonPropertyName("comment")]
+        public string Comment { get; set; }
+
+        [JsonPropertyName("tax1")]
+        public string Tax1 { get; set; }
+
+        [JsonPropertyName("tax2")]
+        public string Tax2 { get; set; }
+
+        [JsonPropertyName("tax3")]
+        public string Tax3 { get; set; }
+
+        [JsonPropertyName("pre_tax_total")]
+        public double PreTaxTotal { get; set; }
+
+        [JsonPropertyName("received")]
+        public double Received { get; set; }
+
+        [JsonPropertyName("balance")]
+        public double Balance { get; set; }
     }
 
     /// <summary>
@@ -1184,41 +2262,93 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerCampaign();
+            return new VTigerCampaign();
         }
+
         public override string RemoteTableName() { return "Campaigns"; }
+
         public override VTigerType GetElementType() { return VTigerType.Campaigns; }
+
         public VTigerCampaign() { }
-        public VTigerCampaign(string campaignname, DateTime closingDate, string assigned_user_id)
+
+        public VTigerCampaign(string campaignName, DateTime closingDate, string assignedUserId)
         {
-            this.campaignname = campaignname;
-            this.closingdate = VTiger.DateTimeToVtDate(closingDate);
-            this.assigned_user_id = assigned_user_id;
+            CampaignName = campaignName;
+            ClosingDate = VTiger.DateTimeToVtDate(closingDate);
+            AssignedUserId = assignedUserId;
         }
-        public string campaignname; //mandatory
-        public string campaign_no;
-        public Campaigntype campaigntype;
-        public string product_id;
-        public Campaignstatus campaignstatus;
-        public string closingdate; //mandatory
-        public string assigned_user_id; //mandatory
-        public double numsent;
-        public string sponsor;
-        public string targetaudience;
-        public int targetsize;
-        public DateTime createdtime;
-        public DateTime modifiedtime;
-        public Expectedresponse expectedresponse;
-        public double expectedrevenue;
-        public double budgetcost;
-        public double actualcost;
-        public int expectedresponsecount;
-        public int expectedsalescount;
-        public double expectedroi;
-        public int actualresponsecount;
-        public int actualsalescount;
-        public double actualroi;
-        public string description;
+
+        [JsonPropertyName("campaignname")]
+        public string CampaignName { get; set; } // mandatory
+
+        [JsonPropertyName("campaign_no")]
+        public string CampaignNo { get; set; }
+
+        [JsonPropertyName("campaigntype")]
+        public Campaigntype CampaignType { get; set; }
+
+        [JsonPropertyName("product_id")]
+        public string ProductId { get; set; }
+
+        [JsonPropertyName("campaignstatus")]
+        public Campaignstatus CampaignStatus { get; set; }
+
+        [JsonPropertyName("closingdate")]
+        public string ClosingDate { get; set; } // mandatory
+
+        [JsonPropertyName("assigned_user_id")]
+        public string AssignedUserId { get; set; } // mandatory
+
+        [JsonPropertyName("numsent")]
+        public double NumSent { get; set; }
+
+        [JsonPropertyName("sponsor")]
+        public string Sponsor { get; set; }
+
+        [JsonPropertyName("targetaudience")]
+        public string TargetAudience { get; set; }
+
+        [JsonPropertyName("targetsize")]
+        public int TargetSize { get; set; }
+
+        [JsonPropertyName("createdtime")]
+        public DateTime CreatedTime { get; set; }
+
+        [JsonPropertyName("modifiedtime")]
+        public DateTime ModifiedTime { get; set; }
+
+        [JsonPropertyName("expectedresponse")]
+        public Expectedresponse ExpectedResponse { get; set; }
+
+        [JsonPropertyName("expectedrevenue")]
+        public double ExpectedRevenue { get; set; }
+
+        [JsonPropertyName("budgetcost")]
+        public double BudgetCost { get; set; }
+
+        [JsonPropertyName("actualcost")]
+        public double ActualCost { get; set; }
+
+        [JsonPropertyName("expectedresponsecount")]
+        public int ExpectedResponseCount { get; set; }
+
+        [JsonPropertyName("expectedsalescount")]
+        public int ExpectedSalesCount { get; set; }
+
+        [JsonPropertyName("expectedroi")]
+        public double ExpectedROI { get; set; }
+
+        [JsonPropertyName("actualresponsecount")]
+        public int ActualResponseCount { get; set; }
+
+        [JsonPropertyName("actualsalescount")]
+        public int ActualSalesCount { get; set; }
+
+        [JsonPropertyName("actualroi")]
+        public double ActualROI { get; set; }
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
     }
 
     /// <summary>
@@ -1228,47 +2358,95 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerEvent();
+            return new VTigerEvent();
         }
+
         public override string RemoteTableName() { return "Events"; }
+
         public override VTigerType GetElementType() { return VTigerType.Events; }
+
         public VTigerEvent() { }
-        public VTigerEvent(string subject, string date_start, string time_start, string due_date, 
-            string time_end, int duration_hours, Eventstatus eventstatus, 
-            Activitytype activitytype, string assigned_user_id)
+
+        public VTigerEvent(string subject, string dateStart, string timeStart, string dueDate,
+            string timeEnd, int durationHours, Eventstatus eventStatus,
+            Activitytype activityType, string assignedUserId)
         {
-            this.subject = subject;
-            this.assigned_user_id = assigned_user_id;
-            this.date_start = date_start;
-            this.time_start = time_start;
-            this.due_date = due_date;
-            this.time_end = time_end;
-            this.duration_hours = duration_hours;
-            this.eventstatus = eventstatus;
-            this.activitytype = activitytype;
+            Subject = subject;
+            AssignedUserId = assignedUserId;
+            DateStart = dateStart;
+            TimeStart = timeStart;
+            DueDate = dueDate;
+            TimeEnd = timeEnd;
+            DurationHours = durationHours;
+            EventStatus = eventStatus;
+            ActivityType = activityType;
         }
-        public string subject; //mandatory
-        public string assigned_user_id; //mandatory
-        public string date_start; //mandatory
-        public string time_start; //mandatory
-        public string due_date; //mandatory
-        public string time_end; //mandatory
-        public RecurringType recurringtype;
-        public int duration_hours; //mandatory
-        public Duration_minutes duration_minutes;
-        public string parent_id;
-        public Eventstatus eventstatus; //mandatory
-        public bool sendnotification;
-        public Activitytype activitytype; //mandatory
-        public string location;
-        public DateTime createdtime;
-        public DateTime modifiedtime;
-        public Taskpriority taskpriority;
-        public bool notime;
-        public Visibility visibility;
-        public string description;
-        public int reminder_time;
-        public string contact_id;
+
+        [JsonPropertyName("subject")]
+        public string Subject { get; set; } // mandatory
+
+        [JsonPropertyName("assigned_user_id")]
+        public string AssignedUserId { get; set; } // mandatory
+
+        [JsonPropertyName("date_start")]
+        public string DateStart { get; set; } // mandatory
+
+        [JsonPropertyName("time_start")]
+        public string TimeStart { get; set; } // mandatory
+
+        [JsonPropertyName("due_date")]
+        public string DueDate { get; set; } // mandatory
+
+        [JsonPropertyName("time_end")]
+        public string TimeEnd { get; set; } // mandatory
+
+        [JsonPropertyName("recurringtype")]
+        public RecurringType RecurringType { get; set; }
+
+        [JsonPropertyName("duration_hours")]
+        public int DurationHours { get; set; } // mandatory
+
+        [JsonPropertyName("duration_minutes")]
+        public Duration_minutes DurationMinutes { get; set; }
+
+        [JsonPropertyName("parent_id")]
+        public string ParentId { get; set; }
+
+        [JsonPropertyName("eventstatus")]
+        public Eventstatus EventStatus { get; set; } // mandatory
+
+        [JsonPropertyName("sendnotification")]
+        public bool SendNotification { get; set; }
+
+        [JsonPropertyName("activitytype")]
+        public Activitytype ActivityType { get; set; } // mandatory
+
+        [JsonPropertyName("location")]
+        public string Location { get; set; }
+
+        [JsonPropertyName("createdtime")]
+        public DateTime CreatedTime { get; set; }
+
+        [JsonPropertyName("modifiedtime")]
+        public DateTime ModifiedTime { get; set; }
+
+        [JsonPropertyName("taskpriority")]
+        public Taskpriority TaskPriority { get; set; }
+
+        [JsonPropertyName("notime")]
+        public bool NoTime { get; set; }
+
+        [JsonPropertyName("visibility")]
+        public Visibility Visibility { get; set; }
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
+
+        [JsonPropertyName("reminder_time")]
+        public int ReminderTime { get; set; }
+
+        [JsonPropertyName("contact_id")]
+        public string ContactId { get; set; }
     }
 
     /// <summary>
@@ -1278,58 +2456,138 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerUser();
+            return new VTigerUser();
         }
+
         public override string RemoteTableName() { return "User"; }
+
         public override VTigerType GetElementType() { return VTigerType.Users; }
+
         public VTigerUser() { }
-        public VTigerUser(string user_name, string user_password, string confirm_password, string last_name, string roleid, string email1)
+
+        public VTigerUser(string userName, string userPassword, string confirmPassword, string lastName, string roleId, string email1)
         {
-            this.user_name = user_name;
-            this.user_password = user_password;
-            this.confirm_password = confirm_password;
-            this.last_name = last_name;
-            this.roleid = roleid;
-            this.email1 = email1;
+            UserName = userName;
+            UserPassword = userPassword;
+            ConfirmPassword = confirmPassword;
+            LastName = lastName;
+            RoleId = roleId;
+            Email1 = email1;
         }
-        public string user_name; //mandatory
-        public bool is_admin;
-        public string user_password; //mandatory
-        public string confirm_password; //mandatory
-        public string first_name;
-        public string last_name; //mandatory
-        public string roleid; //mandatory
-        public string email1; //mandatory
-        public string status;
-        public Activity_view activity_view;
-        public Lead_view lead_view;
-        public string currency_id;
-        public string hour_format;
-        public string end_hour;
-        public string start_hour;
-        public string title;
-        public string phone_work;
-        public string department;
-        public string phone_mobile;
-        public string reports_to_id;
-        public string phone_other;
-        public string email2;
-        public string phone_fax;
-        public string yahoo_id;
-        public string phone_home;
-        public Date_format date_format;
-        public string signature;
-        public string description;
-        public string address_street;
-        public string address_city;
-        public string address_state;
-        public string address_postalcode;
-        public string address_country;
-        public string accesskey;
-        public bool internal_mailer;
-        public Reminder_interval reminder_interval;
-        public string asterisk_extension;
-        public bool use_asterisk;
+
+        [JsonPropertyName("user_name")]
+        public string UserName { get; set; } // mandatory
+
+        [JsonPropertyName("is_admin")]
+        public bool IsAdmin { get; set; }
+
+        [JsonPropertyName("user_password")]
+        public string UserPassword { get; set; } // mandatory
+
+        [JsonPropertyName("confirm_password")]
+        public string ConfirmPassword { get; set; } // mandatory
+
+        [JsonPropertyName("first_name")]
+        public string FirstName { get; set; }
+
+        [JsonPropertyName("last_name")]
+        public string LastName { get; set; } // mandatory
+
+        [JsonPropertyName("roleid")]
+        public string RoleId { get; set; } // mandatory
+
+        [JsonPropertyName("email1")]
+        public string Email1 { get; set; } // mandatory
+
+        [JsonPropertyName("status")]
+        public string Status { get; set; }
+
+        [JsonPropertyName("activity_view")]
+        public Activity_view ActivityView { get; set; }
+
+        [JsonPropertyName("lead_view")]
+        public Lead_view LeadView { get; set; }
+
+        [JsonPropertyName("currency_id")]
+        public string CurrencyId { get; set; }
+
+        [JsonPropertyName("hour_format")]
+        public string HourFormat { get; set; }
+
+        [JsonPropertyName("end_hour")]
+        public string EndHour { get; set; }
+
+        [JsonPropertyName("start_hour")]
+        public string StartHour { get; set; }
+
+        [JsonPropertyName("title")]
+        public string Title { get; set; }
+
+        [JsonPropertyName("phone_work")]
+        public string PhoneWork { get; set; }
+
+        [JsonPropertyName("department")]
+        public string Department { get; set; }
+
+        [JsonPropertyName("phone_mobile")]
+        public string PhoneMobile { get; set; }
+
+        [JsonPropertyName("reports_to_id")]
+        public string ReportsToId { get; set; }
+
+        [JsonPropertyName("phone_other")]
+        public string PhoneOther { get; set; }
+
+        [JsonPropertyName("email2")]
+        public string Email2 { get; set; }
+
+        [JsonPropertyName("phone_fax")]
+        public string PhoneFax { get; set; }
+
+        [JsonPropertyName("yahoo_id")]
+        public string YahooId { get; set; }
+
+        [JsonPropertyName("phone_home")]
+        public string PhoneHome { get; set; }
+
+        [JsonPropertyName("date_format")]
+        public Date_format DateFormat { get; set; }
+
+        [JsonPropertyName("signature")]
+        public string Signature { get; set; }
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
+
+        [JsonPropertyName("address_street")]
+        public string AddressStreet { get; set; }
+
+        [JsonPropertyName("address_city")]
+        public string AddressCity { get; set; }
+
+        [JsonPropertyName("address_state")]
+        public string AddressState { get; set; }
+
+        [JsonPropertyName("address_postalcode")]
+        public string AddressPostalCode { get; set; }
+
+        [JsonPropertyName("address_country")]
+        public string AddressCountry { get; set; }
+
+        [JsonPropertyName("accesskey")]
+        public string AccessKey { get; set; }
+
+        [JsonPropertyName("internal_mailer")]
+        public bool InternalMailer { get; set; }
+
+        [JsonPropertyName("reminder_interval")]
+        public Reminder_interval ReminderInterval { get; set; }
+
+        [JsonPropertyName("asterisk_extension")]
+        public string AsteriskExtension { get; set; }
+
+        [JsonPropertyName("use_asterisk")]
+        public bool UseAsterisk { get; set; }
     }
 
     /// <summary>
@@ -1339,24 +2597,40 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerPBXManager();
+            return new VTigerPBXManager();
         }
+
         public override string RemoteTableName() { return "PBXManager"; }
+
         public override VTigerType GetElementType() { return VTigerType.PBXManager; }
+
         public VTigerPBXManager() { }
-        public VTigerPBXManager(string customernumber, string callfrom, string callto, string assigned_user_id)
+
+        public VTigerPBXManager(string customerNumber, string callFrom, string callTo, string assignedUserId)
         {
-            this.callfrom = callfrom;
-            this.callto = callto;
-            this.customernumber = customernumber;
-            this.assigned_user_id = assigned_user_id;
+            CallFrom = callFrom;
+            CallTo = callTo;
+            CustomerNumber = customerNumber;
+            AssignedUserId = assignedUserId;
         }
-        public string callfrom; //mandatory
-        public string callto; //mandatory
-        public string customernumber; //mandatory
-        public string assigned_user_id; //mandatory
-        public string timeofcall;
-        public string status;
+
+        [JsonPropertyName("callfrom")]
+        public string CallFrom { get; set; } // mandatory
+
+        [JsonPropertyName("callto")]
+        public string CallTo { get; set; } // mandatory
+
+        [JsonPropertyName("customernumber")]
+        public string CustomerNumber { get; set; } // mandatory
+
+        [JsonPropertyName("assigned_user_id")]
+        public string AssignedUserId { get; set; } // mandatory
+
+        [JsonPropertyName("timeofcall")]
+        public string TimeOfCall { get; set; }
+
+        [JsonPropertyName("status")]
+        public string Status { get; set; }
     }
 
     /// <summary>
@@ -1366,34 +2640,74 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerServiceContract();
+            return new VTigerServiceContract();
         }
+
         public override string RemoteTableName() { return "ServiceContracts"; }
+
         public override VTigerType GetElementType() { return VTigerType.ServiceContracts; }
+
         public VTigerServiceContract() { }
-        public VTigerServiceContract(string subject, string assigned_user_id)
+
+        public VTigerServiceContract(string subject, string assignedUserId)
         {
-            this.assigned_user_id = assigned_user_id;
-            this.subject = subject;
+            AssignedUserId = assignedUserId;
+            Subject = subject;
         }
-        public string assigned_user_id; //mandatory
-        public string createdtime;
-        public string modifiedtime;
-        public string start_date;
-        public string end_date;
-        public string sc_related_to;
-        public Tracking_unit tracking_unit;
-        public string total_units;
-        public string used_units;
-        public string subject; //mandatory
-        public string due_date;
-        public string planned_duration;
-        public string actual_duration;
-        public Contract_status contract_status;
-        public Contract_priority contract_priority;
-        public Contract_type contract_type;
-        public double progress;
-        public string contract_no;
+
+        [JsonPropertyName("assigned_user_id")]
+        public string AssignedUserId { get; set; } // mandatory
+
+        [JsonPropertyName("createdtime")]
+        public string CreatedTime { get; set; }
+
+        [JsonPropertyName("modifiedtime")]
+        public string ModifiedTime { get; set; }
+
+        [JsonPropertyName("start_date")]
+        public string StartDate { get; set; }
+
+        [JsonPropertyName("end_date")]
+        public string EndDate { get; set; }
+
+        [JsonPropertyName("sc_related_to")]
+        public string RelatedTo { get; set; }
+
+        [JsonPropertyName("tracking_unit")]
+        public Tracking_unit TrackingUnit { get; set; }
+
+        [JsonPropertyName("total_units")]
+        public string TotalUnits { get; set; }
+
+        [JsonPropertyName("used_units")]
+        public string UsedUnits { get; set; }
+
+        [JsonPropertyName("subject")]
+        public string Subject { get; set; } // mandatory
+
+        [JsonPropertyName("due_date")]
+        public string DueDate { get; set; }
+
+        [JsonPropertyName("planned_duration")]
+        public string PlannedDuration { get; set; }
+
+        [JsonPropertyName("actual_duration")]
+        public string ActualDuration { get; set; }
+
+        [JsonPropertyName("contract_status")]
+        public Contract_status ContractStatus { get; set; }
+
+        [JsonPropertyName("contract_priority")]
+        public Contract_priority ContractPriority { get; set; }
+
+        [JsonPropertyName("contract_type")]
+        public Contract_type ContractType { get; set; }
+
+        [JsonPropertyName("progress")]
+        public double Progress { get; set; }
+
+        [JsonPropertyName("contract_no")]
+        public string ContractNo { get; set; }
     }
 
     /// <summary>
@@ -1403,33 +2717,73 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerService();
+            return new VTigerService();
         }
+
         public override string RemoteTableName() { return "Services"; }
+
         public override VTigerType GetElementType() { return VTigerType.Services; }
+
         public VTigerService() { }
-        public VTigerService(string servicename)
+
+        public VTigerService(string serviceName)
         {
-            this.servicename = servicename;
+            ServiceName = serviceName;
         }
-        public string servicename; //mandatory
-        public string service_no;
-        public bool discontinued;
-        public string sales_start_date;
-        public string sales_end_date;
-        public string start_date;
-        public string expiry_date;
-        public string website;
-        public DateTime createdtime;
-        public DateTime modifiedtime;
-        public Service_usageunit service_usageunit;
-        public double qty_per_unit;
-        public string assigned_user_id;
-        public Servicecategory servicecategory;
-        public double unit_price;
-        public string taxclass;
-        public double commissionrate;
-        public string description;
+
+        [JsonPropertyName("servicename")]
+        public string ServiceName { get; set; } // mandatory
+
+        [JsonPropertyName("service_no")]
+        public string ServiceNo { get; set; }
+
+        [JsonPropertyName("discontinued")]
+        public bool Discontinued { get; set; }
+
+        [JsonPropertyName("sales_start_date")]
+        public string SalesStartDate { get; set; }
+
+        [JsonPropertyName("sales_end_date")]
+        public string SalesEndDate { get; set; }
+
+        [JsonPropertyName("start_date")]
+        public string StartDate { get; set; }
+
+        [JsonPropertyName("expiry_date")]
+        public string ExpiryDate { get; set; }
+
+        [JsonPropertyName("website")]
+        public string Website { get; set; }
+
+        [JsonPropertyName("createdtime")]
+        public DateTime CreatedTime { get; set; }
+
+        [JsonPropertyName("modifiedtime")]
+        public DateTime ModifiedTime { get; set; }
+
+        [JsonPropertyName("service_usageunit")]
+        public Service_usageunit ServiceUsageUnit { get; set; }
+
+        [JsonPropertyName("qty_per_unit")]
+        public double QuantityPerUnit { get; set; }
+
+        [JsonPropertyName("assigned_user_id")]
+        public string AssignedUserId { get; set; }
+
+        [JsonPropertyName("servicecategory")]
+        public Servicecategory ServiceCategory { get; set; }
+
+        [JsonPropertyName("unit_price")]
+        public double UnitPrice { get; set; }
+
+        [JsonPropertyName("taxclass")]
+        public string TaxClass { get; set; }
+
+        [JsonPropertyName("commissionrate")]
+        public double CommissionRate { get; set; }
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
     }
 
     /// <summary>
@@ -1439,40 +2793,76 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerAsset();
+            return new VTigerAsset();
         }
+
         public override string RemoteTableName() { return "Assets"; }
+
         public override VTigerType GetElementType() { return VTigerType.Assets; }
+
         public VTigerAsset() { }
-        public VTigerAsset(string product, string serialnumber, string datesold, 
-            string dateinservice, Assetstatus assetstatus, string assetname, 
-            string account, string assigned_user_id)
+
+        public VTigerAsset(string product, string serialNumber, string dateSold,
+            string dateInService, Assetstatus assetStatus, string assetName,
+            string account, string assignedUserId)
         {
-            this.product = product;
-            this.serialnumber = serialnumber;
-            this.datesold = datesold;
-            this.dateinservice = dateinservice;
-            this.assetstatus = assetstatus;
-            this.assigned_user_id = assigned_user_id;
-            this.assetname = assetname;
-            this.account = account;
+            Product = product;
+            SerialNumber = serialNumber;
+            DateSold = dateSold;
+            DateInService = dateInService;
+            AssetStatus = assetStatus;
+            AssignedUserId = assignedUserId;
+            AssetName = assetName;
+            Account = account;
         }
-        public string asset_no;
-        public string product; //mandatory
-        public string serialnumber; //mandatory
-        public string datesold; //mandatory
-        public string dateinservice; //mandatory
-        public Assetstatus assetstatus; //mandatory
-        public string tagnumber;
-        public string invoiceid;
-        public string shippingmethod;
-        public string shippingtrackingnumber;
-        public string assigned_user_id; //mandatory
-        public string assetname; //mandatory
-        public string account; //mandatory
-        public DateTime createdtime;
-        public DateTime modifiedtime;
-        public string description;
+
+        [JsonPropertyName("asset_no")]
+        public string AssetNo { get; set; }
+
+        [JsonPropertyName("product")]
+        public string Product { get; set; } // mandatory
+
+        [JsonPropertyName("serialnumber")]
+        public string SerialNumber { get; set; } // mandatory
+
+        [JsonPropertyName("datesold")]
+        public string DateSold { get; set; } // mandatory
+
+        [JsonPropertyName("dateinservice")]
+        public string DateInService { get; set; } // mandatory
+
+        [JsonPropertyName("assetstatus")]
+        public Assetstatus AssetStatus { get; set; } // mandatory
+
+        [JsonPropertyName("tagnumber")]
+        public string TagNumber { get; set; }
+
+        [JsonPropertyName("invoiceid")]
+        public string InvoiceId { get; set; }
+
+        [JsonPropertyName("shippingmethod")]
+        public string ShippingMethod { get; set; }
+
+        [JsonPropertyName("shippingtrackingnumber")]
+        public string ShippingTrackingNumber { get; set; }
+
+        [JsonPropertyName("assigned_user_id")]
+        public string AssignedUserId { get; set; } // mandatory
+
+        [JsonPropertyName("assetname")]
+        public string AssetName { get; set; } // mandatory
+
+        [JsonPropertyName("account")]
+        public string Account { get; set; } // mandatory
+
+        [JsonPropertyName("createdtime")]
+        public DateTime CreatedTime { get; set; }
+
+        [JsonPropertyName("modifiedtime")]
+        public DateTime ModifiedTime { get; set; }
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
     }
 
     /// <summary>
@@ -1482,24 +2872,42 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerModComment();
+            return new VTigerModComment();
         }
+
         public override string RemoteTableName() { return "ModComments"; }
+
         public override VTigerType GetElementType() { return VTigerType.ModComments; }
+
         public VTigerModComment() { }
-        public VTigerModComment(string commentcontent, string assigned_user_id, string related_to)
+
+        public VTigerModComment(string commentContent, string assignedUserId, string relatedTo)
         {
-            this.commentcontent = commentcontent;
-            this.assigned_user_id = assigned_user_id;
-            this.related_to = related_to;
+            CommentContent = commentContent;
+            AssignedUserId = assignedUserId;
+            RelatedTo = relatedTo;
         }
-        public string commentcontent; //mandatory
-        public string assigned_user_id; //mandatory
-        public DateTime createdtime;
-        public DateTime modifiedtime;
-        public string related_to; //mandatory
-        public string creator;
-        public string parent_comments;
+
+        [JsonPropertyName("commentcontent")]
+        public string CommentContent { get; set; } // mandatory
+
+        [JsonPropertyName("assigned_user_id")]
+        public string AssignedUserId { get; set; } // mandatory
+
+        [JsonPropertyName("createdtime")]
+        public DateTime CreatedTime { get; set; }
+
+        [JsonPropertyName("modifiedtime")]
+        public DateTime ModifiedTime { get; set; }
+
+        [JsonPropertyName("related_to")]
+        public string RelatedTo { get; set; } // mandatory
+
+        [JsonPropertyName("creator")]
+        public string Creator { get; set; }
+
+        [JsonPropertyName("parent_comments")]
+        public string ParentComments { get; set; }
     }
 
     /// <summary>
@@ -1509,26 +2917,48 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerProjectMilestone();
+            return new VTigerProjectMilestone();
         }
+
         public override string RemoteTableName() { return "ProjectMilestone"; }
+
         public override VTigerType GetElementType() { return VTigerType.ProjectMilestone; }
+
         public VTigerProjectMilestone() { }
-        public VTigerProjectMilestone(string projectmilestonename, string projectid, string assigned_user_id)
+
+        public VTigerProjectMilestone(string projectMilestoneName, string projectId, string assignedUserId)
         {
-            this.projectmilestonename = projectmilestonename;
-            this.projectid = projectid;
-            this.assigned_user_id = assigned_user_id;
+            ProjectMilestoneName = projectMilestoneName;
+            ProjectId = projectId;
+            AssignedUserId = assignedUserId;
         }
-        public string projectmilestonename; //mandatory
-        public string projectmilestonedate;
-        public string projectid; //mandatory
-        public Projectmilestonetype projectmilestonetype;
-        public string assigned_user_id; //mandatory
-        public string projectmilestone_no;
-        public DateTime createdtime;
-        public DateTime modifiedtime;
-        public string description;
+
+        [JsonPropertyName("projectmilestonename")]
+        public string ProjectMilestoneName { get; set; } // mandatory
+
+        [JsonPropertyName("projectmilestonedate")]
+        public string ProjectMilestoneDate { get; set; }
+
+        [JsonPropertyName("projectid")]
+        public string ProjectId { get; set; } // mandatory
+
+        [JsonPropertyName("projectmilestonetype")]
+        public Projectmilestonetype ProjectMilestoneType { get; set; }
+
+        [JsonPropertyName("assigned_user_id")]
+        public string AssignedUserId { get; set; } // mandatory
+
+        [JsonPropertyName("projectmilestone_no")]
+        public string ProjectMilestoneNo { get; set; }
+
+        [JsonPropertyName("createdtime")]
+        public DateTime CreatedTime { get; set; }
+
+        [JsonPropertyName("modifiedtime")]
+        public DateTime ModifiedTime { get; set; }
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
     }
 
     /// <summary>
@@ -1538,31 +2968,63 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerProjectTask();
+            return new VTigerProjectTask();
         }
+
         public override string RemoteTableName() { return "ProjectTask"; }
+
         public override VTigerType GetElementType() { return VTigerType.ProjectTask; }
+
         public VTigerProjectTask() { }
-        public VTigerProjectTask(string projecttaskname, string projectid, string assigned_user_id)
+
+        public VTigerProjectTask(string projectTaskName, string projectId, string assignedUserId)
         {
-            this.projecttaskname = projecttaskname;
-            this.projectid = projectid;
-            this.assigned_user_id = assigned_user_id;
+            ProjectTaskName = projectTaskName;
+            ProjectId = projectId;
+            AssignedUserId = assignedUserId;
         }
-        public string projecttaskname; //mandatory
-        public Projecttasktype projecttasktype;
-        public Projecttaskpriority projecttaskpriority;
-        public string projectid; //mandatory
-        public string assigned_user_id; //mandatory
-        public int projecttasknumber;
-        public string projecttask_no;
-        public Projecttaskprogress projecttaskprogress;
-        public string projecttaskhours;
-        public string startdate;
-        public string enddate;
-        public DateTime createdtime;
-        public DateTime modifiedtime;
-        public string description;
+
+        [JsonPropertyName("projecttaskname")]
+        public string ProjectTaskName { get; set; } // mandatory
+
+        [JsonPropertyName("projecttasktype")]
+        public Projecttasktype ProjectTaskType { get; set; }
+
+        [JsonPropertyName("projecttaskpriority")]
+        public Projecttaskpriority ProjectTaskPriority { get; set; }
+
+        [JsonPropertyName("projectid")]
+        public string ProjectId { get; set; } // mandatory
+
+        [JsonPropertyName("assigned_user_id")]
+        public string AssignedUserId { get; set; } // mandatory
+
+        [JsonPropertyName("projecttasknumber")]
+        public int ProjectTaskNumber { get; set; }
+
+        [JsonPropertyName("projecttask_no")]
+        public string ProjectTaskNo { get; set; }
+
+        [JsonPropertyName("projecttaskprogress")]
+        public Projecttaskprogress ProjectTaskProgress { get; set; }
+
+        [JsonPropertyName("projecttaskhours")]
+        public string ProjectTaskHours { get; set; }
+
+        [JsonPropertyName("startdate")]
+        public string StartDate { get; set; }
+
+        [JsonPropertyName("enddate")]
+        public string EndDate { get; set; }
+
+        [JsonPropertyName("createdtime")]
+        public DateTime CreatedTime { get; set; }
+
+        [JsonPropertyName("modifiedtime")]
+        public DateTime ModifiedTime { get; set; }
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
     }
 
     /// <summary>
@@ -1572,32 +3034,68 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerProject();
+            return new VTigerProject();
         }
+
         public override string RemoteTableName() { return "Project"; }
+
         public override VTigerType GetElementType() { return VTigerType.Project; }
+
         public VTigerProject() { }
-        public VTigerProject(string projectname, string assigned_user_id)
+
+        public VTigerProject(string projectName, string assignedUserId)
         {
-            this.projectname = projectname;
-            this.assigned_user_id = assigned_user_id;
+            ProjectName = projectName;
+            AssignedUserId = assignedUserId;
         }
-        public string projectname; //mandatory
-        public string startdate;
-        public string targetenddate;
-        public string actualenddate;
-        public Projectstatus projectstatus;
-        public Projecttype projecttype;
-        public string linktoaccountscontacts;
-        public string assigned_user_id; //mandatory
-        public string project_no;
-        public string targetbudget;
-        public string projecturl;
-        public Projectpriority projectpriority;
-        public Progress progress;
-        public DateTime createdtime;
-        public DateTime modifiedtime;
-        public string description;
+
+        [JsonPropertyName("projectname")]
+        public string ProjectName { get; set; } // mandatory
+
+        [JsonPropertyName("startdate")]
+        public string StartDate { get; set; }
+
+        [JsonPropertyName("targetenddate")]
+        public string TargetEndDate { get; set; }
+
+        [JsonPropertyName("actualenddate")]
+        public string ActualEndDate { get; set; }
+
+        [JsonPropertyName("projectstatus")]
+        public Projectstatus ProjectStatus { get; set; }
+
+        [JsonPropertyName("projecttype")]
+        public Projecttype ProjectType { get; set; }
+
+        [JsonPropertyName("linktoaccountscontacts")]
+        public string LinkToAccountsContacts { get; set; }
+
+        [JsonPropertyName("assigned_user_id")]
+        public string AssignedUserId { get; set; } // mandatory
+
+        [JsonPropertyName("project_no")]
+        public string ProjectNo { get; set; }
+
+        [JsonPropertyName("targetbudget")]
+        public string TargetBudget { get; set; }
+
+        [JsonPropertyName("projecturl")]
+        public string ProjectUrl { get; set; }
+
+        [JsonPropertyName("projectpriority")]
+        public Projectpriority ProjectPriority { get; set; }
+
+        [JsonPropertyName("progress")]
+        public Progress Progress { get; set; }
+
+        [JsonPropertyName("createdtime")]
+        public DateTime CreatedTime { get; set; }
+
+        [JsonPropertyName("modifiedtime")]
+        public DateTime ModifiedTime { get; set; }
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
     }
 
     /// <summary>
@@ -1607,20 +3105,32 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerSMSNotifier();
+            return new VTigerSMSNotifier();
         }
+
         public override string RemoteTableName() { return "SMSNotifier"; }
+
         public override VTigerType GetElementType() { return VTigerType.SMSNotifier; }
+
         public VTigerSMSNotifier() { }
-        public VTigerSMSNotifier(string assigned_user_id, string message)
+
+        public VTigerSMSNotifier(string assignedUserId, string message)
         {
-            this.assigned_user_id = assigned_user_id;
-            this.message = message;
+            AssignedUserId = assignedUserId;
+            Message = message;
         }
-        public string assigned_user_id; //mandatory
-        public DateTime createdtime;
-        public DateTime modifiedtime;
-        public string message; //mandatory
+
+        [JsonPropertyName("assigned_user_id")]
+        public string AssignedUserId { get; set; } // mandatory
+
+        [JsonPropertyName("createdtime")]
+        public DateTime CreatedTime { get; set; }
+
+        [JsonPropertyName("modifiedtime")]
+        public DateTime ModifiedTime { get; set; }
+
+        [JsonPropertyName("message")]
+        public string Message { get; set; } // mandatory
     }
 
     /// <summary>
@@ -1630,12 +3140,18 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerGroup();
+            return new VTigerGroup();
         }
+
         public override string RemoteTableName() { return "Groups"; }
+
         public override VTigerType GetElementType() { return VTigerType.Groups; }
-        public string groupname;
-        public string description;
+
+        [JsonPropertyName("groupname")]
+        public string GroupName { get; set; }
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
     }
 
     /// <summary>
@@ -1645,23 +3161,41 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerCurrency();
+            return new VTigerCurrency();
         }
+
         public override string RemoteTableName() { return "Currency"; }
+
         public override VTigerType GetElementType() { return VTigerType.Currency; }
+
         public VTigerCurrency() { }
-        public VTigerCurrency(string defaultid, int deleted)
+
+        public VTigerCurrency(string defaultId, int deleted)
         {
-            this.defaultid = defaultid;
-            this.deleted = deleted;
+            DefaultId = defaultId;
+            Deleted = deleted;
         }
-        public string currency_name;
-        public string currency_code;
-        public string currency_symbol;
-        public double conversion_rate;
-        public string currency_status;
-        public string defaultid; //mandatory
-        public int deleted; //mandatory
+
+        [JsonPropertyName("currency_name")]
+        public string CurrencyName { get; set; }
+
+        [JsonPropertyName("currency_code")]
+        public string CurrencyCode { get; set; }
+
+        [JsonPropertyName("currency_symbol")]
+        public string CurrencySymbol { get; set; }
+
+        [JsonPropertyName("conversion_rate")]
+        public double ConversionRate { get; set; }
+
+        [JsonPropertyName("currency_status")]
+        public string CurrencyStatus { get; set; }
+
+        [JsonPropertyName("defaultid")]
+        public string DefaultId { get; set; } // mandatory
+
+        [JsonPropertyName("deleted")]
+        public int Deleted { get; set; } // mandatory
     }
 
     /// <summary>
@@ -1671,20 +3205,32 @@ namespace VTigerApi
     {
         public override VTigerEntity CreateNewInstance()
         {
-            return (VTigerEntity)new VTigerDocumentFolder();
+            return new VTigerDocumentFolder();
         }
+
         public override string RemoteTableName() { return "DocumentFolders"; }
+
         public override VTigerType GetElementType() { return VTigerType.DocumentFolders; }
+
         public VTigerDocumentFolder() { }
-        public VTigerDocumentFolder(string foldername, string createdby)
+
+        public VTigerDocumentFolder(string folderName, string createdBy)
         {
-            this.foldername = foldername;
-            this.createdby = createdby;
+            FolderName = folderName;
+            CreatedBy = createdBy;
         }
-        public string foldername; //mandatory
-        public string description;
-        public string createdby; //mandatory
-        public int sequence;
+
+        [JsonPropertyName("foldername")]
+        public string FolderName { get; set; } // mandatory
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
+
+        [JsonPropertyName("createdby")]
+        public string CreatedBy { get; set; } // mandatory
+
+        [JsonPropertyName("sequence")]
+        public int Sequence { get; set; }
     }
 
     #endregion

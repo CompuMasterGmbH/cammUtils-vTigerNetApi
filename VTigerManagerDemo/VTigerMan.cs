@@ -591,8 +591,8 @@ namespace VTigerManager
                 string lastname = GetInput("lastname");
                 StatusLabel.Text = "Creating element";
                 VTigerContact newContact = api.AddContact(firstname, lastname, api.UserID);
-                StatusLabel.Text = "Successfully created element with ID " + newContact.id.ToString();
-                MessageBox.Show(this, "Successfully created element with ID " + newContact.id.ToString() + " / contact no. " + newContact.contact_no, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                StatusLabel.Text = "Successfully created element with ID " + newContact.Id.ToString();
+                MessageBox.Show(this, "Successfully created element with ID " + newContact.Id.ToString() + " / contact no. " + newContact.ContactNo, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 ShowPage(currentPage);
             }
             catch (Exception ex)
@@ -776,8 +776,8 @@ namespace VTigerManager
             try
             {
                 VTigerAccount newAcount = api.AddAccount("TestAccount " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), api.UserID);
-                newRecordID = newAcount.id;
-                newRecordNo = newAcount.account_no;
+                newRecordID = newAcount.Id;
+                newRecordNo = newAcount.AccountNo;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
             NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Account", newRecordID, newRecordNo, newRecordCreationException);
@@ -790,8 +790,8 @@ namespace VTigerManager
             try
             {
                 VTigerAsset newAsset = api.AddAsset("TestProduct", "s/n 0000", DateTime.Now.ToString("yyyy-MM-dd"), DateTime.Now.ToString("yyyy-MM-dd"), Assetstatus.Outofservice, "TestAsset " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), "TestAccount", api.UserID);
-                newRecordID = newAsset.id;
-                newRecordNo = newAsset.asset_no;
+                newRecordID = newAsset.Id;
+                newRecordNo = newAsset.AssetNo;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
             NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Asset", newRecordID, newRecordNo, newRecordCreationException);
@@ -804,7 +804,7 @@ namespace VTigerManager
             try
             {
                 VTigerCalendar newCalendar = api.AddCalendar(api.UserID, "TestCalendarEntry", DateTime.Now, DateTime.Now.AddDays(3), TaskStatus.Planned);
-                newRecordID = newCalendar.id;
+                newRecordID = newCalendar.Id;
                 newRecordNo = "N/A";
             }
             catch (Exception ex) { newRecordCreationException = ex; }
@@ -818,8 +818,8 @@ namespace VTigerManager
             try
             {
                 VTigerCampaign newCampaign = api.AddCampaign("TestCampaign " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), DateTime.Now, api.UserID);
-                newRecordID = newCampaign.id;
-                newRecordNo = newCampaign.campaign_no;
+                newRecordID = newCampaign.Id;
+                newRecordNo = newCampaign.CampaignNo;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
             NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Campaigns", newRecordID, newRecordNo, newRecordCreationException);
@@ -832,8 +832,8 @@ namespace VTigerManager
             try
             {
                 VTigerContact newContact = api.AddContact("TestFirstName", "TestFamilyName " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), api.UserID);
-                newRecordID = newContact.id;
-                newRecordNo = newContact.contact_no;
+                newRecordID = newContact.Id;
+                newRecordNo = newContact.ContactNo;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
             NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Contacts", newRecordID, newRecordNo, newRecordCreationException);
@@ -850,7 +850,7 @@ namespace VTigerManager
             try
             {
                 VTigerDocument newDocument = api.AddDocument("TestNote " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), api.UserID);
-                newRecordID = newDocument.id;
+                newRecordID = newDocument.Id;
                 newRecordNo = "N/A";
             }
             catch (Exception ex) { newRecordCreationException = ex; }
@@ -866,7 +866,7 @@ namespace VTigerManager
             try
             {
                 VTigerEvent newEvent = api.AddEvent("TestEvent " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), DateTime.Now.ToString("yyyy-MM-dd"), DateTime.Now.ToString("yyyy-MM-dd"), DateTime.Now.ToString("HH:mm:ss"),"23:59:59", 4, Eventstatus.Planned, Activitytype.Meeting, api.UserID);
-                newRecordID = newEvent.id;
+                newRecordID = newEvent.Id;
                 newRecordNo = "N/A";
             }
             catch (Exception ex) { newRecordCreationException = ex; }
@@ -880,8 +880,8 @@ namespace VTigerManager
             try
             {
                 VTigerFaq newFaq = api.AddFaq(Faqstatus.Draft, "TestFaq " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), "TestAnswer");
-                newRecordID = newFaq.id;
-                newRecordNo = newFaq.faq_no;
+                newRecordID = newFaq.Id;
+                newRecordNo = newFaq.FaqNo;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
             NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Faq", newRecordID, newRecordNo, newRecordCreationException);
@@ -896,8 +896,8 @@ namespace VTigerManager
             try
             {
                 VTigerHelpDesk newHelpdesk = api.AddHelpDesk(api.UserID, Ticketstatus.Open, "TestHelpDesk " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"));
-                newRecordID = newHelpdesk.id;
-                newRecordNo = newHelpdesk.ticket_no;
+                newRecordID = newHelpdesk.Id;
+                newRecordNo = newHelpdesk.TicketNo;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
             NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "HelpDesk", newRecordID, newRecordNo, newRecordCreationException);
@@ -910,8 +910,8 @@ namespace VTigerManager
             try
             {
                 VTigerInvoice newInvoice = api.AddInvoice("TestInvoice " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), "TestBillStreet", "TestShippingStreet", "TestAccount", api.UserID);
-                newRecordID = newInvoice.id;
-                newRecordNo = newInvoice.invoice_no;
+                newRecordID = newInvoice.Id;
+                newRecordNo = newInvoice.InvoiceNo;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
             NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Invoice", newRecordID, newRecordNo, newRecordCreationException);
@@ -924,8 +924,8 @@ namespace VTigerManager
             try
             {
                 VTigerLead newLead = api.AddLead("TestLeadFamilyName " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), "TestLeadCompany", api.UserID);
-                newRecordID = newLead.id;
-                newRecordNo = newLead.lead_no;
+                newRecordID = newLead.Id;
+                newRecordNo = newLead.LeadNo;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
             NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Leads", newRecordID, newRecordNo, newRecordCreationException);
@@ -940,7 +940,7 @@ namespace VTigerManager
             try
             {
                 VTigerPBXManager newPBXManager = api.AddPBXManager("TestCustomerNo", "TestPBXManagerCallFrom " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), "TestPBXManagerCallTo", api.UserID);
-                newRecordID = newPBXManager.id;
+                newRecordID = newPBXManager.Id;
                 newRecordNo = "N/A";
             }
             catch (Exception ex) { newRecordCreationException = ex; }
@@ -954,8 +954,8 @@ namespace VTigerManager
             try
             {
                 VTigerPotential newPotential = api.AddPotential("TestPotential " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), "RelatedTo", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), Sales_stage.Needs_Analysis, api.UserID);
-                newRecordID = newPotential.id;
-                newRecordNo = newPotential.potential_no;
+                newRecordID = newPotential.Id;
+                newRecordNo = newPotential.PotentialNo;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
             NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Potentials", newRecordID, newRecordNo, newRecordCreationException);
@@ -969,9 +969,9 @@ namespace VTigerManager
             {
                 //VTigerCurrency currency = api.Query<VTigerCurrency>("SELECT * FROM Currency LIMIT 0, 1")[0];
                 VTigerCurrency currency = api.Query<VTigerCurrency>(0, 1)[0];
-                VTigerPriceBook newPriceBook = api.AddPriceBook("TestPriceBook " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), currency.id);
-                newRecordID = newPriceBook.id;
-                newRecordNo = newPriceBook.pricebook_no;
+                VTigerPriceBook newPriceBook = api.AddPriceBook("TestPriceBook " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), currency.Id);
+                newRecordID = newPriceBook.Id;
+                newRecordNo = newPriceBook.PriceBookNo;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
             NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "PriceBooks", newRecordID, newRecordNo, newRecordCreationException);
@@ -984,8 +984,8 @@ namespace VTigerManager
             try
             {
                 VTigerProduct newProduct = api.AddProduct("TestProduct " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), api.UserID);
-                newRecordID = newProduct.id;
-                newRecordNo = newProduct.product_no;
+                newRecordID = newProduct.Id;
+                newRecordNo = newProduct.ProductNo;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
             NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Products", newRecordID, newRecordNo, newRecordCreationException);
@@ -1016,8 +1016,8 @@ namespace VTigerManager
             try
             {
                 VTigerPurchaseOrder newPurchaseOrder = api.AddPurchaseOrder("TestPurchaseOrder " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), "VendorID", PoStatus.Created, "TestBillStreet", "TestShippingStreet", api.UserID);
-                newRecordID = newPurchaseOrder.id;
-                newRecordNo = newPurchaseOrder.purchaseorder_no;
+                newRecordID = newPurchaseOrder.Id;
+                newRecordNo = newPurchaseOrder.PurchaseOrderNo;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
             NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "PurchaseOrder", newRecordID, newRecordNo, newRecordCreationException);
@@ -1030,8 +1030,8 @@ namespace VTigerManager
             try
             {
                 VTigerQuote newQuote = api.AddQuote("TestQuote " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), Quotestage.Created, "TestBillStreet", "TestShippingStreet", "TestAccountID", api.UserID);
-                newRecordID = newQuote.id;
-                newRecordNo = newQuote.quote_no;
+                newRecordID = newQuote.Id;
+                newRecordNo = newQuote.QuoteNo;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
             NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Quotes", newRecordID, newRecordNo, newRecordCreationException);
@@ -1044,8 +1044,8 @@ namespace VTigerManager
             try
             {
                 VTigerSalesOrder newSalesOrder = api.AddSalesOrder("TestFamilyName " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), SoStatus.Created, "TestBillStreet", "TestShippingStreet", Invoicestatus.Created, "TestAccountID", api.UserID);
-                newRecordID = newSalesOrder.id;
-                newRecordNo = newSalesOrder.salesorder_no;
+                newRecordID = newSalesOrder.Id;
+                newRecordNo = newSalesOrder.SalesOrderNo;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
             NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "SalesOrders", newRecordID, newRecordNo, newRecordCreationException);
@@ -1073,8 +1073,8 @@ namespace VTigerManager
             try
             {
                 VTigerService newService = api.AddService("TestService " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"));
-                newRecordID = newService.id;
-                newRecordNo = newService.service_no;
+                newRecordID = newService.Id;
+                newRecordNo = newService.ServiceNo;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
             NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Services", newRecordID, newRecordNo, newRecordCreationException);
@@ -1089,8 +1089,8 @@ namespace VTigerManager
             try
             {
                 VTigerVendor newVendor = api.AddVendor("TestVendor " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), api.UserID);
-                newRecordID = newVendor.id;
-                newRecordNo = newVendor.vendor_no;
+                newRecordID = newVendor.Id;
+                newRecordNo = newVendor.VendorNo;
             }
             catch (Exception ex) { newRecordCreationException = ex; }
             NewRecordForEveryTypeToolStripMenuItem_AddResultRecord(results, "Vendors", newRecordID, newRecordNo, newRecordCreationException);

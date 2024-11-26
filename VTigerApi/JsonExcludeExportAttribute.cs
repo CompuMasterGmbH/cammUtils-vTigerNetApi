@@ -15,25 +15,38 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System;
-using System.ComponentModel;
-using System.ComponentModel.Design;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
-namespace Jayrock.Json.Conversion
+namespace VTigerApi.Json.Conversion
 {
-    [Serializable]
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-    public sealed class JsonExcludeExportAttribute : Attribute, IPropertyDescriptorCustomization, IObjectMemberExporter
+    /// <summary>
+    /// Custom attribute to exclude a property or field from JSON serialization.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
+    public sealed class JsonExcludeExportAttribute : JsonConverterAttribute
     {
-        public void Apply(PropertyDescriptor property)
+        /// <inheritdoc/>
+        public override JsonConverter CreateConverter(Type typeToConvert)
         {
-            var services = (IServiceContainer)property;
-            services.AddService(typeof(IObjectMemberExporter), this);
+            // Use the custom ExcludeConverter
+            return new ExcludeConverter();
         }
 
-        void IObjectMemberExporter.Export(ExportContext context, JsonWriter writer, object source)
+        /// <summary>
+        /// The actual converter that prevents serialization of the property or field.
+        /// </summary>
+        private class ExcludeConverter : JsonConverter<object>
         {
-            //writer.WriteMember(_property.Name);
-            //context.Export(_property.GetValue(source), writer);
+            public override object Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException("This field is excluded from serialization.");
+            }
+
+            public override void Write(Utf8JsonWriter writer, object value, JsonSerializerOptions options)
+            {
+                // Do nothing, exclude the field from serialization
+            }
         }
     }
 }

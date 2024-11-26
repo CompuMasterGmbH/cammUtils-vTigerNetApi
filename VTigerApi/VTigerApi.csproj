@@ -7,12 +7,11 @@
     <Company>CompuMaster GmbH</Company>
     <Product>cammUtils-VTigerNetApi</Product>
     <Copyright>2014, 2017, 2019, 2020, 2024 CompuMaster GmbH &amp; additional committers</Copyright>
-    <AssemblyVersion>2024.11.26.101</AssemblyVersion>
     <OutputType>Library</OutputType>
     <AssemblyName>VTigerNetApi</AssemblyName>
     <Configurations>Debug;CI_CD;Release</Configurations>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <PackageVersion>2024.11.26.101</PackageVersion>
+    <Version>2024.11.26.102</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="jayrock-json" Version="0.9.16530.1" />

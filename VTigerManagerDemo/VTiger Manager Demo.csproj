@@ -30,6 +30,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Configurations>Debug;CI_CD;Release</Configurations>
     <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\VTigerApi\VTigerApi.csproj" />

@@ -7,15 +7,12 @@
     <Company>CompuMaster GmbH</Company>
     <Product>cammUtils-VTigerNetApi</Product>
     <Copyright>2014, 2017, 2019, 2020, 2024 CompuMaster GmbH &amp; additional committers</Copyright>
-    <AssemblyVersion>2024.11.26.100</AssemblyVersion>
+    <AssemblyVersion>2024.11.26.101</AssemblyVersion>
     <OutputType>Library</OutputType>
     <AssemblyName>VTigerNetApi</AssemblyName>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
     <Configurations>Debug;CI_CD;Release</Configurations>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <PackageVersion>2024.11.26.101</PackageVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="jayrock-json" Version="0.9.16530.1" />

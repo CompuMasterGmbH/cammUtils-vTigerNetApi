@@ -70,8 +70,13 @@ jobs:
             - name: Build
               run: dotnet build --configuration=${{env.BUILD_CONFIGURATION}} --no-restore
 
-            - name: Run Unit Tests
-              run: dotnet test --results-directory test-results --logger junit --configuration=${{env.BUILD_CONFIGURATION}} --no-restore
+            - name: Run Unit Tests (Win:net48)
+              if: startsWith(matrix.os, 'windows')
+              run: dotnet test --framework net48 --results-directory test-results --logger junit --configuration=${{env.BUILD_CONFIGURATION}} --no-restore
+
+            - name: Run Unit Tests (Linux/Mac:net8.0)
+              if: (!startsWith(matrix.os, 'windows'))
+              run: dotnet test --framework net8.0 --results-directory test-results --logger junit --configuration=${{env.BUILD_CONFIGURATION}} --no-restore
 
             - name: Dir Listing (Win) test-results
               if: startsWith(matrix.os, 'windows')

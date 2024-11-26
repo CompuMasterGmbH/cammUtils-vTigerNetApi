@@ -1,21 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <UseWindowsForms>true</UseWindowsForms>
-    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <TargetFrameworks>net48;net8.0</TargetFrameworks>
     <Configurations>Debug;CI_CD;Release</Configurations>
     <AssemblyTitle>VTigerApiUnitTests</AssemblyTitle>
     <Description>camm Utils VTigerApi Unit Tests, Apache License v2.0</Description>
     <Company>CompuMaster GmbH</Company>
     <Product>cammUtils-VTigerNetApi</Product>
-    <Copyright>2019 CompuMaster GmbH &amp; additional committers</Copyright>
-    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <Copyright>2019-2014 CompuMaster GmbH &amp; additional committers</Copyright>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\VTigerApi\VTigerApi.csproj" />
-    <ProjectReference Include="..\VTigerManagerDemoControls\VTiger Manager Demo Controls.csproj" />
-    <ProjectReference Include="..\VTigerManagerDemo\VTiger Manager Demo.csproj" />
+    <ProjectReference Include="..\VTigerManagerDemoControls\VTiger Manager Demo Tools.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CompuMaster.Data" Version="3.0.2024.815" />

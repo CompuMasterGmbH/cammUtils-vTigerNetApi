@@ -10,7 +10,6 @@ namespace VTigerApiUnitTests
         [TestMethod]
         public void ReadKeyValueTable()
         {
-            VTigerUserControls.KeyValueDataGridView TestGrid = new VTigerUserControls.KeyValueDataGridView();
             DataTable OldTable = new DataTable();
             OldTable.Columns.Add("Test1", typeof(String)); //insert a column
             OldTable.Columns.Add("Test2", typeof(String)); //insert a column
@@ -42,7 +41,7 @@ namespace VTigerApiUnitTests
             System.Console.WriteLine();
             System.Console.WriteLine("Input table");
             System.Console.WriteLine(CompuMaster.Data.DataTables.ConvertToPlainTextTableFixedColumnWidths(InputTable));
-            DataTable Result = TestGrid.ReadKeyValueTable(OldTable, InputTable);
+            DataTable Result = VTigerUserControls.Tools.ReadKeyValueTable(OldTable, InputTable);
             System.Console.WriteLine();
             System.Console.WriteLine("Result table");
             System.Console.WriteLine(CompuMaster.Data.DataTables.ConvertToPlainTextTableFixedColumnWidths(Result));
@@ -51,7 +50,6 @@ namespace VTigerApiUnitTests
         [TestMethod]
         public void GenerateKeyValueTable()
         {
-            VTigerUserControls.KeyValueDataGridView TestGrid = new VTigerUserControls.KeyValueDataGridView();
             DataTable InputTable = new DataTable();
             InputTable.Columns.Add("Test1", typeof(String)); //insert a column
             InputTable.Columns.Add("Test2", typeof(String)); //insert a column
@@ -75,7 +73,7 @@ namespace VTigerApiUnitTests
             InputTable.Rows[3][2] = "Test";
             System.Console.WriteLine("Input table");
             System.Console.WriteLine(CompuMaster.Data.DataTables.ConvertToPlainTextTableFixedColumnWidths(InputTable));
-            DataTable Result = TestGrid.GenerateKeyValueTable(InputTable);
+            DataTable Result = VTigerUserControls.Tools.GenerateKeyValueTable(InputTable);
             System.Console.WriteLine();
             System.Console.WriteLine("Result table");
             System.Console.WriteLine(CompuMaster.Data.DataTables.ConvertToPlainTextTableFixedColumnWidths(Result));

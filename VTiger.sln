@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VTigerApi", "VTigerApi\VTig
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VTiger Manager Demo", "VTigerManagerDemo\VTiger Manager Demo.csproj", "{F8B8BA13-CB21-4325-B65B-0A9B7746DA38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VTiger Manager Demo Controls", "VTigerManagerDemoControls\VTiger Manager Demo Controls.csproj", "{B6AFCB0D-36AC-448D-8C9D-E626C22C451A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VTiger Manager Demo Tools", "VTigerManagerDemoControls\VTiger Manager Demo Tools.csproj", "{B6AFCB0D-36AC-448D-8C9D-E626C22C451A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VTigerApiUnitTests", "VTigerApiUnitTests\VTigerApiUnitTests.csproj", "{8CCDC2CD-17CB-4CA4-800E-0C0814FB3D3D}"
 EndProject

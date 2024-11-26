@@ -1,79 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
 using System.Data;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
+using System.Threading.Tasks;
 
 namespace VTigerUserControls
 {
-    /// <summary>
-    /// Klasse zum anzeigen von DataTables als normale Tabelle oder als umgeformte Key-Value Tabelle
-    /// </summary>
-    public partial class KeyValueDataGridView : DataGridView
+    public class Tools
     {
-        bool showKeyValueTable;
-
-        public DataTable DataTable
+        static public DataTable GenerateKeyValueTable(DataTable inputTable)
         {
-            get
-            {
-                if (base.DataSource is DataTable)
-                    return base.DataSource as DataTable;
-                return null;
-            }
-            set
-            {
-                base.DataSource = value;
-            }
-        }
-
-        DataTable originalTable;
-
-        /// <summary>
-        /// Gibt an, ob die Tabelle normal oder als Key-Value Tabelle angezeigt wird.
-        /// </summary>
-        public bool ShowKeyValueTable
-        {
-            get
-            {
-                return showKeyValueTable;
-            }
-            set
-            {
-                if (showKeyValueTable != value && DataTable != null)
-                {
-                    if (value)
-                        DataTable = GenerateKeyValueTable(DataTable);
-                    else
-                        DataTable = ReadKeyValueTable(originalTable, DataTable);
-                }
-                showKeyValueTable = value;
-            }
-        }
-
-        new public object DataSource
-        {
-            get
-            {
-                if (showKeyValueTable && DataTable != null)
-                    return ReadKeyValueTable(originalTable, DataTable);
-                else
-                    return base.DataSource;
-            }
-            set
-            {
-                base.DataSource = value;
-                if (showKeyValueTable && DataTable != null)
-                    DataTable = GenerateKeyValueTable(DataTable);
-            }
-        }
-
-        internal DataTable GenerateKeyValueTable(DataTable inputTable)
-        {
-            originalTable = inputTable;
             if (inputTable == null)
                 return null;
             DataTable outputTable = new DataTable();
@@ -100,7 +37,7 @@ namespace VTigerUserControls
             return outputTable;
         }
 
-        internal DataTable ReadKeyValueTable(DataTable oldTable, DataTable inputTable)
+        static public DataTable ReadKeyValueTable(DataTable oldTable, DataTable inputTable)
         {
             if (inputTable == null)
                 return null;
@@ -141,6 +78,5 @@ namespace VTigerUserControls
 
             return outputTable;
         }
-
     }
 }

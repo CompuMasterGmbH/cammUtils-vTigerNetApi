@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\VTigerApi\VTigerApi.csproj" />
-    <ProjectReference Include="..\VTigerManagerDemoControls\VTiger Manager Demo Controls.csproj" />
+    <ProjectReference Include="..\VTigerManagerDemoControls\VTiger Manager Demo Tools.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CompuMaster.Data" Version="3.0.2024.815" />
@@ -41,5 +41,10 @@
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.SystemWebAdapters" Version="1.4.0" />
     <PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="KeyValueDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

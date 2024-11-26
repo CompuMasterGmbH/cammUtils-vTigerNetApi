@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net48;netstandard2.0</TargetFrameworks>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <AssemblyTitle>VTigerNetApi</AssemblyTitle>
     <Description>camm Utils VTigerApi, Apache License v2.0</Description>
     <Company>CompuMaster GmbH</Company>
@@ -14,8 +13,18 @@
     <Version>2024.11.26.102</Version>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="jayrock-json" Version="0.9.16530.1" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.SystemWebAdapters" Version="1.4.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\fork-Jayrock.Json-src\Jayrock.Json\Jayrock.Json.csproj">
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\fork-Jayrock.Json-src\Jayrock.Json\bin\$(Configuration)\netstandard2.0\Jayrock.Json.dll*">
+      <Pack>true</Pack>
+      <PackagePath>lib\netstandard2.0</PackagePath>
+    </Content>
   </ItemGroup>
 </Project>

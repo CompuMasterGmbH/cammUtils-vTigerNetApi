@@ -10,7 +10,7 @@
     <Company>CompuMaster GmbH</Company>
     <Product>cammUtils-VTigerNetApi</Product>
     <Copyright>2019 CompuMaster GmbH &amp; additional committers</Copyright>
-    <AssemblyVersion>2019.02.21.0</AssemblyVersion>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\VTigerApi\VTigerApi.csproj" />

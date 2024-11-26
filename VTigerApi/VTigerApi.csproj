@@ -10,7 +10,7 @@
     <AssemblyName>VTigerNetApi</AssemblyName>
     <Configurations>Debug;CI_CD;Release</Configurations>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <Version>2024.11.26.102</Version>
+    <Version>2024.11.26.200</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />

@@ -1,21 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net48</TargetFrameworks>
+    <TargetFrameworks>net8.0;net48;netstandard2.0</TargetFrameworks>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AssemblyTitle>VTigerNetApi</AssemblyTitle>
     <Description>camm Utils VTigerApi, Apache License v2.0</Description>
     <Company>CompuMaster GmbH</Company>
     <Product>cammUtils-VTigerNetApi</Product>
     <Copyright>2014, 2017, 2019, 2020, 2024 CompuMaster GmbH &amp; additional committers</Copyright>
-    <AssemblyVersion>2024.11.26.100</AssemblyVersion>
     <OutputType>Library</OutputType>
     <AssemblyName>VTigerNetApi</AssemblyName>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
     <Configurations>Debug;CI_CD;Release</Configurations>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Version>2024.11.26.102</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />

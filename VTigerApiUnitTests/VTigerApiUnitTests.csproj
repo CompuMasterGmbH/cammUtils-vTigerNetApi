@@ -1,24 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <UseWindowsForms>true</UseWindowsForms>
-    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <TargetFrameworks>net48;net8.0</TargetFrameworks>
     <Configurations>Debug;CI_CD;Release</Configurations>
     <AssemblyTitle>VTigerApiUnitTests</AssemblyTitle>
     <Description>camm Utils VTigerApi Unit Tests, Apache License v2.0</Description>
     <Company>CompuMaster GmbH</Company>
     <Product>cammUtils-VTigerNetApi</Product>
-    <Copyright>2019 CompuMaster GmbH &amp; additional committers</Copyright>
-    <AssemblyVersion>2019.02.21.0</AssemblyVersion>
+    <Copyright>2019-2014 CompuMaster GmbH &amp; additional committers</Copyright>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\VTigerApi\VTigerApi.csproj" />
-    <ProjectReference Include="..\VTigerManagerDemoControls\VTiger Manager Demo Controls.csproj" />
-    <ProjectReference Include="..\VTigerManagerDemo\VTiger Manager Demo.csproj" />
+    <ProjectReference Include="..\VTigerManagerDemoControls\VTiger Manager Demo Tools.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CompuMaster.Data" Version="3.0.2024.815" />
+    <PackageReference Include="JUnitTestLogger4GitHub" Version="1.1.1" />
+    <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="3.6.3" />
     <PackageReference Include="MSTest.TestFramework" Version="3.6.3" />

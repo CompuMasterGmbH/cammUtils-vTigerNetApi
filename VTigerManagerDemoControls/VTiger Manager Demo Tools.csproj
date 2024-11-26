@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net48</TargetFrameworks>
+    <OutputType>Library</OutputType>
+    <RootNamespace>VTigerUserControls</RootNamespace>
+    <AssemblyName>VTigerUserControls</AssemblyName>
+    <Configurations>Debug;CI_CD;Release</Configurations>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+  </ItemGroup>
+</Project>

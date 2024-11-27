@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VTiger Manager Demo Tools",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VTigerApiUnitTests", "VTigerApiUnitTests\VTigerApiUnitTests.csproj", "{8CCDC2CD-17CB-4CA4-800E-0C0814FB3D3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jayrock.Json", "fork-Jayrock.Json-src\Jayrock.Json\Jayrock.Json.csproj", "{C03F0A28-F017-4843-8622-117465C2D663}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CI_CD|Any CPU = CI_CD|Any CPU
@@ -98,24 +96,6 @@ Global
 		{8CCDC2CD-17CB-4CA4-800E-0C0814FB3D3D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{8CCDC2CD-17CB-4CA4-800E-0C0814FB3D3D}.Release|x86.ActiveCfg = Release|Any CPU
 		{8CCDC2CD-17CB-4CA4-800E-0C0814FB3D3D}.Release|x86.Build.0 = Release|Any CPU
-		{C03F0A28-F017-4843-8622-117465C2D663}.CI_CD|Any CPU.ActiveCfg = Debug|Any CPU
-		{C03F0A28-F017-4843-8622-117465C2D663}.CI_CD|Any CPU.Build.0 = Debug|Any CPU
-		{C03F0A28-F017-4843-8622-117465C2D663}.CI_CD|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{C03F0A28-F017-4843-8622-117465C2D663}.CI_CD|Mixed Platforms.Build.0 = Debug|Any CPU
-		{C03F0A28-F017-4843-8622-117465C2D663}.CI_CD|x86.ActiveCfg = Debug|Any CPU
-		{C03F0A28-F017-4843-8622-117465C2D663}.CI_CD|x86.Build.0 = Debug|Any CPU
-		{C03F0A28-F017-4843-8622-117465C2D663}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C03F0A28-F017-4843-8622-117465C2D663}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C03F0A28-F017-4843-8622-117465C2D663}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{C03F0A28-F017-4843-8622-117465C2D663}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{C03F0A28-F017-4843-8622-117465C2D663}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{C03F0A28-F017-4843-8622-117465C2D663}.Debug|x86.Build.0 = Debug|Any CPU
-		{C03F0A28-F017-4843-8622-117465C2D663}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C03F0A28-F017-4843-8622-117465C2D663}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C03F0A28-F017-4843-8622-117465C2D663}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{C03F0A28-F017-4843-8622-117465C2D663}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{C03F0A28-F017-4843-8622-117465C2D663}.Release|x86.ActiveCfg = Release|Any CPU
-		{C03F0A28-F017-4843-8622-117465C2D663}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

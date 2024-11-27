@@ -10,11 +10,27 @@
     <AssemblyName>VTigerNetApi</AssemblyName>
     <Configurations>Debug;CI_CD;Release</Configurations>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <Version>2024.11.27.101</Version>
+    <OptionInfer>On</OptionInfer>
+    <Version>2024.11.27.102</Version>    
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CompuMaster.Jayrock.Json" Version="2024.9.17418.1142" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.SystemWebAdapters" Version="1.4.0" />
+  </ItemGroup>
+  <PropertyGroup>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageIcon>logo_64x64.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/CompuMasterGmbH/cammUtils-vTigerNetApi</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/CompuMasterGmbH/cammUtils-vTigerNetApi.git</RepositoryUrl>
+    <Description>.NET library with common methods for accessing VTiger CRM</Description>
+    <PackageTags>CompuMaster VTiger CRM Webservice REST client</PackageTags>
+    <Authors>CompuMaster GmbH</Authors>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="../README.md" Pack="true" PackagePath="." />
+    <None Include="../logo_64x64.png" Pack="true" PackagePath="." />
   </ItemGroup>
 </Project>

@@ -6,6 +6,7 @@
     <Version>2024.11.26.100</Version>
     <OutputType>Library</OutputType>
     <RootNamespace>Jayrock</RootNamespace>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DefineConstants>TRACE;DEBUG;NET_4_0</DefineConstants>

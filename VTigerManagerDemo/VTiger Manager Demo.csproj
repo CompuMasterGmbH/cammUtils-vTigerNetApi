@@ -30,6 +30,7 @@
     <Configurations>Debug;CI_CD;Release</Configurations>
     <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\VTigerApi\VTigerApi.csproj" />

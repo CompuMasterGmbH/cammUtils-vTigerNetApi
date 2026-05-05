@@ -1,4 +1,20 @@
-*/_CreateNewNuGetPackage/* linguist-vendored
+﻿*/_CreateNewNuGetPackage/* linguist-vendored
 NDoc/* linguist-vendored
 *.cmd  linguist-vendored
 *.ps1  linguist-vendored
+* text=auto eol=crlf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.zip binary
+*.nupkg binary
+*.snk binary
+*.pfx binary
+*.xls binary
+*.xlsx binary
+*.doc binary
+*.docx binary
+*.ppt binary
+*.pptx binary

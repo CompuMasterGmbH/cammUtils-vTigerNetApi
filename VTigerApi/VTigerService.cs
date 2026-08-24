@@ -19,7 +19,6 @@ using System.Net;
 using System.IO;
 using System.Text;
 using System.Security.Cryptography;
-using System.Web;
 using Jayrock.Json;
 using Jayrock.Json.Conversion;
 using System.Data;
@@ -432,7 +431,7 @@ namespace VTigerApi
         public T VTiger_Query<T>(string query)
         {
             return VTigerGetJson<T>("query",
-                String.Format("sessionName={0}&query={1}", sessionName, HttpUtility.UrlEncode(query)), false);
+                String.Format("sessionName={0}&query={1}", sessionName, WebUtility.UrlEncode(query)), false);
         }
 
         /// <summary>
@@ -489,7 +488,7 @@ namespace VTigerApi
         public T VTiger_Create<T>(VTigerType elementType, string element)
         {
             return VTigerGetJson<T>("create",
-                String.Format("sessionName={0}&elementType={1}&element={2}", sessionName, elementType, HttpUtility.UrlEncode(element)), true);
+                String.Format("sessionName={0}&elementType={1}&element={2}", sessionName, elementType, WebUtility.UrlEncode(element)), true);
         }
 
         /// <summary>
@@ -574,7 +573,7 @@ namespace VTigerApi
         private T VTiger_Update<T>(string element)
         {
             return VTigerGetJson<T>("update",
-                String.Format("sessionName={0}&element={1}", sessionName, HttpUtility.UrlEncode(element)), true);
+                String.Format("sessionName={0}&element={1}", sessionName, WebUtility.UrlEncode(element)), true);
         }
 
         /// <summary>

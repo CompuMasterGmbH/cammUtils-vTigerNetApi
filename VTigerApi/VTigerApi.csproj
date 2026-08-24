@@ -11,12 +11,11 @@
     <Configurations>Debug;CI_CD;Release</Configurations>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <OptionInfer>On</OptionInfer>
-    <Version>2024.11.27.102</Version>    
+    <Version>2026.08.24.1</Version>    
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CompuMaster.Jayrock.Json" Version="2024.9.17418.1142" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-    <PackageReference Include="Microsoft.AspNetCore.SystemWebAdapters" Version="1.4.0" />
   </ItemGroup>
   <PropertyGroup>
     <PackageReadmeFile>README.md</PackageReadmeFile>
